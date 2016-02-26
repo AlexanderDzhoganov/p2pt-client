@@ -1,0 +1,1 @@
+module.exports = require("npm:extend.js@0.0.1/index");

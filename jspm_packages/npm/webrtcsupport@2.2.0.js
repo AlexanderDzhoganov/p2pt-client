@@ -1,0 +1,1 @@
+module.exports = require("npm:webrtcsupport@2.2.0/index-browser");

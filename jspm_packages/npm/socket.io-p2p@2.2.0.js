@@ -1,0 +1,1 @@
+module.exports = require("npm:socket.io-p2p@2.2.0/index");

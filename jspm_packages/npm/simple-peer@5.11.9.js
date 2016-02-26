@@ -1,0 +1,1 @@
+module.exports = require("npm:simple-peer@5.11.9/index");
