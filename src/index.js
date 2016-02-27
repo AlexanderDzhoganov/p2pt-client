@@ -71,6 +71,11 @@ export class Index {
         }
       }.bind(this))
 
+      this.p2p.on('peer-error', err => {
+        console.error(err)
+        this.connectedToPeer = false
+      }.bind(this))
+
       this.p2p.on('error', err => {
         console.error(err)
         this.connectedToPeer = false
