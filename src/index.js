@@ -69,7 +69,6 @@ export class Index {
 
       this.p2p.on('ready', function() {
         this.p2p.usePeerConnection = true
-        this.p2p.emit('peer-obj', { peerId: peerId })
       }.bind(this))
 
       this.p2p.on('upgrade', data => {
