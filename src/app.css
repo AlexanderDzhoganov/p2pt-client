@@ -1,25 +1,48 @@
+html {
+    margin: 0;
+    padding: 0;
+}
+
 body {
-    background: #242424 url('/images/bg.png');
+    margin: 0;
+    padding: 0;
+    background: #fbfbfb;
     color: #9496C6;
-    font-family: Verdana;
 }
 
 .header {
-    padding: 16px;
     width: 100%;
     text-align: center;
     color: #37374A;
+    background: #fff;
+    height: 60px;
+    padding: 10px;
+    border-bottom: 1px solid #E2E2E2;
+}
+
+.header .logo {
+    font-family: monospace;
+    font-size: 32px;
+    float: right;
+}
+
+.header .info {
+    font-family: Tahoma;
+    float: left;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.header-separator {
+    margin-top: 56px;
+    border: 1px solid #eee;
 }
 
 .upload-box {
     width: 512px;
     height: 512px;
-    position: absolute;
-    top:0;
-    bottom: 0;
-    left: 0;
-    right: 0;
     margin: auto;
+    margin-top: 48px;
     text-align: center;
 }
 
@@ -56,4 +79,19 @@ body {
 
 .dz-message {
     display: none;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    border-top: 1px solid #E2E2E2;
+    background-color: #fff;
+}
+
+.footer .flink {
+    float: right;
+    color: #8C8C8C;
+    margin: 19px;
 }
