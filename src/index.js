@@ -28,6 +28,8 @@ export class Index {
 
   downloader = null
 
+  totalTransfers = 0
+
   constructor(router) {
     this.router = router
     Dropzone.autoDiscover = false
@@ -64,6 +66,10 @@ export class Index {
     this.socket.on('set-token-invalid', () => {
       this.router.navigate('/')
       location.reload()
+    }.bind(this))
+
+    this.socket.on('total-transfers', val => {
+      this.totalTransfers = val
     }.bind(this))
 
     this.socket.on('set-token-ok', token => {

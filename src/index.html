@@ -36,13 +36,13 @@
                   </div>
 
                   <div if.bind="token && !uploading">
-                      <h3>
+                      <h2>
                           Give this url to the receiving party:
                           <br />
                           <a href="${serverUrl}/${token}" target="_blank" class="token-link">${serverUrl}/${token}</a>
                           <br/>
                           and don't close this tab until the transfer is complete
-                      </h3>
+                      </h2>
                   </div>
 
                   <div if.bind="uploading && !uploadComplete">
@@ -81,12 +81,20 @@
                       </div>
                   </div>
 
-                  <h2><a if.bind="downloader.queue[0].localUrl"
-                         download.bind="downloader.queue[0].fileName"
-                         href.bind="downloader.queue[0].localUrl">Save file</a></h2>
+                  <h2>
+                    <a if.bind="downloader.queue[0].localUrl"
+                      download.bind="downloader.queue[0].fileName"
+                      href.bind="downloader.queue[0].localUrl">
+                      Save file
+                    </a>
+                  </h2>
               </template>
           </div>
         </div>
+      </div>
+
+      <div>
+      BITF.LY HAS SHIPPED ${totalTransfers} FILES SO FAR
       </div>
 
       <div class="hero-footer">
