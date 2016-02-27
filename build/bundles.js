@@ -1,20 +1,12 @@
 module.exports = {
   "bundles": {
-    "dist/app-build": {
+    "dist/app": {
       "includes": [
         "[*.js]",
         "*.html!text",
-        "*.css!text"
-      ],
-      "options": {
-        "inject": true,
-        "minify": true,
-        "depCache": true,
-        "rev": true
-      }
-    },
-    "dist/aurelia": {
-      "includes": [
+        "*.css!text",
+        "text",
+        "css",
         "aurelia-framework",
         "aurelia-bootstrapper",
         "aurelia-fetch-client",
@@ -27,7 +19,15 @@ module.exports = {
         "aurelia-history-browser",
         "aurelia-logging-console",
         "bootstrap",
-        "bootstrap/css/bootstrap.css!text"
+        "bootstrap/css/bootstrap.css!text",
+        "dropzone",
+        "dropzone/min/dropzone.min.css!text",
+        "jspm/nodelibs-path",
+        "lodash",
+        "mimetype",
+        "font-awesome/css/font-awesome.min.css!text",
+        "socket.io-client",
+        "socket.io-p2p"
       ],
       "options": {
         "inject": true,

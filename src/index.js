@@ -74,8 +74,12 @@ export class Index {
           trickle: false,
           config: {
             "iceServers": [
-              {"url":"stun:23.21.150.121","urls":"stun:23.21.150.121"}
-            ]}
+              {
+                "url": "stun:23.21.150.121",
+                "urls": "stun:23.21.150.121"
+              }
+            ]
+          }
         }
       })
 
