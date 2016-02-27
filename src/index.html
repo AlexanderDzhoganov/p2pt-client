@@ -37,7 +37,7 @@
       </div>
       <div if.bind="uploading && uploadComplete">
         <h2>Your file has been sent successfully!</h2>
-        <h4><a href="/">Send another</a></h4>
+        <h4><a click.delegate="reload()">Send another</a></h4>
       </div>
     </div>
   </div>
