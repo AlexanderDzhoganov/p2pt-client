@@ -2,34 +2,58 @@ import p2p from 'socket.io-p2p'
 import io from 'socket.io-client'
 
 import lodash from 'lodash'
+import $ from 'jquery'
+import Dropzone from 'dropzone'
 
 import filereader from './filereader'
 import downloader from './downloader'
 
 export class Index {
 
-  connected = false
+  isUploader = true
   connectedToPeer = false
 
   token = null
-  tokenAccepted = false
 
-  files = null
+  file = null
   uploading = false
 
   downloader = null
 
   constructor() {
     this.downloader = new downloader()
+    this.downloader.onDownloadComplete = download => {
+      console.log('DOWNLOAD READY')
+    }.bind(this)
   }
 
   activate(params) {
     if(params.token) {
+      this.isUploader = false
       this.token = params.token
     }
   }
 
   bind() {
+    Dropzone.autoDiscover = false
+    Dropzone.autoProcessQueue = false
+
+    var view = this
+
+    Dropzone.options.dropzone = {
+      init: function() {
+        this.on("addedfile", file => {
+          view.fileAdded(file)
+        }.bind(this))
+      },
+      autoDiscover: false,
+      autoProcessQueue: false
+    };
+
+    setTimeout(() => {
+      this.dropzone = new Dropzone("div#dropzone", { url: "/file/post"})
+    }.bind(this), 0)
+
     this.socket = io('http://localhost:3000')
 
     this.p2p = new p2p(this.socket)
@@ -43,7 +67,7 @@ export class Index {
       console.log('connection upgraded to webrtc')
       this.connectedToPeer = true
 
-      if (this.files && this.files[0]) {
+      if (this.file) {
         this.startUpload()
       }
     }.bind(this))
@@ -58,7 +82,6 @@ export class Index {
     }.bind(this))
 
     this.socket.on('connect', () => {
-      this.connected = true
       if(this.token) {
         this.socket.emit('set-token', this.token)
       }
@@ -66,25 +89,29 @@ export class Index {
 
     this.socket.on('error', err => {
       console.error(err)
-      this.connected = false
     }.bind(this))
 
     this.socket.on('set-token-ok', token => {
       this.token = token
-      this.tokenAccepted = true
     }.bind(this))
   }
 
+  fileAdded(file) {
+    this.fileName = file.name
+    this.contentType = file.type
+    this.file = file
+    this.socket.emit('ask-token')
+  }
+
   startUpload() {
-    if(!this.files || !this.connectedToPeer) {
+    if(!this.file || !this.connectedToPeer) {
       return
     }
 
     this.uploading = true
-    
     var fileName = this.fileName.split('\\').pop()
 
-    this.reader = new filereader(this.files[0])
+    this.reader = new filereader(this.file)
     this.reader.readFile(function(data, complete) {
       this.p2p.emit('data', {
         fileName: fileName,
@@ -95,17 +122,9 @@ export class Index {
       })
 
       if(complete) {
-        this.uploading = false
+        this.uploadComplete = true
       }
     }.bind(this))
-  }
-
-  askToken() {
-    if(!this.connected) {
-      return
-    }
-
-    this.socket.emit('ask-token')
   }
 
 }

@@ -626,5 +626,6 @@
   },
   "npm:mimetype@0.0.8": {
     "path": "github:jspm/nodelibs-path@^0.1.0"
-  }
+  },
+  "github:enyo/dropzone@4.3.0": {}
 }

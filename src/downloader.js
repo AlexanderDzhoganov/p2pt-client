@@ -32,6 +32,9 @@ export default class Downloader {
       if (download.complete) {
         var blob = new Blob(download.chunks, { type: mimetype.lookup(download.fileName) })
         download.localUrl = window.URL.createObjectURL(blob)
+        if (this.onDownloadComplete) {
+          this.onDownloadComplete(download)
+        }
       }
     }
 

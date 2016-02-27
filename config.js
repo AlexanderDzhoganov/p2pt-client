@@ -31,6 +31,7 @@ System.config({
     "component-emitter": "npm:component-emitter@1.2.0",
     "core-js": "npm:core-js@1.2.6",
     "debug": "npm:debug@2.2.0",
+    "dropzone": "github:enyo/dropzone@4.3.0",
     "fetch": "github:github/fetch@0.10.1",
     "font-awesome": "npm:font-awesome@4.5.0",
     "isarray": "npm:isarray@1.0.0",

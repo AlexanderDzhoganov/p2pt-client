@@ -1,52 +1,31 @@
 <template>
-  <div class="row">
-    <div class="col-md-12">
-      Connected: ${connected}
+  <div if.bind="isUploader" class="upload-box">
+    <div if.bind="!file" id="dropzone" class="dropzone">
     </div>
-  </div>
-  <div if.bind="connected && !token" class="row">
-    <div class="col-md-12">
-      <button type="button" class="btn btn-primary" click.delegate="askToken()">Ask for token</button>
-    </div>
-  </div>
-  <div if.bind="token" class="row">
-    <div class="col-md-12">
-      Token: <a href="http://localhost:9000/#/${token}" target="_blank">${token}</a><br/>
-      Token accepted: ${tokenAccepted}<br/>
-      Connected to peer: ${connectedToPeer}<br/>
-      Uploading: ${uploading}<br/>
-
-      <form class="form" submit.delegate="upload()">
-        <input type="file" class="form-control" files.bind="files" value.bind="fileName" change.delegate="startUpload()"/>
-      </form>
-
-      <template if.bind="files && files.length > 0">
-        File size: ${fileSize}
+    <div if.bind="file && !uploading">
+      <template if.bind="token">
+        Give this url to the receiving party:
+        <a href="http://localhost:9000/#/${token}" target="_blank">http://localhost:9000/#/${token}</a>
+      </template>
+      <template if.bind="!token">
+        Waiting for upload token
       </template>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th>File name</th>
-            <th>File size</th>
-            <th>Progress</th>
-            <th>Save</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr repeat.for="file of downloader.queue">
-            <td>${file.fileName}</td>
-            <td>${((file.fileSize / 1024.0) / 1024.0).toFixed(2)} MiB</td>
-            <td>${((file.bytesTransferred / file.fileSize) * 100.0).toFixed(2)}%</td>
-            <td>
-              <a if.bind="file.complete" download="${file.fileName}" href="${file.localUrl}">Save</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div if.bind="uploading">
+      Uploading file to partner<br/>
+      ${reader.pos} / ${reader.fileSize}
     </div>
+  </div>
+
+  <div if.bind="!isUploader" class="download-box">
+    <template if.bind="downloader.queue.length === 0">
+      Please wait..
+    </template>
+    <template if.bind="downloader.queue.length > 0">
+      Receiving "${downloader.queue[0].fileName}"<br/>
+      Size: ${downloader.queue[0].fileSize}<br/>
+
+      <a if.bind="downloader.queue[0].localUrl" href.bind="downloader.queue[0].localUrl">Save this file</a>
+    </template>
   </div>
 </template>

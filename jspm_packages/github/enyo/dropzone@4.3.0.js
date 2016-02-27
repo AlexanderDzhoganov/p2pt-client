@@ -1,0 +1,1 @@
+module.exports = require("github:enyo/dropzone@4.3.0/dropzone");
