@@ -57,7 +57,15 @@ export class Index {
     this.socket.on('set-token-ok', token => {
       this.token = token
 
-      this.p2p = new p2p(this.socket)
+      this.p2p = new p2p(this.socket, {
+        peerOpts: {
+          config: {
+            iceServers: [
+              { url: 'stun:stun.stunprotocol.org' }
+            ]
+          }
+        }
+      })
 
       this.p2p.on('ready', function() {
         this.p2p.usePeerConnection = true
