@@ -169,4 +169,5 @@ export class Index {
     location.reload()
   }
 
+
 }

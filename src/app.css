@@ -139,8 +139,46 @@ a {
 }
 
 .faq {
-    width: 100%;
-    text-align: center;
+    width: 600px;
+    height: 234px;
+    text-align: left;
+    margin: 30px auto 0;
+    font-size: 15px;
+}
+
+.faq .list-item .title {
+    font-weight: bold;
+    color: #0b97c4;
+    font-size: 15px;
+    margin: 0;
+    margin-top: 8px;
+    cursor: pointer;
+}
+
+.faq .list-item .title:hover {
+    color: #0f7595;
+}
+
+.faq .list-item .title i {
+    font-size: 15px;
+}
+
+.faq .list-item .content {
+    padding: 0 23px;
+    height: auto;
+    max-height: 0px;
+    overflow: hidden;
+    transition: max-height 650ms ease;
+    -webkit-transition: max-height 650ms ease;
+}
+
+.faq .list-item .content.show {
+    max-height: 250px;
+}
+
+.faq .list-item .content .inner-content {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .token-link {
