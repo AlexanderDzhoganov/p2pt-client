@@ -25,9 +25,10 @@
                 <h3>
                     Give this url to the receiving party:
                     <br />
-                    <a href="${serverUrl}/${token}" target="_blank">${serverUrl}/${token}</a>
+                    <a href="${serverUrl}/${token}" target="_blank" class="token-link">${serverUrl}/${token}</a>
+                    <br/>
+                    and don't close this tab until the transfer is complete
                 </h3>
-                <h4>Don't close this tab until the transfer is complete</h4>
             </div>
 
             <div if.bind="uploading && !uploadComplete">
@@ -71,12 +72,12 @@
                    href.bind="downloader.queue[0].localUrl">Save file</a></h2>
         </template>
     </div>
-
+    
     <div class="clearfix"></div>
 
     <footer class="footer">
       <span class="pull-right" style="margin: 4px;">
-        <a href="https://github.com/bitfly/" class="flink"><i class="fa fa-github fa-3x"></i></a>
+        <a href="https://github.com/bitfly-p2p/" class="flink"><i class="fa fa-github fa-3x"></i></a>
       </span>
     </footer>
 </template>
