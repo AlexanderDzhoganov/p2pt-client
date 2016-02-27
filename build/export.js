@@ -6,6 +6,7 @@ module.exports = {
     "LICENSE",
     "dist/**/*",
     "images/**",
+    "fonts/**",
     "jspm_packages/system.js",
     "jspm_packages/system-polyfills.js",
     "jspm_packages/system-csp-production.js",
