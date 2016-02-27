@@ -39,7 +39,6 @@ System.config({
     "json3": "npm:json3@3.3.2",
     "lodash": "npm:lodash@4.5.1",
     "mimetype": "npm:mimetype@0.0.8",
-    "simple-peer": "npm:simple-peer@6.0.1",
     "socket.io-client": "npm:socket.io-client@1.4.5",
     "socket.io-p2p": "npm:socket.io-p2p@2.2.0",
     "text": "github:systemjs/plugin-text@0.0.3",
@@ -545,12 +544,13 @@ System.config({
       "inherits": "npm:inherits@2.0.1",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
-    "npm:simple-peer@6.0.1": {
+    "npm:simple-peer@5.11.9": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "debug": "npm:debug@2.2.0",
       "get-browser-rtc": "npm:get-browser-rtc@1.0.2",
       "hat": "npm:hat@0.0.3",
       "inherits": "npm:inherits@2.0.1",
+      "is-typedarray": "npm:is-typedarray@1.0.0",
       "once": "npm:once@1.3.3",
       "process": "github:jspm/nodelibs-process@0.1.2",
       "stream": "github:jspm/nodelibs-stream@0.1.0"
@@ -579,7 +579,7 @@ System.config({
       "has-binary": "npm:has-binary@0.1.7",
       "hat": "npm:hat@0.0.3",
       "process": "github:jspm/nodelibs-process@0.1.2",
-      "simple-peer": "npm:simple-peer@6.0.1",
+      "simple-peer": "npm:simple-peer@5.11.9",
       "socket.io-p2p-parser": "github:tomcartwrightuk/socket.io-p2p-parser@master",
       "stream": "github:jspm/nodelibs-stream@0.1.0",
       "string_decoder": "github:jspm/nodelibs-string_decoder@0.1.0",

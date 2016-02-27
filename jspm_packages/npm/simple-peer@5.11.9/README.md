@@ -237,6 +237,9 @@ Send text/binary data to the remote peer. `data` can be any of several types: `S
 `Buffer` (see [buffer](https://github.com/feross/buffer)), `TypedArrayView` (`Uint8Array`,
 etc.), `ArrayBuffer`, or `Blob` (in browsers that support it).
 
+Other data types will be transformed with `JSON.stringify` before sending. This is handy
+for sending object literals across like this: `peer.send({ type: 'data', data: 'hi' })`.
+
 Note: If this method is called before the `peer.on('connect')` event has fired, then data
 will be buffered.
 
@@ -293,8 +296,7 @@ Fired when the peer connection and data channel are ready to use.
 
 ### `peer.on('data', function (data) {})`
 
-Received a message from the remote peer (via the data channel). JSON strings will be
-parsed and the resulting `Object` emitted.
+Received a message from the remote peer (via the data channel).
 
 `data` will be either a `String` or a `Buffer/Uint8Array` (see [buffer](https://github.com/feross/buffer)).
 

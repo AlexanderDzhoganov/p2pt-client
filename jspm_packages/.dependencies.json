@@ -577,6 +577,18 @@
   },
   "github:rase-/node-XMLHttpRequest@add%2Fssl-support": {},
   "github:component/global@2.0.1": {},
+  "npm:jquery@2.2.1": {},
+  "npm:lodash@4.5.1": {
+    "buffer": "github:jspm/nodelibs-buffer@^0.1.0",
+    "process": "github:jspm/nodelibs-process@^0.1.0"
+  },
+  "npm:mimetype@0.0.8": {
+    "path": "github:jspm/nodelibs-path@^0.1.0"
+  },
+  "github:enyo/dropzone@4.3.0": {},
+  "npm:bn.js@4.10.4": {
+    "buffer": "github:jspm/nodelibs-buffer@^0.1.0"
+  },
   "npm:socket.io-p2p@2.2.0": {
     "component-bind": "npm:component-bind@^1.0.0",
     "component-emitter": "npm:component-emitter@^1.2.0",
@@ -596,7 +608,6 @@
     "string_decoder": "github:jspm/nodelibs-string_decoder@^0.1.0"
   },
   "npm:extend.js@0.0.1": {},
-  "npm:webrtcsupport@2.2.0": {},
   "npm:simple-peer@5.11.9": {
     "debug": "npm:debug@^2.1.0",
     "get-browser-rtc": "npm:get-browser-rtc@^1.0.0",
@@ -608,34 +619,13 @@
     "process": "github:jspm/nodelibs-process@^0.1.0",
     "stream": "github:jspm/nodelibs-stream@^0.1.0"
   },
-  "npm:hat@0.0.3": {},
   "npm:once@1.3.3": {
     "wrappy": "npm:wrappy@^1.0.0"
   },
-  "github:tomcartwrightuk/socket.io-p2p-parser@master": {},
   "npm:is-typedarray@1.0.0": {},
   "npm:wrappy@1.0.1": {},
   "npm:get-browser-rtc@1.0.2": {},
-  "npm:jquery@2.2.1": {},
-  "npm:lodash@4.5.1": {
-    "buffer": "github:jspm/nodelibs-buffer@^0.1.0",
-    "process": "github:jspm/nodelibs-process@^0.1.0"
-  },
-  "npm:mimetype@0.0.8": {
-    "path": "github:jspm/nodelibs-path@^0.1.0"
-  },
-  "github:enyo/dropzone@4.3.0": {},
-  "npm:simple-peer@6.0.1": {
-    "debug": "npm:debug@^2.1.0",
-    "get-browser-rtc": "npm:get-browser-rtc@^1.0.0",
-    "hat": "npm:hat@0.0.3",
-    "inherits": "npm:inherits@^2.0.1",
-    "once": "npm:once@^1.3.1",
-    "stream": "github:jspm/nodelibs-stream@^0.1.0",
-    "buffer": "github:jspm/nodelibs-buffer@^0.1.0",
-    "process": "github:jspm/nodelibs-process@^0.1.0"
-  },
-  "npm:bn.js@4.10.4": {
-    "buffer": "github:jspm/nodelibs-buffer@^0.1.0"
-  }
+  "npm:hat@0.0.3": {},
+  "npm:webrtcsupport@2.2.0": {},
+  "github:tomcartwrightuk/socket.io-p2p-parser@master": {}
 }

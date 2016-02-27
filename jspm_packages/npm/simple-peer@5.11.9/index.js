@@ -5,6 +5,7 @@
   var getBrowserRTC = require('get-browser-rtc');
   var hat = require('hat');
   var inherits = require('inherits');
+  var isTypedArray = require('is-typedarray');
   var once = require('once');
   var stream = require('stream');
   inherits(Peer, stream.Duplex);
@@ -90,8 +91,8 @@
   }
   Peer.WEBRTC_SUPPORT = !!getBrowserRTC();
   Peer.config = {iceServers: [{
-      url: 'stun:stun.stunprotocol.org',
-      urls: 'stun:stun.stunprotocol.org'
+      url: 'stun:23.21.150.121',
+      urls: 'stun:23.21.150.121'
     }]};
   Peer.constraints = {};
   Peer.channelConfig = {};
@@ -148,6 +149,9 @@
   };
   Peer.prototype.send = function(chunk) {
     var self = this;
+    if (!isTypedArray.strict(chunk) && !(chunk instanceof ArrayBuffer) && !Buffer.isBuffer(chunk) && typeof chunk !== 'string' && (typeof Blob === 'undefined' || !(chunk instanceof Blob))) {
+      chunk = JSON.stringify(chunk);
+    }
     if (Buffer.isBuffer(chunk) && self._isWrtc) {
       chunk = new Uint8Array(chunk);
     }
@@ -309,17 +313,21 @@
       self._destroy();
     }
   };
-  Peer.prototype.getStats = function(cb) {
+  Peer.prototype._maybeReady = function() {
     var self = this;
+    self._debug('maybeReady pc %s channel %s', self._pcReady, self._channelReady);
+    if (self.connected || self._connecting || !self._pcReady || !self._channelReady)
+      return;
+    self._connecting = true;
     if (!self._pc.getStats) {
-      cb([]);
+      onStats([]);
     } else if (typeof window !== 'undefined' && !!window.mozRTCPeerConnection) {
       self._pc.getStats(null, function(res) {
         var items = [];
         res.forEach(function(item) {
           items.push(item);
         });
-        cb(items);
+        onStats(items);
       }, self._onError.bind(self));
     } else {
       self._pc.getStats(function(res) {
@@ -334,56 +342,24 @@
           item.timestamp = result.timestamp;
           items.push(item);
         });
-        cb(items);
+        onStats(items);
       });
     }
-  };
-  Peer.prototype._maybeReady = function() {
-    var self = this;
-    self._debug('maybeReady pc %s channel %s', self._pcReady, self._channelReady);
-    if (self.connected || self._connecting || !self._pcReady || !self._channelReady)
-      return;
-    self._connecting = true;
-    self.getStats(function(items) {
+    function onStats(items) {
+      items.forEach(function(item) {
+        if (item.type === 'remotecandidate' && item.candidateType === 'host') {
+          self.remoteAddress = item.ipAddress;
+          self.remotePort = Number(item.portNumber);
+          self.remoteFamily = 'IPv4';
+          self._debug('connect remote: %s:%s (%s)', self.remoteAddress, self.remotePort, self.remoteFamily);
+        } else if (item.type === 'localcandidate' && item.candidateType === 'host') {
+          self.localAddress = item.ipAddress;
+          self.localPort = Number(item.portNumber);
+          self._debug('connect local: %s:%s', self.localAddress, self.localPort);
+        }
+      });
       self._connecting = false;
       self.connected = true;
-      var remoteCandidates = {};
-      var localCandidates = {};
-      function setActiveCandidates(item) {
-        var local = localCandidates[item.localCandidateId];
-        var remote = remoteCandidates[item.remoteCandidateId];
-        if (local) {
-          self.localAddress = local.ipAddress;
-          self.localPort = Number(local.portNumber);
-        } else if (typeof item.googLocalAddress === 'string') {
-          local = item.googLocalAddress.split(':');
-          self.localAddress = local[0];
-          self.localPort = Number(local[1]);
-        }
-        self._debug('connect local: %s:%s', self.localAddress, self.localPort);
-        if (remote) {
-          self.remoteAddress = remote.ipAddress;
-          self.remotePort = Number(remote.portNumber);
-          self.remoteFamily = 'IPv4';
-        } else if (typeof item.googRemoteAddress === 'string') {
-          remote = item.googRemoteAddress.split(':');
-          self.remoteAddress = remote[0];
-          self.remotePort = Number(remote[1]);
-          self.remoteFamily = 'IPv4';
-        }
-        self._debug('connect remote: %s:%s', self.remoteAddress, self.remotePort);
-      }
-      items.forEach(function(item) {
-        if (item.type === 'remotecandidate')
-          remoteCandidates[item.id] = item;
-        if (item.type === 'localcandidate')
-          localCandidates[item.id] = item;
-      });
-      items.forEach(function(item) {
-        var isCandidatePair = ((item.type === 'googCandidatePair' && item.googActiveConnection === 'true') || (item.type === 'candidatepair' && item.selected));
-        if (isCandidatePair)
-          setActiveCandidates(item);
-      });
       if (self._chunk) {
         try {
           self.send(self._chunk);
@@ -408,7 +384,7 @@
         self._interval.unref();
       self._debug('connect');
       self.emit('connect');
-    });
+    }
   };
   Peer.prototype._onSignalingStateChange = function() {
     var self = this;
@@ -438,9 +414,15 @@
       return;
     var data = event.data;
     self._debug('read: %d bytes', data.byteLength || data.length);
-    if (data instanceof ArrayBuffer)
+    if (data instanceof ArrayBuffer) {
       data = new Buffer(data);
-    self.push(data);
+      self.push(data);
+    } else {
+      try {
+        data = JSON.parse(data);
+      } catch (err) {}
+      self.emit('data', data);
+    }
   };
   Peer.prototype._onChannelOpen = function() {
     var self = this;

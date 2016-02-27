@@ -44,10 +44,10 @@ test('disable trickle', function(t) {
     t.equal(peer2.initiator, false, 'peer2 is not initiator');
     peer1.send('sup peer2');
     peer2.on('data', function(data) {
-      t.equal(data.toString(), 'sup peer2', 'got correct message');
+      t.equal(data, 'sup peer2', 'got correct message');
       peer2.send('sup peer1');
       peer1.on('data', function(data) {
-        t.equal(data.toString(), 'sup peer1', 'got correct message');
+        t.equal(data, 'sup peer1', 'got correct message');
         function tryDone() {
           if (!peer1.connected && !peer2.connected) {
             t.pass('both peers closed');
@@ -92,10 +92,10 @@ test('disable trickle (only initiator)', function(t) {
     t.equal(peer2.initiator, false, 'peer2 is not initiator');
     peer1.send('sup peer2');
     peer2.on('data', function(data) {
-      t.equal(data.toString(), 'sup peer2', 'got correct message');
+      t.equal(data, 'sup peer2', 'got correct message');
       peer2.send('sup peer1');
       peer1.on('data', function(data) {
-        t.equal(data.toString(), 'sup peer1', 'got correct message');
+        t.equal(data, 'sup peer1', 'got correct message');
         function tryDone() {
           if (!peer1.connected && !peer2.connected) {
             t.pass('both peers closed');
@@ -140,10 +140,10 @@ test('disable trickle (only receiver)', function(t) {
     t.equal(peer2.initiator, false, 'peer2 is not initiator');
     peer1.send('sup peer2');
     peer2.on('data', function(data) {
-      t.equal(data.toString(), 'sup peer2', 'got correct message');
+      t.equal(data, 'sup peer2', 'got correct message');
       peer2.send('sup peer1');
       peer1.on('data', function(data) {
-        t.equal(data.toString(), 'sup peer1', 'got correct message');
+        t.equal(data, 'sup peer1', 'got correct message');
         function tryDone() {
           if (!peer1.connected && !peer2.connected) {
             t.pass('both peers closed');
