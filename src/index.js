@@ -2,7 +2,9 @@ import p2p from 'socket.io-p2p'
 import io from 'socket.io-client'
 
 import lodash from 'lodash'
-import mimetype from 'mimetype'
+
+import filereader from './filereader'
+import downloader from './downloader'
 
 export class Index {
 
@@ -15,11 +17,11 @@ export class Index {
   files = null
   uploading = false
 
-  chunkSize = 16384
-  currentPosition = 0
-  fileSize = 0
+  downloader = null
 
-  downloadQueue = []
+  constructor() {
+    this.downloader = new downloader()
+  }
 
   activate(params) {
     if(params.token) {
@@ -41,7 +43,7 @@ export class Index {
       console.log('connection upgraded to webrtc')
       this.connectedToPeer = true
 
-      if (this.file) {
+      if (this.files && this.files[0]) {
         this.startUpload()
       }
     }.bind(this))
@@ -52,36 +54,12 @@ export class Index {
     }.bind(this))
 
     this.p2p.on('data', packet => {
-      var download = _.find(this.downloadQueue, dl => dl.fileName == packet.fileName)
-      if(!download) {
-        this.downloadQueue.push({
-          fileName: packet.fileName,
-          fileSize: packet.fileSize,
-          chunks: [packet.data],
-          bytesTransferred: packet.size,
-          complete: packet.size >= packet.fileSize
-        })
-        download = this.downloadQueue[this.downloadQueue.length - 1]
-      } else {
-        download.chunks.push(packet.data)
-        download.bytesTransferred += packet.size
-        download.fileSize = packet.fileSize
-
-        if (download.bytesTransferred >= download.fileSize) {
-          download.complete = true
-        }
-      }
-
-      if (download.complete) {
-        var blob = new Blob(download.chunks, { type: mimetype.lookup(download.fileName) })
-        download.localUrl = window.URL.createObjectURL(blob)
-        console.log('URL: ' + download.localUrl)
-      }
+      this.downloader.addChunk(packet.fileName, packet.fileSize, packet.data)
     }.bind(this))
 
     this.socket.on('connect', () => {
       this.connected = true
-      this.processToken()
+      this.socket.emit('set-token', this.token)
     }.bind(this))
 
     this.socket.on('error', err => {
@@ -95,56 +73,29 @@ export class Index {
     }.bind(this))
   }
 
-  processToken() {
-    if(!this.token) {
-      return
-    }
-
-    this.socket.emit('set-token', this.token)
-  }
-
   startUpload() {
     if(!this.files || !this.connectedToPeer) {
       return
     }
 
     this.uploading = true
-
-    this.reader = new FileReader()
-    this.reader.onload = function(e) {
-      this.onChunkLoaded(e)
-    }.bind(this)
-
-    this.loadNextChunk()
-  }
-
-  onChunkLoaded(event) {
-    this.fileSize = this.files[0].size
-
-    var data = this.reader.result
+    
     var fileName = this.fileName.split('\\').pop()
 
-    console.log('"' + fileName + '" sending chunk @ ' + this.currentPosition + ':' + data.byteLength)
+    this.reader = new filereader(this.files[0])
+    this.reader.readFile(function(data, complete) {
+      this.p2p.emit('data', {
+        fileName: fileName,
+        fileSize: this.reader.fileSize,
+        position: this.reader.pos,
+        size: data.byteLength,
+        data: data
+      })
 
-    this.p2p.emit('data', {
-      fileName: fileName,
-      fileSize: this.fileSize,
-      position: this.currentPosition,
-      size: data.byteLength,
-      data: data
-    })
-
-    this.currentPosition += data.byteLength
-    if (this.currentPosition < this.fileSize) {
-      this.loadNextChunk()
-    } else {
-      this.uploading = false
-    }
-  }
-
-  loadNextChunk() {
-    this.reader.readAsArrayBuffer(this.files[0].slice(this.currentPosition, 
-      this.currentPosition + this.chunkSize));
+      if(complete) {
+        this.uploading = false
+      }
+    }.bind(this))
   }
 
   askToken() {
