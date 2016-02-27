@@ -1,5 +1,5 @@
 export default class Config {
-    serverUrl = 'http://localhost:9000/#'
+    serverUrl = 'http://localhost'
     apiUrl = 'http://localhost:3000'
-    usePushState = false
+    usePushState = true
 }

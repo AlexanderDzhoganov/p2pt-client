@@ -4,7 +4,7 @@ export class App {
   configureRouter(config, router) {
     config.title = 'P2PT'
 
-    if(Config.usePushState) {
+    if(new Config().usePushState) {
         config.options.pushState = true
     }
     
