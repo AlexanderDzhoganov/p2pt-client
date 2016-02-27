@@ -26,7 +26,9 @@
       Size: ${downloader.queue[0].fileSize}<br/>
       Downloaded: ${downloader.queue[0].bytesTransferred}<br/>
 
-      <a if.bind="downloader.queue[0].localUrl" href.bind="downloader.queue[0].localUrl">Save this file</a>
+      <a if.bind="downloader.queue[0].localUrl"
+        download.bind="downloader.queue[0].fileName"
+        href.bind="downloader.queue[0].localUrl">Save this file</a>
     </template>
   </div>
 </template>
