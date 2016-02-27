@@ -160,4 +160,8 @@ export class Index {
     }.bind(this))
   }
 
+  reload() {
+    location.reload()
+  }
+
 }
