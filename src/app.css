@@ -40,6 +40,8 @@ a {
 .header .logo {
     font-size: 24px;
     float: right;
+    position: relative;
+    top: -2px;
 }
 
 .header .info {
@@ -96,6 +98,8 @@ a {
     text-align: center;
     font-size: 24px;
     pointer-events: none;
+    position: relative;
+    top: 22px;
 }
 
 .download-box {
