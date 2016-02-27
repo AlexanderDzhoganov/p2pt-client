@@ -1,3 +1,6 @@
+import {inject} from 'aurelia-framework'
+import {Router} from 'aurelia-router'
+
 import p2p from 'socket.io-p2p'
 import io from 'socket.io-client'
 
@@ -8,9 +11,10 @@ import Dropzone from 'dropzone'
 import filereader from './filereader'
 import downloader from './downloader'
 
-export class Index {
+import Config from './config'
 
-  serverUrl = 'http://localhost'
+@inject(Router)
+export class Index {
 
   isUploader = true
   connectedToPeer = false
@@ -24,10 +28,13 @@ export class Index {
 
   downloader = null
 
-  constructor() {
+  constructor(router) {
+    this.router = router
     Dropzone.autoDiscover = false
     Dropzone.autoProcessQueue = false
     this.downloader = new downloader()
+    this.config = new Config()
+    this.serverUrl = this.config.serverUrl
   }
 
   activate(params) {
@@ -42,7 +49,7 @@ export class Index {
       this.initDropzone()
     }
 
-    this.socket = io(this.serverUrl + ':3000')
+    this.socket = io(this.config.apiUrl)
   
     this.socket.on('connect', () => {
       if(this.token) {
@@ -52,6 +59,11 @@ export class Index {
 
     this.socket.on('error', err => {
       console.error(err)
+    }.bind(this))
+
+    this.socket.on('set-token-invalid', () => {
+      this.router.navigate('/')
+      location.reload()
     }.bind(this))
 
     this.socket.on('set-token-ok', token => {
