@@ -12,7 +12,6 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
-
   map: {
     "aurelia-animator-css": "npm:aurelia-animator-css@1.0.0-beta.1.1.1",
     "aurelia-bootstrapper": "npm:aurelia-bootstrapper@1.0.0-beta.1.1.2",
@@ -30,6 +29,7 @@ System.config({
     "bootstrap": "github:twbs/bootstrap@3.3.6",
     "component-emitter": "npm:component-emitter@1.2.0",
     "core-js": "npm:core-js@1.2.6",
+    "css": "github:systemjs/plugin-css@0.1.20",
     "debug": "npm:debug@2.2.0",
     "dropzone": "github:enyo/dropzone@4.3.0",
     "fetch": "github:github/fetch@0.10.1",
@@ -41,7 +41,7 @@ System.config({
     "mimetype": "npm:mimetype@0.0.8",
     "socket.io-client": "npm:socket.io-client@1.4.5",
     "socket.io-p2p": "npm:socket.io-p2p@2.2.0",
-    "text": "github:systemjs/plugin-text@0.0.3",
+    "text": "github:systemjs/plugin-text@0.0.7",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
     },

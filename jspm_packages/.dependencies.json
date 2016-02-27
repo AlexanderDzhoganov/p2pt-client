@@ -12,7 +12,6 @@
     "process": "github:jspm/nodelibs-process@^0.1.0"
   },
   "npm:babel-core@5.8.35": {},
-  "github:systemjs/plugin-text@0.0.3": {},
   "github:systemjs/plugin-css@0.1.20": {},
   "github:github/fetch@0.10.1": {},
   "npm:process@0.11.2": {
@@ -627,5 +626,6 @@
   "npm:get-browser-rtc@1.0.2": {},
   "npm:hat@0.0.3": {},
   "npm:webrtcsupport@2.2.0": {},
-  "github:tomcartwrightuk/socket.io-p2p-parser@master": {}
+  "github:tomcartwrightuk/socket.io-p2p-parser@master": {},
+  "github:systemjs/plugin-text@0.0.7": {}
 }
