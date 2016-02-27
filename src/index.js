@@ -127,7 +127,6 @@ export class Index {
           view.fileAdded(file)
         }.bind(this),
         thumbnail: (file, dataUrl) => {
-          this.previewImage = dataUrl
         }.bind(this),
         uploadprogress: () => {},
         autoProcessQueue: false
