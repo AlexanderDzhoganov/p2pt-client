@@ -193,7 +193,6 @@
     "fs": "github:jspm/nodelibs-fs@^0.1.0",
     "buffer": "github:jspm/nodelibs-buffer@^0.1.0"
   },
-  "npm:extend.js@0.0.1": {},
   "npm:component-bind@1.0.0": {},
   "npm:debug@2.2.0": {
     "ms": "npm:ms@0.7.1",
@@ -205,25 +204,7 @@
   },
   "npm:component-emitter@1.2.0": {},
   "npm:isarray@0.0.1": {},
-  "npm:hat@0.0.3": {},
   "npm:ms@0.7.1": {},
-  "npm:simple-peer@5.11.9": {
-    "debug": "npm:debug@^2.1.0",
-    "get-browser-rtc": "npm:get-browser-rtc@^1.0.0",
-    "hat": "npm:hat@0.0.3",
-    "inherits": "npm:inherits@^2.0.1",
-    "is-typedarray": "npm:is-typedarray@^1.0.0",
-    "once": "npm:once@^1.3.1",
-    "buffer": "github:jspm/nodelibs-buffer@^0.1.0",
-    "process": "github:jspm/nodelibs-process@^0.1.0",
-    "stream": "github:jspm/nodelibs-stream@^0.1.0"
-  },
-  "npm:is-typedarray@1.0.0": {},
-  "npm:get-browser-rtc@1.0.2": {},
-  "npm:once@1.3.3": {
-    "wrappy": "npm:wrappy@^1.0.0"
-  },
-  "npm:wrappy@1.0.1": {},
   "npm:isarray@1.0.0": {},
   "npm:buffer@3.6.0": {
     "base64-js": "npm:base64-js@0.0.8",
@@ -234,7 +215,6 @@
     "process": "github:jspm/nodelibs-process@^0.1.0"
   },
   "npm:ieee754@1.1.6": {},
-  "github:tomcartwrightuk/socket.io-p2p-parser@master": {},
   "npm:base64-js@0.0.8": {},
   "npm:tty-browserify@0.0.0": {},
   "github:jspm/nodelibs-buffer@0.1.0": {
@@ -270,24 +250,6 @@
     "process": "github:jspm/nodelibs-process@^0.1.0",
     "buffer": "github:jspm/nodelibs-buffer@^0.1.0",
     "events": "github:jspm/nodelibs-events@^0.1.1"
-  },
-  "npm:socket.io-p2p@2.2.0": {
-    "component-bind": "npm:component-bind@^1.0.0",
-    "component-emitter": "npm:component-emitter@^1.2.0",
-    "debug": "npm:debug@^2.1.0",
-    "extend.js": "npm:extend.js@0.0.1",
-    "has-binary": "npm:has-binary@^0.1.5",
-    "hat": "npm:hat@0.0.3",
-    "simple-peer": "npm:simple-peer@~5.11.0",
-    "socket.io-p2p-parser": "github:tomcartwrightuk/socket.io-p2p-parser",
-    "to-array": "npm:to-array@^0.1.4",
-    "webrtcsupport": "npm:webrtcsupport@^2.1.2",
-    "buffer": "github:jspm/nodelibs-buffer@^0.1.0",
-    "process": "github:jspm/nodelibs-process@^0.1.0",
-    "events": "github:jspm/nodelibs-events@^0.1.1",
-    "stream": "github:jspm/nodelibs-stream@^0.1.0",
-    "util": "github:jspm/nodelibs-util@^0.1.0",
-    "string_decoder": "github:jspm/nodelibs-string_decoder@^0.1.0"
   },
   "npm:to-array@0.1.4": {},
   "npm:string_decoder@0.10.31": {
@@ -429,7 +391,6 @@
     "crypto": "github:jspm/nodelibs-crypto@^0.1.0",
     "fs": "github:jspm/nodelibs-fs@^0.1.0"
   },
-  "npm:webrtcsupport@2.2.0": {},
   "npm:buffer-xor@1.0.3": {
     "buffer": "github:jspm/nodelibs-buffer@^0.1.0",
     "systemjs-json": "github:systemjs/plugin-json@^0.1.0"
@@ -618,5 +579,52 @@
     "systemjs-json": "github:systemjs/plugin-json@^0.1.0"
   },
   "github:rase-/node-XMLHttpRequest@add%2Fssl-support": {},
-  "github:component/global@2.0.1": {}
+  "github:component/global@2.0.1": {},
+  "npm:socket.io-p2p@2.2.0": {
+    "component-bind": "npm:component-bind@^1.0.0",
+    "component-emitter": "npm:component-emitter@^1.2.0",
+    "debug": "npm:debug@^2.1.0",
+    "extend.js": "npm:extend.js@0.0.1",
+    "has-binary": "npm:has-binary@^0.1.5",
+    "hat": "npm:hat@0.0.3",
+    "simple-peer": "npm:simple-peer@~5.11.0",
+    "socket.io-p2p-parser": "github:tomcartwrightuk/socket.io-p2p-parser",
+    "to-array": "npm:to-array@^0.1.4",
+    "webrtcsupport": "npm:webrtcsupport@^2.1.2",
+    "buffer": "github:jspm/nodelibs-buffer@^0.1.0",
+    "process": "github:jspm/nodelibs-process@^0.1.0",
+    "events": "github:jspm/nodelibs-events@^0.1.1",
+    "stream": "github:jspm/nodelibs-stream@^0.1.0",
+    "util": "github:jspm/nodelibs-util@^0.1.0",
+    "string_decoder": "github:jspm/nodelibs-string_decoder@^0.1.0"
+  },
+  "npm:extend.js@0.0.1": {},
+  "npm:webrtcsupport@2.2.0": {},
+  "npm:simple-peer@5.11.9": {
+    "debug": "npm:debug@^2.1.0",
+    "get-browser-rtc": "npm:get-browser-rtc@^1.0.0",
+    "hat": "npm:hat@0.0.3",
+    "inherits": "npm:inherits@^2.0.1",
+    "is-typedarray": "npm:is-typedarray@^1.0.0",
+    "once": "npm:once@^1.3.1",
+    "buffer": "github:jspm/nodelibs-buffer@^0.1.0",
+    "process": "github:jspm/nodelibs-process@^0.1.0",
+    "stream": "github:jspm/nodelibs-stream@^0.1.0"
+  },
+  "npm:hat@0.0.3": {},
+  "npm:once@1.3.3": {
+    "wrappy": "npm:wrappy@^1.0.0"
+  },
+  "github:tomcartwrightuk/socket.io-p2p-parser@master": {},
+  "npm:is-typedarray@1.0.0": {},
+  "npm:wrappy@1.0.1": {},
+  "npm:get-browser-rtc@1.0.2": {},
+  "npm:jquery@2.2.1": {},
+  "npm:lodash@4.5.1": {
+    "buffer": "github:jspm/nodelibs-buffer@^0.1.0",
+    "process": "github:jspm/nodelibs-process@^0.1.0"
+  },
+  "npm:mimetype@0.0.8": {
+    "path": "github:jspm/nodelibs-path@^0.1.0"
+  }
 }

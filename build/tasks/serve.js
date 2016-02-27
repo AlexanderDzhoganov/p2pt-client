@@ -9,6 +9,11 @@ gulp.task('serve', ['build'], function(done) {
     online: false,
     open: false,
     port: 9000,
+    ui: false,
+    ghostMode: false,
+    reloadOnRestart: false,
+    injectChanges: false,
+    codeSync: false,
     server: {
       baseDir: ['.'],
       middleware: function(req, res, next) {

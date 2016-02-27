@@ -28,9 +28,16 @@ System.config({
     "babel": "npm:babel-core@5.8.35",
     "babel-runtime": "npm:babel-runtime@5.8.35",
     "bootstrap": "github:twbs/bootstrap@3.3.6",
+    "component-emitter": "npm:component-emitter@1.2.0",
     "core-js": "npm:core-js@1.2.6",
+    "debug": "npm:debug@2.2.0",
     "fetch": "github:github/fetch@0.10.1",
     "font-awesome": "npm:font-awesome@4.5.0",
+    "isarray": "npm:isarray@1.0.0",
+    "jquery": "npm:jquery@2.2.1",
+    "json3": "npm:json3@3.3.2",
+    "lodash": "npm:lodash@4.5.1",
+    "mimetype": "npm:mimetype@0.0.8",
     "socket.io-client": "npm:socket.io-client@1.4.5",
     "socket.io-p2p": "npm:socket.io-p2p@2.2.0",
     "text": "github:systemjs/plugin-text@0.0.3",
@@ -452,9 +459,16 @@ System.config({
     "npm:inherits@2.0.1": {
       "util": "github:jspm/nodelibs-util@0.1.0"
     },
+    "npm:lodash@4.5.1": {
+      "buffer": "github:jspm/nodelibs-buffer@0.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
     "npm:miller-rabin@4.0.0": {
       "bn.js": "npm:bn.js@4.10.3",
       "brorand": "npm:brorand@1.0.5"
+    },
+    "npm:mimetype@0.0.8": {
+      "path": "github:jspm/nodelibs-path@0.1.0"
     },
     "npm:once@1.3.3": {
       "wrappy": "npm:wrappy@1.0.1"

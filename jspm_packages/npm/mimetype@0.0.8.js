@@ -1,0 +1,1 @@
+module.exports = require("npm:mimetype@0.0.8/mimetype");
