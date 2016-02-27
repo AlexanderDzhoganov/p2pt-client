@@ -20,7 +20,6 @@ module.exports = {
         "dropzone",
         "dropzone/min/dropzone.min.css!text",
         "jspm/nodelibs-path",
-        "jquery",
         "lodash",
         "mimetype",
         "font-awesome/css/font-awesome.min.css!text",
