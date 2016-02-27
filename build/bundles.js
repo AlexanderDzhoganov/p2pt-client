@@ -11,15 +11,12 @@ module.exports = {
         "aurelia-bootstrapper",
         "aurelia-fetch-client",
         "aurelia-router",
-        "aurelia-animator-css",
         "aurelia-templating-binding",
         "aurelia-templating-resources",
         "aurelia-templating-router",
         "aurelia-loader-default",
         "aurelia-history-browser",
         "aurelia-logging-console",
-        "bootstrap",
-        "bootstrap/css/bootstrap.css!text",
         "dropzone",
         "dropzone/min/dropzone.min.css!text",
         "jspm/nodelibs-path",
@@ -31,7 +28,7 @@ module.exports = {
       ],
       "options": {
         "inject": true,
-        "minify": false,
+        "minify": true,
         "rev": true
       }
     }
