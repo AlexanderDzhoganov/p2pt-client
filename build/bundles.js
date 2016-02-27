@@ -17,8 +17,6 @@ module.exports = {
         "aurelia-loader-default",
         "aurelia-history-browser",
         "aurelia-logging-console",
-        "bootstrap",
-        "bootstrap/css/bootstrap.css!text",
         "dropzone",
         "dropzone/min/dropzone.min.css!text",
         "jspm/nodelibs-path",

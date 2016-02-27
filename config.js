@@ -26,7 +26,6 @@ System.config({
     "aurelia-templating-router": "npm:aurelia-templating-router@1.0.0-beta.1.1.1",
     "babel": "npm:babel-core@5.8.35",
     "babel-runtime": "npm:babel-runtime@5.8.35",
-    "bootstrap": "github:twbs/bootstrap@3.3.6",
     "component-emitter": "npm:component-emitter@1.2.0",
     "core-js": "npm:core-js@1.2.6",
     "css": "github:systemjs/plugin-css@0.1.20",
@@ -101,9 +100,6 @@ System.config({
     },
     "github:jspm/nodelibs-vm@0.1.0": {
       "vm-browserify": "npm:vm-browserify@0.0.4"
-    },
-    "github:twbs/bootstrap@3.3.6": {
-      "jquery": "github:components/jquery@2.2.1"
     },
     "npm:asn1.js@4.5.0": {
       "assert": "github:jspm/nodelibs-assert@0.1.0",
