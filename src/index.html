@@ -1,93 +1,109 @@
 <template>
-    <div class="header">
-        <div class="logo">bit<span style="color: #346BC8;">f.ly</span></div>
-        <div class="info">No middleman, no cookies, no tracking. Single-click secure file transfer over <a
-                href="https://webrtc.org/">WebRTC</a>.
+    <section class="hero is-fullheight is-bold">
+        <div class="hero-header">
+            <header class="header">
+                <div class="header-left">
+                    <div class="header-item info">
+                        No middleman, no cookies, no tracking. Single-click secure file transfer over
+                        <a href="https://webrtc.org/" style="margin-left: 4px;">WebRTC</a>.
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="header-item logo">
+                        bit<span style="color: #346BC8;">f.ly</span>
+                    </div>
+                </div>
+            </header>
         </div>
-    </div>
 
-    <div class="container">
-        <div if.bind="isUploader">
-            <div if.bind="!file" id="dropzone" class="dropzone" ref="dropzoneRef">
-                <div class="dropzone-text">Drag and drop a file or click to browse</div>
+        <div class="hero-content">
+            <div class="container">
+                <div if.bind="isUploader" class="container">
+                    <div if.bind="!file" id="dropzone" class="dropzone" ref="dropzoneRef">
+                        <div class="dropzone-text">Drag and drop a file or click to browse</div>
 
-                <div class="fileicon"></div>
-            </div>
+                        <div class="fileicon"></div>
+                    </div>
 
-            <div if.bind="file && !token" class="upload-box">
-                <div><h2>Please wait</h2></div>
-            </div>
+                    <div if.bind="file && !token" class="upload-box">
+                        <div><h2>Please wait</h2></div>
+                    </div>
 
-            <div if.bind="file" class="upload-box">
-                <div><h2>Sending "${fileName}"</h2></div>
-                <div if.bind="previewImage">
-                    <img src.bind="previewImage">
-                </div>
+                    <div if.bind="file" class="upload-box">
+                        <div><h2>Sending "${fileName}"</h2></div>
+                        <div if.bind="previewImage">
+                            <img src.bind="previewImage">
+                        </div>
 
-                <div if.bind="token && !uploading">
-                    <h3>
-                        Give this url to the receiving party:
-                        <br/>
-                        <a href="${serverUrl}/${token}" target="_blank" class="token-link">${serverUrl}/${token}</a>
-                        <br/>
-                        and don't close this tab until the transfer is complete
-                    </h3>
-                </div>
+                        <div if.bind="token && !uploading">
+                            <h3>
+                                Give this url to the receiving party:
+                                <br/>
+                                <a href="${serverUrl}/${token}" target="_blank"
+                                   class="token-link">${serverUrl}/${token}</a>
+                                <br/>
+                                and don't close this tab until the transfer is complete
+                            </h3>
+                        </div>
 
-                <div if.bind="uploading && !uploadComplete">
-                    <h2>Transmitting..</h2>
+                        <div if.bind="uploading && !uploadComplete">
+                            <h2>Transmitting..</h2>
 
-                    <div class="progress progress-success">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="${reader.percentComplete}"
-                             aria-valuemin="0" aria-valuemax="100" style="width:${reader.percentComplete}%">
-                            <span class="sr-only">${reader.percentComplete}%</span>
+                            <div class="progress progress-success">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="${reader.percentComplete}"
+                                     aria-valuemin="0" aria-valuemax="100" style="width:${reader.percentComplete}%">
+                                    <span class="sr-only">${reader.percentComplete}%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div if.bind="uploading && uploadComplete">
+                            <h2>Your file has been sent successfully!</h2>
+                            <h4><a href="/">Send another</a></h4>
                         </div>
                     </div>
+
+                    <require from="faq"></require>
+                    <faq></faq>
                 </div>
-                <div if.bind="uploading && uploadComplete">
-                    <h2>Your file has been sent successfully!</h2>
-                    <h4><a href="/">Send another</a></h4>
+
+                <div if.bind="!isUploader" class="container">
+                    <template if.bind="downloader.queue.length === 0">
+                        <h2>Please wait..</h2>
+                    </template>
+                    <template if.bind="downloader.queue.length > 0">
+                        <h2>
+                            <template if.bind="!downloader.queue[0].localUrl">Receiving</template>
+                            <template if.bind="downloader.queue[0].localUrl">Received</template>
+                            "${downloader.queue[0].fileName}"
+                        </h2>
+                        <h3>Size: ${((downloader.queue[0].fileSize / 1024.0) / 1024.0).toFixed(2)} MiB</h3>
+
+                        <div if.bind="!downloader.queue[0].localUrl" class="progress progress-success">
+                            <div class="progress-bar" role="progressbar"
+                                 aria-valuenow="${downloader.queue[0].percentComplete}"
+                                 aria-valuemin="0" aria-valuemax="100"
+                                 style="width:${downloader.queue[0].percentComplete}%">
+                                <span class="sr-only">${downloader.queue[0].percentComplete}%</span>
+                            </div>
+                        </div>
+
+                        <h2><a if.bind="downloader.queue[0].localUrl"
+                               download.bind="downloader.queue[0].fileName"
+                               href.bind="downloader.queue[0].localUrl">Save file</a></h2>
+                    </template>
                 </div>
             </div>
         </div>
 
-        <div if.bind="!isUploader">
-            <template if.bind="downloader.queue.length === 0">
-                <h2>Please wait..</h2>
-            </template>
-            <template if.bind="downloader.queue.length > 0">
-                <h2>
-                    <template if.bind="!downloader.queue[0].localUrl">Receiving</template>
-                    <template if.bind="downloader.queue[0].localUrl">Received</template>
-                    "${downloader.queue[0].fileName}"
-                </h2>
-                <h3>Size: ${((downloader.queue[0].fileSize / 1024.0) / 1024.0).toFixed(2)} MiB</h3>
-
-                <div if.bind="!downloader.queue[0].localUrl" class="progress progress-success">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="${downloader.queue[0].percentComplete}"
-                         aria-valuemin="0" aria-valuemax="100" style="width:${downloader.queue[0].percentComplete}%">
-                        <span class="sr-only">${downloader.queue[0].percentComplete}%</span>
-                    </div>
+        <div class="hero-footer">
+            <footer class="footer">
+                <div class="container">
+                    <a class="button" href="https://github.com/bitfly-p2p/">
+                        <i class="fa fa-github"></i>
+                        GitHub
+                    </a>
                 </div>
-
-                <h2><a if.bind="downloader.queue[0].localUrl"
-                       download.bind="downloader.queue[0].fileName"
-                       href.bind="downloader.queue[0].localUrl">Save file</a></h2>
-            </template>
+            </footer>
         </div>
-
-        <require from="faq"></require>
-        <faq></faq>
-    </div>
-
-    <div class="clearfix"></div>
-
-    <footer class="footer">
-      <span style="margin: 4px; float: right;">
-        <a href="https://github.com/bitfly-p2p/" class="flink"><i class="fa fa-github fa-2x"></i></a>
-      </span>
-        <div style="margin: 16px 0 15px 15px;">
-            1.0.0 beta
-        </div>
-    </footer>
+    </section>
 </template>
