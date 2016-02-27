@@ -247,6 +247,12 @@
       this.copy(r);
       return r;
     };
+    BN.prototype._expand = function _expand(size) {
+      while (this.length < size) {
+        this.words[this.length++] = 0;
+      }
+      return this;
+    };
     BN.prototype.strip = function strip() {
       while (this.length > 1 && this.words[this.length - 1] === 0) {
         this.length--;
@@ -578,9 +584,7 @@
       assert(typeof width === 'number' && width >= 0);
       var bytesNeeded = Math.ceil(width / 26) | 0;
       var bitsLeft = width % 26;
-      while (this.length < bytesNeeded) {
-        this.words[this.length++] = 0;
-      }
+      this._expand(bytesNeeded);
       if (bitsLeft > 0) {
         bytesNeeded--;
       }
@@ -599,9 +603,7 @@
       assert(typeof bit === 'number' && bit >= 0);
       var off = (bit / 26) | 0;
       var wbit = bit % 26;
-      while (this.length <= off) {
-        this.words[this.length++] = 0;
-      }
+      this._expand(off + 1);
       if (val) {
         this.words[off] = this.words[off] | (1 << wbit);
       } else {
@@ -1756,19 +1758,7 @@
     BN.prototype._ishlnsubmul = function _ishlnsubmul(num, mul, shift) {
       var len = num.length + shift;
       var i;
-      if (this.words.length < len) {
-        var t = new Array(len);
-        for (i = 0; i < this.length; i++) {
-          t[i] = this.words[i];
-        }
-        this.words = t;
-      } else {
-        i = this.length;
-      }
-      this.length = Math.max(this.length, len);
-      for (; i < this.length; i++) {
-        this.words[i] = 0;
-      }
+      this._expand(len);
       var w;
       var carry = 0;
       for (i = 0; i < num.length; i++) {
@@ -2145,15 +2135,12 @@
       var s = (bit - r) / 26;
       var q = 1 << r;
       if (this.length <= s) {
-        for (var i = this.length; i < s + 1; i++) {
-          this.words[i] = 0;
-        }
+        this._expand(s + 1);
         this.words[s] |= q;
-        this.length = s + 1;
         return this;
       }
       var carry = q;
-      for (i = s; carry !== 0 && i < this.length; i++) {
+      for (var i = s; carry !== 0 && i < this.length; i++) {
         var w = this.words[i] | 0;
         w += carry;
         carry = w >>> 26;

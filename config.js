@@ -39,6 +39,7 @@ System.config({
     "json3": "npm:json3@3.3.2",
     "lodash": "npm:lodash@4.5.1",
     "mimetype": "npm:mimetype@0.0.8",
+    "simple-peer": "npm:simple-peer@6.0.1",
     "socket.io-client": "npm:socket.io-client@1.4.5",
     "socket.io-p2p": "npm:socket.io-p2p@2.2.0",
     "text": "github:systemjs/plugin-text@0.0.3",
@@ -107,7 +108,7 @@ System.config({
     },
     "npm:asn1.js@4.5.0": {
       "assert": "github:jspm/nodelibs-assert@0.1.0",
-      "bn.js": "npm:bn.js@4.10.3",
+      "bn.js": "npm:bn.js@4.10.4",
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "inherits": "npm:inherits@2.0.1",
@@ -258,7 +259,7 @@ System.config({
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
-    "npm:bn.js@4.10.3": {
+    "npm:bn.js@4.10.4": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0"
     },
     "npm:browserify-aes@1.0.6": {
@@ -287,14 +288,14 @@ System.config({
       "inherits": "npm:inherits@2.0.1"
     },
     "npm:browserify-rsa@4.0.1": {
-      "bn.js": "npm:bn.js@4.10.3",
+      "bn.js": "npm:bn.js@4.10.4",
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "constants": "github:jspm/nodelibs-constants@0.1.0",
       "crypto": "github:jspm/nodelibs-crypto@0.1.0",
       "randombytes": "npm:randombytes@2.0.2"
     },
     "npm:browserify-sign@4.0.0": {
-      "bn.js": "npm:bn.js@4.10.3",
+      "bn.js": "npm:bn.js@4.10.4",
       "browserify-rsa": "npm:browserify-rsa@4.0.1",
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "create-hash": "npm:create-hash@1.1.2",
@@ -342,7 +343,7 @@ System.config({
       "buffer": "github:jspm/nodelibs-buffer@0.1.0"
     },
     "npm:create-ecdh@4.0.0": {
-      "bn.js": "npm:bn.js@4.10.3",
+      "bn.js": "npm:bn.js@4.10.4",
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "crypto": "github:jspm/nodelibs-crypto@0.1.0",
       "elliptic": "npm:elliptic@6.2.3"
@@ -397,7 +398,7 @@ System.config({
       "minimalistic-assert": "npm:minimalistic-assert@1.0.0"
     },
     "npm:diffie-hellman@5.0.2": {
-      "bn.js": "npm:bn.js@4.10.3",
+      "bn.js": "npm:bn.js@4.10.4",
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "crypto": "github:jspm/nodelibs-crypto@0.1.0",
       "miller-rabin": "npm:miller-rabin@4.0.0",
@@ -405,7 +406,7 @@ System.config({
       "systemjs-json": "github:systemjs/plugin-json@0.1.0"
     },
     "npm:elliptic@6.2.3": {
-      "bn.js": "npm:bn.js@4.10.3",
+      "bn.js": "npm:bn.js@4.10.4",
       "brorand": "npm:brorand@1.0.5",
       "hash.js": "npm:hash.js@1.0.3",
       "inherits": "npm:inherits@2.0.1",
@@ -465,7 +466,7 @@ System.config({
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:miller-rabin@4.0.0": {
-      "bn.js": "npm:bn.js@4.10.3",
+      "bn.js": "npm:bn.js@4.10.4",
       "brorand": "npm:brorand@1.0.5"
     },
     "npm:mimetype@0.0.8": {
@@ -508,7 +509,7 @@ System.config({
       "assert": "github:jspm/nodelibs-assert@0.1.0"
     },
     "npm:public-encrypt@4.0.0": {
-      "bn.js": "npm:bn.js@4.10.3",
+      "bn.js": "npm:bn.js@4.10.4",
       "browserify-rsa": "npm:browserify-rsa@4.0.1",
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "create-hash": "npm:create-hash@1.1.2",
@@ -544,13 +545,12 @@ System.config({
       "inherits": "npm:inherits@2.0.1",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
-    "npm:simple-peer@5.11.9": {
+    "npm:simple-peer@6.0.1": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "debug": "npm:debug@2.2.0",
       "get-browser-rtc": "npm:get-browser-rtc@1.0.2",
       "hat": "npm:hat@0.0.3",
       "inherits": "npm:inherits@2.0.1",
-      "is-typedarray": "npm:is-typedarray@1.0.0",
       "once": "npm:once@1.3.3",
       "process": "github:jspm/nodelibs-process@0.1.2",
       "stream": "github:jspm/nodelibs-stream@0.1.0"
@@ -579,7 +579,7 @@ System.config({
       "has-binary": "npm:has-binary@0.1.7",
       "hat": "npm:hat@0.0.3",
       "process": "github:jspm/nodelibs-process@0.1.2",
-      "simple-peer": "npm:simple-peer@5.11.9",
+      "simple-peer": "npm:simple-peer@6.0.1",
       "socket.io-p2p-parser": "github:tomcartwrightuk/socket.io-p2p-parser@master",
       "stream": "github:jspm/nodelibs-stream@0.1.0",
       "string_decoder": "github:jspm/nodelibs-string_decoder@0.1.0",
