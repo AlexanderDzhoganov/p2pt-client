@@ -32,6 +32,10 @@ a {
     border-bottom: 1px solid #e5e5e5;
 }
 
+.hero-content {
+    background: #fafafa;
+}
+
 .header .logo {
     font-size: 24px;
     margin-right: 4px;
@@ -42,6 +46,11 @@ a {
     font-size: 16px;
     margin-top: 4px;
     margin-left: 8px;
+}
+
+.header .info .subtext {
+    color: #8E92A3;
+    margin-left: 4px;
 }
 
 .header-separator {

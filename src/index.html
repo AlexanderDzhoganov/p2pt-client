@@ -4,8 +4,8 @@
         <header class="header">
           <div class="header-left">
             <div class="header-item info">
-              No middleman, no cookies, no tracking. Single-click secure file transfer over 
-              <a href="https://webrtc.org/" style="margin-left: 4px;">WebRTC</a>.
+              Single-click secure file transfer over <a href="https://webrtc.org/" style="margin-left: 4px;">WebRTC</a>. 
+              <span class="subtext">No middleman, no cookies, no tracking.</span>
             </div>
           </div>
           <div class="header-right">
@@ -19,60 +19,61 @@
       <div class="hero-content">
         <div class="container"> 
           <div if.bind="isUploader" class="container">
-              <div if.bind="!file" id="dropzone" class="dropzone" ref="dropzoneRef">
-                  <div class="dropzone-text">Drag and drop a file or click to browse..</div>
+            <div if.bind="!file" id="dropzone" class="dropzone" ref="dropzoneRef">
+                <div class="dropzone-text">Drag and drop a file or click to browse..</div>
 
-                  <div class="fileicon"></div>
+                <div class="fileicon"></div>
 
-                  <div class="dropzone-subtext">..and we'll give you an URL to fetch it from securely</div>
+                <div class="dropzone-subtext">..and we'll give you an URL to fetch it from securely</div>
+            </div>
+
+            <div if.bind="file && !token" class="upload-box">
+                <div><h2 class="title">Please wait</h2></div>
+            </div>
+
+            <div if.bind="file" class="upload-box">
+              <div>
+                <h1 class="title">Sending "${fileName}"</h1>
+              </div>
+              <br/>
+              <div if.bind="token && !uploading">
+                  <h2 class="subtitle">
+                      Give this url to the receiving party:
+                      <br />
+                      <a href="${serverUrl}/${token}" target="_blank" class="token-link">${serverUrl}/${token}</a>
+                      <br/>
+                      and don't close this tab until the transfer is complete
+                  </h2>
               </div>
 
-              <div if.bind="file && !token" class="upload-box">
-                  <div><h2>Please wait</h2></div>
+              <div if.bind="uploading && !uploadComplete">
+                  <h2 class="title">Transmitting..</h2>
+
+                  <div class="progress progress-success">
+                      <div class="progress-bar" role="progressbar" aria-valuenow="${reader.percentComplete}"
+                           aria-valuemin="0" aria-valuemax="100" style="width:${reader.percentComplete}%">
+                          <span class="sr-only">${reader.percentComplete}%</span>
+                      </div>
+                  </div>
               </div>
-
-              <div if.bind="file" class="upload-box">
-                <div>
-                  <h1>Sending "${fileName}"</h1>
-                </div>
-                <div if.bind="token && !uploading">
-                    <h2>
-                        Give this url to the receiving party:
-                        <br />
-                        <a href="${serverUrl}/${token}" target="_blank" class="token-link">${serverUrl}/${token}</a>
-                        <br/>
-                        and don't close this tab until the transfer is complete
-                    </h2>
-                </div>
-
-                <div if.bind="uploading && !uploadComplete">
-                    <h2>Transmitting..</h2>
-
-                    <div class="progress progress-success">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="${reader.percentComplete}"
-                             aria-valuemin="0" aria-valuemax="100" style="width:${reader.percentComplete}%">
-                            <span class="sr-only">${reader.percentComplete}%</span>
-                        </div>
-                    </div>
-                </div>
-                <div if.bind="uploading && uploadComplete">
-                    <h2>Your file has been sent successfully!</h2>
-                    <h4><a href="/">Send another</a></h4>
-                </div>
+              <div if.bind="uploading && uploadComplete">
+                  <h2 class="title">Your file has been sent successfully!</h2>
+                  <h4 class="subtitle"><a href="/">Send another</a></h4>
               </div>
+            </div>
           </div>
 
           <div if.bind="!isUploader" class="container">
             <template if.bind="downloader.queue.length === 0">
-                <h2>Please wait..</h2>
+                <h2 class="title">Please wait..</h2>
             </template>
             <template if.bind="downloader.queue.length > 0">
-              <h2>
+              <h2 class="title">
                   <template if.bind="!downloader.queue[0].localUrl">Receiving</template>
                   <template if.bind="downloader.queue[0].localUrl">Received</template>
                   "${downloader.queue[0].fileName}"
               </h2>
-              <h3>Size: ${((downloader.queue[0].fileSize / 1024.0) / 1024.0).toFixed(2)} MiB</h3>
+              <h3 class="subtitle">Size: ${((downloader.queue[0].fileSize / 1024.0) / 1024.0).toFixed(2)} MiB</h3>
 
               <div if.bind="!downloader.queue[0].localUrl" class="progress progress-success">
                   <div class="progress-bar" role="progressbar" aria-valuenow="${downloader.queue[0].percentComplete}"
@@ -81,19 +82,22 @@
                   </div>
               </div>
 
-              <h2>
-                <a if.bind="downloader.queue[0].localUrl"
-                  download.bind="downloader.queue[0].fileName"
-                  href.bind="downloader.queue[0].localUrl">
-                  Save file
-                </a>
-              </h2>
+              <br/>
+              <div>
+                <h1 class="title">
+                  <a if.bind="downloader.queue[0].localUrl"
+                    download.bind="downloader.queue[0].fileName"
+                    href.bind="downloader.queue[0].localUrl">
+                    Save file
+                  </a>
+                </h1>
+              </div>
             </template>
           </div>
         </div>
       </div>
 
-      <div>
+      <div style="background: #fafafa;">
         BITF.LY HAS SHIPPED ${totalTransfers} FILES SO FAR
       </div>
 
