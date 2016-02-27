@@ -2,7 +2,7 @@ export default class Reader {
 
     constructor(file) {
       this.file = file
-      this.chunkSize = 1048576
+      this.chunkSize = 542288
       this.pos = 0
       this.fileSize = 0
       this.percentComplete = 0
