@@ -59,7 +59,9 @@ export class Index {
 
     this.socket.on('connect', () => {
       this.connected = true
-      this.socket.emit('set-token', this.token)
+      if(this.token) {
+        this.socket.emit('set-token', this.token)
+      }
     }.bind(this))
 
     this.socket.on('error', err => {
