@@ -49,16 +49,15 @@
               <div if.bind="uploading && !uploadComplete">
                   <h2 class="title">Transmitting..</h2>
 
-                  <div class="progress progress-success">
-                      <div class="progress-bar" role="progressbar" aria-valuenow="${reader.percentComplete}"
-                           aria-valuemin="0" aria-valuemax="100" style="width:${reader.percentComplete}%">
-                          <span class="sr-only">${reader.percentComplete}%</span>
+                  <div class="progress">
+                      <div class="progress-bar" style="width:${reader.percentComplete}%">
+                          <span class="sr-only">${reader.percentComplete.toFixed(2)}%</span>
                       </div>
                   </div>
               </div>
               <div if.bind="uploading && uploadComplete">
                   <h2 class="title">Your file has been sent successfully!</h2>
-                  <h4 class="subtitle"><a href="/">Send another?</a></h4>
+                  <h4 class="subtitle"><a click.delegate="reload()">Send another?</a></h4>
               </div>
             </div>
           </div>
@@ -75,10 +74,10 @@
               </h2>
               <h3 class="subtitle">Size: ${((downloader.queue[0].fileSize / 1024.0) / 1024.0).toFixed(2)} MiB</h3>
 
-              <div if.bind="!downloader.queue[0].localUrl" class="progress progress-success">
+              <div if.bind="!downloader.queue[0].localUrl" class="progress">
                   <div class="progress-bar" role="progressbar" aria-valuenow="${downloader.queue[0].percentComplete}"
                        aria-valuemin="0" aria-valuemax="100" style="width:${downloader.queue[0].percentComplete}%">
-                      <span class="sr-only">${downloader.queue[0].percentComplete}%</span>
+                      <span class="sr-only">${downloader.queue[0].percentComplete.toFixed(2)}%</span>
                   </div>
               </div>
 

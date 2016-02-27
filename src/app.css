@@ -152,3 +152,18 @@ a {
 .footer .flink:hover {
     color: #333;
 }
+
+.progress-bar {
+    background-color: #6B6B93;
+    color: #fafafa;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.progress {
+    width: 100%;
+    background-color: #cccccc;
+    border-radius: 8px;
+    color: #fafafa;
+    border-radius: 8px;
+}
