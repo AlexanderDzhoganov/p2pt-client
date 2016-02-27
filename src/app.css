@@ -59,7 +59,6 @@ a {
     padding: 0;
     top: 60px;
     z-index: 1;
-    background: url('images/background.png')
 }
 
 .upload-text {
@@ -67,14 +66,13 @@ a {
 }
 
 .dropzone {
-    border: none;
     background: url('/images/file.png') no-repeat center;
-    cursor: pointer;
     width: 50%;
     margin: 0 auto;
     padding: 0;
     border: 2px dashed #494C66;
     min-height: 400px;
+    border-radius: 32px;
 }
 
 .dropzone.dz-drag-hover {
