@@ -24,6 +24,7 @@
     <template if.bind="downloader.queue.length > 0">
       Receiving "${downloader.queue[0].fileName}"<br/>
       Size: ${downloader.queue[0].fileSize}<br/>
+      Downloaded: ${downloader.queue[0].bytesTransferred}<br/>
 
       <a if.bind="downloader.queue[0].localUrl" href.bind="downloader.queue[0].localUrl">Save this file</a>
     </template>

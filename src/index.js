@@ -10,6 +10,8 @@ import downloader from './downloader'
 
 export class Index {
 
+  serverUrl = 'http://localhost'
+
   isUploader = true
   connectedToPeer = false
 
@@ -22,9 +24,6 @@ export class Index {
 
   constructor() {
     this.downloader = new downloader()
-    this.downloader.onDownloadComplete = download => {
-      console.log('DOWNLOAD READY')
-    }.bind(this)
   }
 
   activate(params) {
@@ -35,10 +34,56 @@ export class Index {
   }
 
   bind() {
+    if(this.isUploader) {
+      this.initDropzone()
+    }
+
+    this.socket = io(this.serverUrl + ':3000')
+  
+    this.socket.on('connect', () => {
+      if(this.token) {
+        this.socket.emit('set-token', this.token)
+      }
+    }.bind(this))
+
+    this.socket.on('error', err => {
+      console.error(err)
+    }.bind(this))
+
+    this.socket.on('set-token-ok', token => {
+      this.token = token
+
+      this.p2p = new p2p(this.socket)
+
+      this.p2p.on('ready', function() {
+        this.p2p.usePeerConnection = true
+        this.p2p.emit('peer-obj', { peerId: peerId })
+      }.bind(this))
+
+      this.p2p.on('upgrade', data => {
+        console.log('connection upgraded to webrtc')
+        this.connectedToPeer = true
+
+        if (this.file) {
+          this.startUpload()
+        }
+      }.bind(this))
+
+      this.p2p.on('error', err => {
+        console.error(err)
+        this.connectedToPeer = false
+      }.bind(this))
+
+      this.p2p.on('data', packet => {
+        this.downloader.addChunk(packet.fileName, packet.fileSize, packet.data, packet.complete)
+      }.bind(this))
+    }.bind(this))
+  }
+
+  initDropzone() {
+    var view = this
     Dropzone.autoDiscover = false
     Dropzone.autoProcessQueue = false
-
-    var view = this
 
     Dropzone.options.dropzone = {
       init: function() {
@@ -53,47 +98,6 @@ export class Index {
     setTimeout(() => {
       this.dropzone = new Dropzone("div#dropzone", { url: "/file/post"})
     }.bind(this), 0)
-
-    this.socket = io('http://localhost:3000')
-
-    this.p2p = new p2p(this.socket)
-
-    this.p2p.on('ready', function() {
-      this.p2p.usePeerConnection = true
-      this.p2p.emit('peer-obj', { peerId: peerId })
-    }.bind(this))
-
-    this.p2p.on('upgrade', data => {
-      console.log('connection upgraded to webrtc')
-      this.connectedToPeer = true
-
-      if (this.file) {
-        this.startUpload()
-      }
-    }.bind(this))
-
-    this.p2p.on('error', err => {
-      console.error(err)
-      this.connectedToPeer = false
-    }.bind(this))
-
-    this.p2p.on('data', packet => {
-      this.downloader.addChunk(packet.fileName, packet.fileSize, packet.data)
-    }.bind(this))
-
-    this.socket.on('connect', () => {
-      if(this.token) {
-        this.socket.emit('set-token', this.token)
-      }
-    }.bind(this))
-
-    this.socket.on('error', err => {
-      console.error(err)
-    }.bind(this))
-
-    this.socket.on('set-token-ok', token => {
-      this.token = token
-    }.bind(this))
   }
 
   fileAdded(file) {
@@ -116,9 +120,8 @@ export class Index {
       this.p2p.emit('data', {
         fileName: fileName,
         fileSize: this.reader.fileSize,
-        position: this.reader.pos,
-        size: data.byteLength,
-        data: data
+        data: data,
+        complete: complete
       })
 
       if(complete) {

@@ -7,7 +7,7 @@ export default class Downloader {
       this.queue = []
     }
 
-    addChunk(fileName, fileSize, chunk) {
+    addChunk(fileName, fileSize, chunk, complete) {
       var download = _.find(this.queue, dl => dl.fileName == fileName)
       if(!download) {
         this.queue.push({
@@ -15,7 +15,7 @@ export default class Downloader {
           fileSize: fileSize,
           chunks: [chunk],
           bytesTransferred: chunk.byteLength,
-          complete: chunk.byteLength >= fileSize
+          complete: complete
         })
 
         download = this.queue[this.queue.length - 1]
@@ -23,18 +23,12 @@ export default class Downloader {
         download.chunks.push(chunk)
         download.bytesTransferred += chunk.byteLength
         download.fileSize = fileSize
-
-        if (download.bytesTransferred >= download.fileSize) {
-          download.complete = true
-        }
+        download.complete = complete
       }
 
       if (download.complete) {
         var blob = new Blob(download.chunks, { type: mimetype.lookup(download.fileName) })
         download.localUrl = window.URL.createObjectURL(blob)
-        if (this.onDownloadComplete) {
-          this.onDownloadComplete(download)
-        }
       }
     }
 
