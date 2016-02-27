@@ -11,7 +11,6 @@ module.exports = {
         "aurelia-bootstrapper",
         "aurelia-fetch-client",
         "aurelia-router",
-        "aurelia-animator-css",
         "aurelia-templating-binding",
         "aurelia-templating-resources",
         "aurelia-templating-router",
@@ -31,7 +30,7 @@ module.exports = {
       ],
       "options": {
         "inject": true,
-        "minify": false,
+        "minify": true,
         "rev": true
       }
     }

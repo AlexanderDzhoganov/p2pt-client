@@ -81,6 +81,10 @@ a {
     top: 64px;
 }
 
+.dropzone:hover {
+    border: 2px solid #494C66;
+}
+
 .fileicon {
     background: url('/images/file.png') no-repeat center;
     width: 326px;
