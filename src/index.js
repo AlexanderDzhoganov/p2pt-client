@@ -58,7 +58,9 @@ export class Index {
       this.token = token
 
       this.p2p = new p2p(this.socket, {
-        trickle: false
+        peerOpts: {
+          trickle: false
+        }
       })
 
       this.p2p.on('ready', function() {
