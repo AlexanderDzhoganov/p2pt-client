@@ -66,13 +66,24 @@ a {
 }
 
 .dropzone {
-    background: url('/images/file.png') no-repeat center;
+    background: url('images/background.png');
     width: 50%;
     margin: 0 auto;
     padding: 0;
     border: 2px dashed #494C66;
     min-height: 400px;
     border-radius: 32px;
+    position: relative;
+    top: 50%;
+    margin-top: -200px;
+}
+
+.fileicon {
+    background: url('/images/file.png') no-repeat center;
+    width: 326px;
+    height: 256px;
+    margin: 50px auto;
+    pointer-events: none;
 }
 
 .dropzone.dz-drag-hover {
