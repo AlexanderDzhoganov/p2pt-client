@@ -1,4 +1,6 @@
 <template>
+    <require from="faq"></require>
+
     <section class="hero is-fullheight is-bold">
       <div class="hero-header">
         <header class="header">
@@ -94,8 +96,11 @@
             </template>
           </div>
 
-          <require from="faq"></require>
-          <faq></faq>
+          <div class="show-faq">
+            <a click.delegate="showFAQ = !showFAQ"><h2 class="subtitle">FAQ</h2></a>
+          </div>
+
+          <faq show.bind="showFAQ"></faq>
         </div>
       </div>
 
