@@ -91,8 +91,8 @@
   }
   Peer.WEBRTC_SUPPORT = !!getBrowserRTC();
   Peer.config = {iceServers: [{
-      url: 'stun:23.21.150.121',
-      urls: 'stun:23.21.150.121'
+      url: 'stun:52.5.57.211',
+      urls: 'stun:52.5.57.211'
     }]};
   Peer.constraints = {};
   Peer.channelConfig = {};
