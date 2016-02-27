@@ -134,3 +134,7 @@ a {
     color: #666666;
     z-index: 2;
 }
+
+.footer .flink:hover {
+    color: #333;
+}
