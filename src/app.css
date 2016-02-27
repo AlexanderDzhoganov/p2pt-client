@@ -1,6 +1,7 @@
 html {
     margin: 0;
     padding: 0;
+    height: 100%;
 }
 
 body {
@@ -8,6 +9,8 @@ body {
     padding: 0;
     background: #fbfbfb;
     color: #9496C6;
+    height: 100%;
+    min-height: 100%;
 }
 
 .header {
@@ -18,6 +21,9 @@ body {
     height: 60px;
     padding: 10px;
     border-bottom: 1px solid #E2E2E2;
+    position: absolute;
+    top: 0;
+    z-index: 2;
 }
 
 .header .logo {
@@ -38,12 +44,16 @@ body {
     border: 1px solid #eee;
 }
 
-.upload-box {
-    width: 512px;
-    height: 512px;
-    margin: auto;
-    margin-top: 48px;
+.container {
+    width: 100%;
+    height: 100%;
     text-align: center;
+    height: calc(100% - 120px);
+    position: relative;
+    margin: 0;
+    padding: 0;
+    top: 60px;
+    z-index: 1;
 }
 
 .upload-text {
@@ -51,11 +61,16 @@ body {
 }
 
 .dropzone { 
-    border: 2px dashed #283050; 
-    border-radius: 5px;
+    border: none;
     background: url('/images/file.png') no-repeat center;
     cursor: pointer;
-    min-height: 512px;
+    height: 100%;
+    padding: 0;
+    border: 2px solid #fbfbfb;
+}
+
+.dropzone.dz-drag-hover {
+    border-color: #9496C6;
 }
 
 .dropzone-text {
@@ -77,6 +92,12 @@ body {
     margin: auto;
 }
 
+.url-box {
+    border: none;
+    background: #fbfbfb;
+    width: 550px;
+}
+
 .dz-message {
     display: none;
 }
@@ -88,10 +109,12 @@ body {
     height: 60px;
     border-top: 1px solid #E2E2E2;
     background-color: #fff;
+    z-index: 2;
 }
 
 .footer .flink {
     float: right;
     color: #8C8C8C;
     margin: 19px;
+    z-index: 2;
 }

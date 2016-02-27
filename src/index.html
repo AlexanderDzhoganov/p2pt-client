@@ -4,7 +4,7 @@
         <div class="info">Fast, Secure, Free File Transfer</div>
     </div>
 
-    <div if.bind="isUploader" class="upload-box">
+    <div if.bind="isUploader" class="container">
         <div if.bind="!file" id="dropzone" class="dropzone" ref="dropzoneRef">
             <div class="dropzone-text">Drag and drop file or click to browse</div>
         </div>
@@ -22,7 +22,8 @@
             <div if.bind="token && !uploading">
                 <h3>
                     Give this url to the receiving party:
-                    <a href="${serverUrl}/${token}" target="_blank">${serverUrl}/${token}</a>
+                    <br />
+                    <input type="text" value="${serverUrl}/${token}" class="url-box" readonly onClick="this.setSelectionRange(0, this.value.length)">
                 </h3>
             </div>
 
@@ -43,7 +44,7 @@
         </div>
     </div>
 
-    <div if.bind="!isUploader" class="download-box">
+    <div if.bind="!isUploader" class="container">
         <template if.bind="downloader.queue.length === 0">
             <h2>Please wait..</h2>
         </template>
