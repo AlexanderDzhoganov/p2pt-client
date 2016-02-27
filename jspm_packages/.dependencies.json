@@ -618,5 +618,6 @@
   "npm:hat@0.0.3": {},
   "npm:webrtcsupport@2.2.0": {},
   "github:tomcartwrightuk/socket.io-p2p-parser@master": {},
-  "github:systemjs/plugin-text@0.0.7": {}
+  "github:systemjs/plugin-text@0.0.7": {},
+  "npm:bulma@0.0.16": {}
 }

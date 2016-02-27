@@ -12,6 +12,7 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
+
   map: {
     "aurelia-bootstrapper": "npm:aurelia-bootstrapper@1.0.0-beta.1.1.2",
     "aurelia-fetch-client": "npm:aurelia-fetch-client@1.0.0-beta.1.1.0",
@@ -25,6 +26,7 @@ System.config({
     "aurelia-templating-router": "npm:aurelia-templating-router@1.0.0-beta.1.1.1",
     "babel": "npm:babel-core@5.8.35",
     "babel-runtime": "npm:babel-runtime@5.8.35",
+    "bulma": "npm:bulma@0.0.16",
     "component-emitter": "npm:component-emitter@1.2.0",
     "core-js": "npm:core-js@1.2.6",
     "css": "github:systemjs/plugin-css@0.1.20",
