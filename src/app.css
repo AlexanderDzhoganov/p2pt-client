@@ -139,7 +139,7 @@ a {
 
 .faq {
     width: 600px;
-    height: 250px;
+    height: 234px;
     text-align: left;
     margin: 30px auto 0;
     font-size: 15px;
@@ -154,25 +154,30 @@ a {
     cursor: pointer;
 }
 
+.faq .list-item .title:hover {
+    color: #0f7595;
+}
+
 .faq .list-item .title i {
     font-size: 15px;
 }
 
 .faq .list-item .content {
     padding: 0 23px;
-    height: 0;
+    height: auto;
+    max-height: 0px;
     overflow: hidden;
-    transition: height 2050ms;
-    -webkit-transition: height 2050ms;
+    transition: max-height 650ms ease;
+    -webkit-transition: max-height 650ms ease;
 }
 
 .faq .list-item .content.show {
-    height: 100%;
+    max-height: 250px;
 }
 
 .faq .list-item .content .inner-content {
     margin-top: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .token-link {
