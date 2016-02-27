@@ -1,7 +1,7 @@
 <template>
     <div class="header">
         <div class="logo">bitf.ly</div>
-        <div class="info">Fast, Secure, Free File Transfer</div>
+        <div class="info">No middleman, no cookies, no tracking - single-click secure file transfer over <a href="https://webrtc.org/">WebRTC</a></div>
     </div>
 
     <div if.bind="isUploader" class="container">
@@ -23,7 +23,7 @@
                 <h3>
                     Give this url to the receiving party:
                     <br />
-                    <input type="text" value="${serverUrl}/${token}" class="url-box" readonly onClick="this.setSelectionRange(0, this.value.length)">
+                    <a href="${serverUrl}/${token}" target="_blank">${serverUrl}/${token}</a>
                 </h3>
             </div>
 
@@ -72,6 +72,8 @@
     <div class="clearfix"></div>
 
     <footer class="footer">
-        <a href="#" class="flink">Source code</a>
+      <span class="pull-right" style="margin: 4px;">
+        <a href="https://github.com/bitfly/" class="flink"><i class="fa fa-github fa-3x"></i></a>
+      </span>
     </footer>
 </template>

@@ -221,6 +221,7 @@ Socketiop2p.prototype._send = function (data) {
     var peer = self._peers[peerId]
     if (peer._channelReady) {
       peer.send(data)
+      break
     }
   }
 }
