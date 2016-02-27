@@ -62,13 +62,7 @@ export class Index {
           trickle: false,
           config: {
             "iceServers": [
-              {"url":"stun:23.21.150.121","urls":"stun:23.21.150.121"},
-              {
-                "url":"turn:global.turn.twilio.com:3478?transport=udp",
-                "username":"b771f2f0210d698fedf9daf27bbb111cf2c1d951dd64ddd1ec50c798e64a8119",
-                "credential":"VDTFURnPht1CEicw239bCktRn6DxNuMmhtSpMALowfs=",
-                "urls":"turn:global.turn.twilio.com:3478?transport=udp"
-              }
+              {"url":"stun:23.21.150.121","urls":"stun:23.21.150.121"}
             ]}
         }
       })
