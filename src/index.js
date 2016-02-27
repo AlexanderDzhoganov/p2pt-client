@@ -18,11 +18,15 @@ export class Index {
   token = null
 
   file = null
+  previewImage = null
   uploading = false
+  uploadComplete = false
 
   downloader = null
 
   constructor() {
+    Dropzone.autoDiscover = false
+    Dropzone.autoProcessQueue = false
     this.downloader = new downloader()
   }
 
@@ -61,7 +65,6 @@ export class Index {
       }.bind(this))
 
       this.p2p.on('upgrade', data => {
-        console.log('connection upgraded to webrtc')
         this.connectedToPeer = true
 
         if (this.file) {
@@ -82,25 +85,24 @@ export class Index {
 
   initDropzone() {
     var view = this
-    Dropzone.autoDiscover = false
-    Dropzone.autoProcessQueue = false
-
-    Dropzone.options.dropzone = {
-      init: function() {
-        this.on("addedfile", file => {
-          view.fileAdded(file)
-        }.bind(this))
-      },
-      autoDiscover: false,
-      autoProcessQueue: false
-    };
 
     setTimeout(() => {
-      this.dropzone = new Dropzone("div#dropzone", { url: "/file/post"})
+      this.dropzone = new Dropzone("div#dropzone", {
+        url: "/file/post",
+        addedfile: file => {
+          view.fileAdded(file)
+        }.bind(this),
+        thumbnail: (file, dataUrl) => {
+          this.previewImage = dataUrl
+        }.bind(this),
+        uploadprogress: () => {},
+        autoProcessQueue: false
+      })
     }.bind(this), 0)
   }
 
   fileAdded(file) {
+    $('#dropzone-text').html(file.name)
     this.fileName = file.name
     this.contentType = file.type
     this.file = file

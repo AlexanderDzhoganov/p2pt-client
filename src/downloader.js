@@ -26,6 +26,8 @@ export default class Downloader {
         download.complete = complete
       }
 
+      download.percentComplete = (download.bytesTransferred / download.fileSize) * 100.0
+
       if (download.complete) {
         var blob = new Blob(download.chunks, { type: mimetype.lookup(download.fileName) })
         download.localUrl = window.URL.createObjectURL(blob)

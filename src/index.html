@@ -1,34 +1,72 @@
 <template>
+  <div class="header">
+    <h1>Send files securely over WebRTC</h1>
+  </div>
+
   <div if.bind="isUploader" class="upload-box">
-    <div if.bind="!file" id="dropzone" class="dropzone">
+    <div if.bind="!file" id="dropzone" class="dropzone" ref="dropzoneRef">
+      <div class="dropzone-text">Drag and drop file or click to browse</div>
     </div>
-    <div if.bind="file && !uploading">
-      <template if.bind="token">
-        Give this url to the receiving party:
-        <a href="http://localhost:9000/#/${token}" target="_blank">http://localhost:9000/#/${token}</a>
-      </template>
-      <template if.bind="!token">
-        Waiting for upload token
-      </template>
+
+    <div if.bind="file && !token" class="upload-box">
+      <div><h2>Please wait</h2></div>
     </div>
-    <div if.bind="uploading">
-      Uploading file to partner<br/>
-      ${reader.pos} / ${reader.fileSize}
+
+    <div if.bind="file" class="upload-box">
+      <div><h2>Sending "${fileName}"</h2></div>
+      <div if.bind="previewImage">
+        <img src.bind="previewImage">
+      </div>
+
+      <div if.bind="token && !uploading">
+        <h3>
+          Give this url to the receiving party:
+          <a href="http://localhost:9000/#/${token}" target="_blank">http://localhost:9000/#/${token}</a>
+        </h3>
+      </div>
+      
+      <div if.bind="uploading && !uploadComplete">
+        <h2>Transmitting..</h2>
+
+        <div class="progress progress-success">
+          <div class="progress-bar" role="progressbar" aria-valuenow="${reader.percentComplete}"
+            aria-valuemin="0" aria-valuemax="100" style="width:${reader.percentComplete}%">
+            <span class="sr-only">${reader.percentComplete}%</span>
+          </div>
+        </div>
+      </div>
+      <div if.bind="uploading && uploadComplete">
+        <h2>Your file has been sent successfully!</h2>
+        <h4><a href="/">Send another</a></h4>
+      </div>
     </div>
   </div>
 
   <div if.bind="!isUploader" class="download-box">
     <template if.bind="downloader.queue.length === 0">
-      Please wait..
+      <h2>Please wait..</h2>
     </template>
     <template if.bind="downloader.queue.length > 0">
-      Receiving "${downloader.queue[0].fileName}"<br/>
-      Size: ${downloader.queue[0].fileSize}<br/>
-      Downloaded: ${downloader.queue[0].bytesTransferred}<br/>
+      <h2>
+        <template if.bind="!downloader.queue[0].localUrl">Receiving</template>
+        <template if.bind="downloader.queue[0].localUrl">Received</template>
+         "${downloader.queue[0].fileName}"</h2>
+      <h3>Size: ${((downloader.queue[0].fileSize / 1024.0) / 1024.0).toFixed(2)} MiB</h3>
 
-      <a if.bind="downloader.queue[0].localUrl"
+      <div if.bind="!downloader.queue[0].localUrl" class="progress progress-success">
+        <div class="progress-bar" role="progressbar" aria-valuenow="${downloader.queue[0].percentComplete}"
+          aria-valuemin="0" aria-valuemax="100" style="width:${downloader.queue[0].percentComplete}%">
+          <span class="sr-only">${downloader.queue[0].percentComplete}%</span>
+        </div>
+      </div>
+
+      <h2><a if.bind="downloader.queue[0].localUrl"
         download.bind="downloader.queue[0].fileName"
-        href.bind="downloader.queue[0].localUrl">Save this file</a>
+        href.bind="downloader.queue[0].localUrl">Save file</a></h2>
     </template>
+  </div>
+
+  <div class="footer">
+
   </div>
 </template>
