@@ -59,6 +59,7 @@ a {
     padding: 0;
     top: 60px;
     z-index: 1;
+    background: url('images/background.png')
 }
 
 .upload-text {
