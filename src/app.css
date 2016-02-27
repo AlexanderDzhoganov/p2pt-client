@@ -40,6 +40,8 @@ a {
 .header .logo {
     font-size: 24px;
     float: right;
+    position: relative;
+    top: -2px;
 }
 
 .header .info {
@@ -96,6 +98,8 @@ a {
     text-align: center;
     font-size: 24px;
     pointer-events: none;
+    position: relative;
+    top: 22px;
 }
 
 .download-box {
@@ -136,7 +140,14 @@ a {
 
 .faq {
     width: 100%;
-    text-align: center;
+    text-align: left;
+    margin-top: 60px;
+    padding: 0 193px;
+}
+
+.faq .list-item .title {
+    font-weight: bold;
+    color: #0b97c4;
 }
 
 .token-link {
