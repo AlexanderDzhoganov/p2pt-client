@@ -76,7 +76,7 @@ a {
     width: 600px;
     border-radius: 32px;
     position: relative;
-    top: 64px;
+    margin-top: 64px;
 }
 
 .fileicon {
