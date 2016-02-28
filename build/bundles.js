@@ -29,7 +29,7 @@ module.exports = {
       ],
       "options": {
         "inject": true,
-        "minify": true,
+        "minify": false,
         "rev": true
       }
     }
