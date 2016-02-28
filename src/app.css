@@ -69,6 +69,7 @@ a {
 
 .dropzone:hover {
     border: 1px solid #C9C9CA;
+    background: #F8F6F6;
 }
 
 .fileicon {
