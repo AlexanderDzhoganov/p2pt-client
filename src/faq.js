@@ -13,7 +13,7 @@ export class Faq {
         setTimeout(function() {
           item.addClass("show");
           $('.faq .list-item[data-faq-item="' + i + '"] .title i').removeClass("fa-angle-right").addClass("fa-angle-down");
-        }, 650);
+        }, 100);
       } else {
         $('.faq .list-item .content').removeClass("show")
         $('.faq .list-item .title i').removeClass("fa-angle-down").addClass("fa-angle-right");
