@@ -12,7 +12,7 @@ export default class Reader {
       this.fileSize = 0
       this.percentComplete = 0
 
-      this.fileHasher = CryptoJS.algo.SHA1.create()
+      this.sha1 = CryptoJS.algo.SHA1.create()
       this.fileHash = null
 
       this.reader = new FileReader()
@@ -32,6 +32,7 @@ export default class Reader {
         }.bind(this)
       }.bind(this)
 
+      // dummy 1 byte read so we can get the file size
       this.reader.readAsArrayBuffer(this.file.slice(0, 1))
     }
 
@@ -44,10 +45,10 @@ export default class Reader {
       this.percentComplete = (this.pos / this.fileSize) * 100.0
       var complete = this.pos >= this.fileSize
 
-      this.fileHasher.update(CryptoJS.lib.WordArray.create(new Uint8Array(data)))
+      this.sha1.update(CryptoJS.lib.WordArray.create(new Uint8Array(data)))
 
       if(complete) {
-        this.fileHash = this.fileHasher.finalize().toString()
+        this.fileHash = this.sha1.finalize().toString()
       }
 
       if(this.readCallback) {

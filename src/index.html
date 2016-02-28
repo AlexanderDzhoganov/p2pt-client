@@ -29,11 +29,11 @@
 
           <div if.bind="isUploader" class="container">
             <div if.bind="!file" id="dropzone" class="dropzone" ref="dropzoneRef">
-                <div class="dropzone-text">Drag and drop a file or click to browse..</div>
+                <div class="dropzone-text">Drag and drop a file or click to browse</div>
 
                 <div class="fileicon"></div>
 
-                <div class="dropzone-subtext">..and we'll give you an URL to fetch it from securely</div>
+                <div class="dropzone-subtext">and we'll generate a secure download URL for you</div>
             </div>
 
             <div if.bind="file && !token" class="upload-box">
@@ -115,7 +115,7 @@
       </div>
 
       <div style="background: #fafafa;">
-        ${totalTransfers} FILES HAVE BEEN TRANSFERRED SECURELY
+        ${totalTransfers} FILES DELIVERED SECURELY
       </div>
 
       <div class="hero-footer">
