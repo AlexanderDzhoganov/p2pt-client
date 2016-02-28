@@ -4,6 +4,9 @@ export default class Reader {
 
     constructor(file) {
       this.file = file
+      this.largeFile = false
+      this.veryLargeFile = false
+
       this.chunkSize = 65536
       this.pos = 0
       this.fileSize = 0
@@ -13,9 +16,23 @@ export default class Reader {
       this.fileHash = null
 
       this.reader = new FileReader()
-      this.reader.onload = function(e) {
-        this.onChunkLoaded()
+
+      this.reader.onload = () => {
+        this.fileSize = this.file.size
+        if(this.fileSize > (1024 * 1024 * 1024)) {
+          this.largeFile = true
+        }
+
+        if(this.fileSize > (1024 * 1024 * 1024 * 8)) {
+          this.veryLargeFile = true
+        }
+
+        this.reader.onload = e => {
+          this.onChunkLoaded()
+        }.bind(this)
       }.bind(this)
+
+      this.reader.readAsArrayBuffer(this.file.slice(0, 1))
     }
 
     onChunkLoaded() {

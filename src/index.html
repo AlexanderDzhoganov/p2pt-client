@@ -19,6 +19,14 @@
 
       <div class="hero-content">
         <div class="container"> 
+          <div if.bind="reader && reader.largeFile && !reader.veryLargeFile" class="notification is-warning">
+            Warning! You are trying to send a large file. Receiving files above 1 GiB is recommended only for desktop devices with plenty of RAM. Mobile devices and old PCs may experience unresponsiveness for a while after the transfer completes and the file gets reassembled.
+          </div>
+
+          <div if.bind="reader && reader.veryLargeFile" class="notification is-danger">
+            Warning! You are trying to send a file over 16 GiB. This will probably not work.
+          </div>
+
           <div if.bind="isUploader" class="container">
             <div if.bind="!file" id="dropzone" class="dropzone" ref="dropzoneRef">
                 <div class="dropzone-text">Drag and drop a file or click to browse..</div>

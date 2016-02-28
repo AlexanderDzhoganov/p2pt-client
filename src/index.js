@@ -167,6 +167,7 @@ export class Index {
     this.fileName = file.name
     this.contentType = file.type
     this.file = file
+    this.reader = new filereader(this.file)
     this.socket.emit('ask-token')
   }
 
@@ -180,12 +181,9 @@ export class Index {
       return 'There is an upload in progress, are you sure you wish to cancel it?'
     }
 
-    this.reader = new filereader(this.file)
-
     this.reader.readCallback = (data, complete) => {
       this.sendChunk(data, complete)
     }.bind(this)
-
 
     setTimeout(() => {
       this.reader.loadNextChunk()
