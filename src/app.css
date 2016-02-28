@@ -114,7 +114,7 @@ a {
     color: #0b97c4;
     font-size: 1.0em;
     margin: 0;
-    margin-top: 0.25em;
+    margin-top: 0.65em;
     cursor: pointer;
 }
 
@@ -139,8 +139,8 @@ a {
 }
 
 .faq .list-item .content .inner-content {
-    margin-top: 0.45em;
-    margin-bottom: 0.45em;
+    margin-top: 0.55em;
+    margin-bottom: 0.55em;
 }
 
 .token-link {
