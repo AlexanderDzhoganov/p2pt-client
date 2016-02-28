@@ -8,13 +8,11 @@ export default class Downloader {
     constructor() {
       this.fileName = null
       this.fileSize = 0
-      this.chunks = []
+      this.chunks = {}
       this.bytesTransferred = 0
       this.complete = false
       this.percentComplete = 0
       this.localUrl = null
-
-      this.hasher = CryptoJS.algo.SHA1.create()
     }
 
     setFileInfo(fileName, fileSize) {
@@ -22,9 +20,8 @@ export default class Downloader {
       this.fileSize = fileSize
     }
 
-    addChunk(chunk) {
-      this.hasher.update(CryptoJS.lib.WordArray.create(new Uint8Array(chunk)))
-      this.chunks.push(chunk)
+    addChunk(chunkId, chunk) {
+      this.chunks[chunkId] = chunk
       this.bytesTransferred += chunk.byteLength
       this.percentComplete = (this.bytesTransferred / this.fileSize) * 100.0
     }
@@ -32,12 +29,22 @@ export default class Downloader {
     setComplete(fileHash) {
       this.complete = false
 
-      this.fileHash = this.hasher.finalize().toString()
+      var chunkList = []
+      for(var i = 0; i < _.keys(this.chunks).length; i++) {
+        chunkList.push(this.chunks[i])
+      }
+
+      var sha1 = CryptoJS.algo.SHA1.create()
+      _.each(chunkList, chunk => {
+        sha1.update(CryptoJS.lib.WordArray.create(new Uint8Array(chunk)))
+      })
+
+      this.fileHash = sha1.finalize().toString()
       if(this.fileHash !== fileHash) {
         return false
       }
 
-      var blob = new Blob(this.chunks, { type: mimetype.lookup(this.fileName) })
+      var blob = new Blob(chunkList, { type: mimetype.lookup(this.fileName) })
       this.localUrl = window.URL.createObjectURL(blob)
       this.complete = true
       return true

@@ -22,6 +22,7 @@ export class Index {
   file = null
   uploading = false
   uploadComplete = false
+  chunkId = 0
   downloader = null
   hashMismatch = null
 
@@ -93,7 +94,7 @@ export class Index {
       this.p2p.on('upgrade', data => {
         this.connectedToPeer = true
 
-        if (this.file) {
+        if (this.file && !this.uploading) {
           this.startUpload()
         }
       }.bind(this))
@@ -108,9 +109,21 @@ export class Index {
         this.connectedToPeer = false
       }.bind(this))
 
+      this.p2p.on('got-chunk', packet => {
+        if(packet.chunkId !== this.chunkId - 1) {
+          console.error('chunks out of order')
+        }
+
+        if(!this.uploadComplete) {
+          this.reader.loadNextChunk()
+        }
+      }.bind(this))
+
       this.p2p.on('data', packet => {
         this.downloader.setFileInfo(packet.fileName, packet.fileSize)
-        this.downloader.addChunk(packet.chunk)
+        this.downloader.addChunk(packet.chunkId, packet.chunk)
+
+        this.p2p.emit('got-chunk', { chunkId: packet.chunkId })
 
         if (packet.complete) {
           if(!this.downloader.setComplete(packet.fileHash)) {
@@ -153,24 +166,37 @@ export class Index {
     }
 
     this.uploading = true
-    var fileName = this.fileName.split('\\').pop()
 
     this.reader = new filereader(this.file)
-    this.reader.readFile(function(data, complete) {
-      var packet = {
-        fileName: fileName,
-        fileSize: this.reader.fileSize,
-        chunk: data,
-        complete: complete,
-        fileHash: this.reader.fileHash
-      }
 
-      this.p2p.emit('data', packet)
+    this.reader.readCallback = (data, complete) => {
+      this.sendChunk(data, complete)
+    }.bind(this)
 
-      if(complete) {
-        this.uploadComplete = true
-      }
-    }.bind(this))
+
+    setTimeout(() => {
+      this.reader.loadNextChunk()
+    }.bind(this), 1000)
+  }
+
+  sendChunk(data, complete) {
+    var fileName = this.fileName.split('\\').pop()
+
+    var packet = {
+      fileName: fileName,
+      fileSize: this.reader.fileSize,
+      chunk: data,
+      complete: complete,
+      fileHash: this.reader.fileHash,
+      chunkId: this.chunkId
+    }
+
+    this.chunkId++
+    this.p2p.emit('data', packet)
+
+    if(complete) {
+      this.uploadComplete = true
+    }
   }
 
   reload() {

@@ -33,11 +33,11 @@ function Socketiop2p (socket, opts, cb) {
                  }
   var defaultOpts = {
     autoUpgrade: true,
-    numClients: 5
+    numClients: 2
   }
   self.opts = extend(defaultOpts, (opts || {}))
   self.peerOpts = self.opts.peerOpts || {}
-  self.numConnectedClients
+  self.numConnectedClients = 0
 
   socket.on('numClients', function (numClients) {
     self.peerId = socket.io.engine.id
@@ -127,13 +127,10 @@ function Socketiop2p (socket, opts, cb) {
   })
 
   self.on('peer_ready', function (peer) {
-    self.readyPeers++
-    if (self.readyPeers >= self.numConnectedClients && !self.ready) {
-      self.ready = true
-      if (self.opts.autoUpgrade) self.usePeerConnection = true
-      if (typeof self.cb === 'function') self.cb()
-      self.emit('upgrade')
-    }
+    self.ready = true
+    if (self.opts.autoUpgrade) self.usePeerConnection = true
+    if (typeof self.cb === 'function') self.cb()
+    self.emit('upgrade')
   })
 
 }

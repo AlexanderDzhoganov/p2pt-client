@@ -4,7 +4,7 @@ export default class Reader {
 
     constructor(file) {
       this.file = file
-      this.chunkSize = 542288
+      this.chunkSize = 16384
       this.pos = 0
       this.fileSize = 0
       this.percentComplete = 0
@@ -18,11 +18,6 @@ export default class Reader {
       }.bind(this)
     }
 
-    readFile(cb) {
-      this.readCallback = cb
-      this.loadNextChunk()
-    }
-
     onChunkLoaded() {
       this.fileSize = this.file.size
 
@@ -34,9 +29,7 @@ export default class Reader {
 
       this.fileHasher.update(CryptoJS.lib.WordArray.create(new Uint8Array(data)))
 
-      if(!complete) {
-        this.loadNextChunk()
-      } else {
+      if(complete) {
         this.fileHash = this.fileHasher.finalize().toString()
       }
 
