@@ -35,6 +35,7 @@
             <div if.bind="file" class="upload-box">
               <div>
                 <h1 class="title">Sending "${fileName}"</h1>
+                <h3 if.bind="reader.fileSize" class="subtitle">Size: ${((reader.fileSize / 1024.0) / 1024.0).toFixed(2)} MiB</h3>
               </div>
               <br/>
               <div if.bind="token && !uploading">
@@ -48,8 +49,6 @@
               </div>
 
               <div if.bind="uploading && !uploadComplete">
-                  <h2 class="title">Sending..</h2>
-
                   <div class="progress">
                       <div class="progress-bar" css="width:${reader.percentComplete}%">
                           <span class="sr-only">${reader.percentComplete.toFixed(2)}%</span>
@@ -70,12 +69,13 @@
             <template if.bind="downloader.fileName">
               <h2 class="title">
                   <template if.bind="!downloader.complete">Receiving</template>
-                  <template if.bind="downloader.complete">Received</template>
+                  <template if.bind="downloader.complete && downloader.validated">Received</template>
+                  <template if.bind="downloader.complete && !downloader.validated">Validating</template>
                   "${downloader.fileName}"
               </h2>
               <h3 class="subtitle">Size: ${((downloader.fileSize / 1024.0) / 1024.0).toFixed(2)} MiB</h3>
 
-              <div if.bind="!downloader.complete && !hashMismatch" class="progress">
+              <div if.bind="(!downloader.complete || !downloader.validated) && !hashMismatch" class="progress">
                   <div class="progress-bar" role="progressbar" aria-valuenow="${downloader.percentComplete}"
                        aria-valuemin="0" aria-valuemax="100" css="width:${downloader.percentComplete}%">
                       <span class="sr-only">${downloader.percentComplete.toFixed(2)}%</span>
@@ -92,7 +92,7 @@
 
               <div>
                 <h1 class="title">
-                  <a if.bind="downloader.complete"
+                  <a if.bind="downloader.complete && downloader.validated"
                     download.bind="downloader.fileName"
                     href.bind="downloader.localUrl">
                     Save file

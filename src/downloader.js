@@ -11,6 +11,9 @@ export default class Downloader {
       this.chunks = {}
       this.bytesTransferred = 0
       this.complete = false
+      this.validated = false
+      this.valdatedChunks = 0
+      this.chunksPerCall = 16
       this.percentComplete = 0
       this.localUrl = null
     }
@@ -26,7 +29,46 @@ export default class Downloader {
       this.percentComplete = (this.bytesTransferred / this.fileSize) * 100.0
     }
 
-    setComplete(fileHash) {
+    validateNextChunkBatch() {
+      var i = this.chunksPerCall
+
+      while(i > 0) {
+        if(!this.validateNextChunk()) {
+          return
+        }
+
+        i--
+      }
+
+      setTimeout(() => {
+        this.validateNextChunkBatch()
+      }.bind(this), 0)
+    }
+
+    validateNextChunk() {
+      this.sha1.update(CryptoJS.lib.WordArray.create(new Uint8Array(this.chunkList[this.validatedChunks])))
+      this.validatedChunks++
+      this.percentComplete = (this.validatedChunks / this.chunkList.length) * 100.0
+      
+      if(this.validatedChunks >= this.chunkList.length) {
+        this.fileHash = this.sha1.finalize().toString()
+        if(this.fileHash !== this.expectedFileHash) {
+          this.completeCb(false)
+          return false
+        }
+
+        var blob = new Blob(this.chunkList, { type: mimetype.lookup(this.fileName) })
+        this.localUrl = window.URL.createObjectURL(blob)
+        this.validated = true
+        this.completeCb(true)
+        return false
+      }
+
+      return true
+    }
+
+    setComplete(fileHash, completeCb) {
+      this.completeCb = completeCb
       this.complete = false
 
       var chunkList = []
@@ -34,20 +76,15 @@ export default class Downloader {
         chunkList.push(this.chunks[i])
       }
 
-      var sha1 = CryptoJS.algo.SHA1.create()
-      _.each(chunkList, chunk => {
-        sha1.update(CryptoJS.lib.WordArray.create(new Uint8Array(chunk)))
-      })
+      this.sha1 = CryptoJS.algo.SHA1.create()
+      this.expectedFileHash = fileHash
 
-      this.fileHash = sha1.finalize().toString()
-      if(this.fileHash !== fileHash) {
-        return false
-      }
-
-      var blob = new Blob(chunkList, { type: mimetype.lookup(this.fileName) })
-      this.localUrl = window.URL.createObjectURL(blob)
+      this.chunkList = chunkList
+      this.validated = false
+      this.validatedChunks = 0
       this.complete = true
-      return true
+      this.percentComplete = 0
+      this.validateNextChunkBatch()
     }
 
 }

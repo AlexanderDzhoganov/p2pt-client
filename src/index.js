@@ -132,11 +132,13 @@ export class Index {
         this.p2p.emit('got-chunk', { chunkId: packet.chunkId })
 
         if (packet.complete) {
-          if(!this.downloader.setComplete(packet.fileHash)) {
-            this.hashMismatch = 'SHA-1 mismatch, got "' + this.downloader.fileHash + '", expected "' + packet.fileHash + '"'
-          }
+          this.downloader.setComplete(packet.fileHash, success => {
+            if(!success) {
+              this.hashMismatch = 'SHA-1 mismatch, got "' + this.downloader.fileHash + '", expected "' + packet.fileHash + '"'
+            }
 
-          window.onbeforeunload = null
+            window.onbeforeunload = null
+          })
         }
       }.bind(this))
     }.bind(this))
