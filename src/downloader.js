@@ -8,7 +8,9 @@ export default class Downloader {
     constructor() {
       this.fileName = null
       this.fileSize = 0
-      this.chunks = {}
+      this.chunks = []
+      this.nextChunkId = 0
+
       this.bytesTransferred = 0
       this.complete = false
       this.validated = false
@@ -24,7 +26,13 @@ export default class Downloader {
     }
 
     addChunk(chunkId, chunk) {
-      this.chunks[chunkId] = chunk
+      if(this.nextChunkId !== chunkId) {
+        console.error('out of order chunk')
+      }
+
+      this.nextChunkId++
+
+      this.chunks.push(chunk)
       this.bytesTransferred += chunk.byteLength
       this.percentComplete = (this.bytesTransferred / this.fileSize) * 100.0
     }
@@ -46,18 +54,18 @@ export default class Downloader {
     }
 
     validateNextChunk() {
-      this.sha1.update(CryptoJS.lib.WordArray.create(new Uint8Array(this.chunkList[this.validatedChunks])))
+      this.sha1.update(CryptoJS.lib.WordArray.create(new Uint8Array(this.chunks[this.validatedChunks])))
       this.validatedChunks++
-      this.percentComplete = (this.validatedChunks / this.chunkList.length) * 100.0
+      this.percentComplete = (this.validatedChunks / this.chunks.length) * 100.0
       
-      if(this.validatedChunks >= this.chunkList.length) {
+      if(this.validatedChunks >= this.chunks.length) {
         this.fileHash = this.sha1.finalize().toString()
         if(this.fileHash !== this.expectedFileHash) {
           this.completeCb(false)
           return false
         }
 
-        var blob = new Blob(this.chunkList, { type: mimetype.lookup(this.fileName) })
+        var blob = new Blob(this.chunks, { type: mimetype.lookup(this.fileName) })
         this.localUrl = window.URL.createObjectURL(blob)
         this.validated = true
         this.completeCb(true)
@@ -71,15 +79,9 @@ export default class Downloader {
       this.completeCb = completeCb
       this.complete = false
 
-      var chunkList = []
-      for(var i = 0; i < _.keys(this.chunks).length; i++) {
-        chunkList.push(this.chunks[i])
-      }
-
       this.sha1 = CryptoJS.algo.SHA1.create()
       this.expectedFileHash = fileHash
 
-      this.chunkList = chunkList
       this.validated = false
       this.validatedChunks = 0
       this.complete = true
