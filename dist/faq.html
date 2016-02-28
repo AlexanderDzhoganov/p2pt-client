@@ -7,8 +7,8 @@
         <div class="list-item" data-faq-item="1">
             <p class="title" click.delegate="showFaqItem(1)"><i class="fa fa-fw fa-angle-right"></i> What is this?</p>
             <div class="content">
-            <p class="inner-content"> Bitfly is a service which allows you to securely transfer files to (almost) any device with a browser.
-            It's powered by <a href="https://webrtc.org/">WebRTC</a> and uses it to establish a secure peer-to-peer connection between any two modern browsers. The browser- provided modern end-to-end encryption means that we (or anyone else) do not get to see the contents or metadata of your files and they're always securely transmitted directly from the sending device to the receiving device.
+            <p class="inner-content"> Bitfly is a service which allows you to securely transfer files to (almost) any device with a modern browser.
+            It's powered by <a href="https://webrtc.org/">WebRTC</a> and uses it to establish a secure peer-to-peer connection between two browsers. The browser- provided modern end-to-end encryption means that we (or anyone else) do not get to see the contents or metadata of your files and they're always securely transmitted directly from the sending device to the receiving device.
             </p>
             </div>
         </div>
@@ -22,9 +22,9 @@
             </div>
         </div>
         <div class="list-item" data-faq-item="3">
-            <p class="title" click.delegate="showFaqItem(3)"><i class="fa fa-fw fa-angle-right"></i> Is sending files via Bitfly anonymous?</p>
+            <p class="title" click.delegate="showFaqItem(3)"><i class="fa fa-fw fa-angle-right"></i> Is sending files via Bitfly secure and anonymous?</p>
             <div class="content">
-                <p class="inner-content">To a certain degree, yes. We do not store any kind of logs but our servers do remember your IP address for a short duration in order to setup the connection between the sending and receiving devices. While using Bitfly for any kind of illegal material is strictly forbidden, we cannot really tell what you're sending (see previous two questions) so it's up to you to be responsible with your data.
+                <p class="inner-content">Secure, absolutely! Anonymous, kind of. We do not store any kind of logs but our servers do remember your IP address for a short duration in order to setup the connection between the sending and receiving devices. While using Bitfly for any kind of illegal material is strictly forbidden, we cannot really tell what you're sending (see previous two questions) so it's up to you to be responsible with your data.
                 </p>
             </div>
         </div>
@@ -32,14 +32,14 @@
             <p class="title" click.delegate="showFaqItem(4)"><i class="fa fa-fw fa-angle-right"></i> How can I be sure you're not sending all my data
             to the NSA and just lying about it?</p>
             <div class="content">
-                <p class="inner-content">Bitfly is completely open-source and very small (less than 2000 lines of code). You can look at all of our backend and frontend code by clicking the 'GitHub' button at the bottom of the page. All file-transfer logic is on the client-side and you can inspect it easily with your browser tools (it's also intentionally not minified). While this setup would be acceptable security-wise for many needs, we strongly advise against using Bitfly for highly sensitive data. You've been warned.
+                <p class="inner-content">Bitfly is completely open-source and very small (less than 2000 lines of code). You can look at all of our backend and frontend code by clicking the 'GitHub' button at the bottom of the page. All file-transfer logic is on the client-side and you can inspect it easily with your browser tools (it's also intentionally not minified). While this setup would be acceptable security-wise for many needs, <strong>we advise against using Bitfly for highly sensitive data.</strong> You've been warned.
                 </p>
             </div>
         </div>
         <div class="list-item" data-faq-item="5">
             <p class="title" click.delegate="showFaqItem(5)"><i class="fa fa-fw fa-angle-right"></i> Javascript crypto is broken!</p>
             <div class="content">
-                <p class="inner-content">We're not doing any kind of cryptography in our code. All encryption is done by your browser's WebRTC implementation. Refer to questions 1 and 2.
+                <p class="inner-content">We're not doing any kind of cryptography in Bitfly's code. All encryption is done by your browser's WebRTC implementation. Refer to questions 1 and 2.
                 </p>
             </div>
         </div>
