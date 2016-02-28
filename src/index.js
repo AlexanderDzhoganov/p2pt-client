@@ -173,6 +173,7 @@ export class Index {
   }
 
   reload() {
+    this.router.navigate('/')
     location.reload()
   }
 
