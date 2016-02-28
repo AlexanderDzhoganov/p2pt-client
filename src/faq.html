@@ -23,32 +23,39 @@
       </div>
     </div>
     <div class="list-item" data-faq-item="3">
-      <p class="title" click.delegate="showFaqItem(3)"><i class="fa fa-fw fa-angle-right"></i> Is sending files via Bitfly secure and anonymous?</p>
+      <p class="title" click.delegate="showFaqItem(3)"><i class="fa fa-fw fa-angle-right"></i> Is sending files via Bitfly secure? How do I know you're not secretly storing all my data?</p>
       <div class="content">
         <p class="inner-content">
-        Secure, absolutely! It is not, however, fully anonymous. While we do not store any logs, our servers do know the IP addresses of both the sending and receiving devices for a short amount of time in order to setup the peer-to-peer connection. While using Bitfly for any kind of illegal material is strictly forbidden we cannot really tell what you are sending (see previous two questions) so it is up to you to be responsible with your data.
+        The answer is - to a certain degree, yes, but there are always possible threats. There are a variety of practical and theoretical attacks against WebRTC but Bitfly should be considered secure for most purposes and against non-sophisticated attackers. Due to the way the WebRTC handshake works there is a possibility that our server maliciously performs a man-in-the-middle attack and gains access to your data. In this sense Bitfly provides no extra security compared to server- based solutions like Dropbox or Google Drive. On the other hand, the ephemeral existence of the files on the network does provide some guarantees that server- based solutions do not - for example, somebody successfully gaining access to our servers does not allow him or her to view the contents or metadata of any files sent in the past. We monitor our servers 24/7 for threats and will immediately respond by shutting down the service temporarily in case we detect a malicious actor to prevent compromise of future transfers. With the above in mind, <strong>we do not advise using Bitfly for highly sensitive data</strong>.
         </p>
       </div>
     </div>
     <div class="list-item" data-faq-item="4">
-      <p class="title" click.delegate="showFaqItem(4)"><i class="fa fa-fw fa-angle-right"></i> How do I know you're not sending all my data
-      to the NSA?</p>
+      <p class="title" click.delegate="showFaqItem(4)"><i class="fa fa-fw fa-angle-right"></i> Is sending files via Bitfly anonymous?</p>
       <div class="content">
         <p class="inner-content">
-        Bitfly is open-source and very small (less than 2000 lines of code). You can look at all of our backend and frontend code by clicking on the 'GitHub' button at the bottom of the page. All of the important code is on the client-side and you can inspect it easily with your browser developer tools (the code is also intentionally not minified). While this setup would be acceptable security-wise for most needs <strong>we advise against using Bitfly for highly sensitive data.</strong> You have been warned.
+        Bitfly does not provide complete anonymity like a service like TOR would. While we do not store any logs, our servers do know the IP addresses of both the sending and receiving devices for a short amount of time in order to setup the peer-to-peer connection. While using Bitfly for any kind of illegal material is strictly forbidden we cannot really tell what you are sending (see previous two questions) so it is up to you to be responsible with your data.
         </p>
       </div>
     </div>
     <div class="list-item" data-faq-item="5">
-      <p class="title" click.delegate="showFaqItem(5)"><i class="fa fa-fw fa-angle-right"></i> Javascript crypto is broken!</p>
+      <p class="title" click.delegate="showFaqItem(5)"><i class="fa fa-fw fa-angle-right"></i> Can I see your code?</p>
+      <div class="content">
+        <p class="inner-content">
+        Bitfly is open-source and very small (less than 2000 lines of code). You can look at all of our backend and frontend code by clicking on the 'GitHub' button at the bottom of the page. All of the important code is on the client-side and you can inspect it easily with your browser developer tools (the code is also intentionally not minified).</strong>
+        </p>
+      </div>
+    </div>
+    <div class="list-item" data-faq-item="6">
+      <p class="title" click.delegate="showFaqItem(6)"><i class="fa fa-fw fa-angle-right"></i> Javascript crypto is broken!</p>
       <div class="content">
         <p class="inner-content">
         We are not doing any kind of vital cryptography in Bitfly's code. All of the actual encryption is done by your browser's WebRTC implementation (refer to questions 1 and 2). We do use the crypto-js package to do SHA-1 hashing of the file chunks in order to verify that we have rebuilt your file correctly on the other end, however this has no substantial implication on security.
         </p>
       </div>
     </div>
-    <div class="list-item" data-faq-item="6">
-      <p class="title" click.delegate="showFaqItem(6)"><i class="fa fa-fw fa-angle-right"></i> It's not working! Help!</p>
+    <div class="list-item" data-faq-item="7">
+      <p class="title" click.delegate="showFaqItem(7)"><i class="fa fa-fw fa-angle-right"></i> It's not working! Help!</p>
       <div class="content">
         <p class="inner-content">
         Bitfly should work for almost anyone with <a href="http://iswebrtcreadyyet.com/" target="_blank">a supported browser</a> but it may fail for some very restricted NAT setups (e.g. behind some corporate firewalls). If you encounter issues please submit a report to one of our GitHub repositories via the GitHub button at the bottom of the page.
