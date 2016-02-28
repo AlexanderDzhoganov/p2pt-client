@@ -47,6 +47,10 @@ export class Index {
   bind() {
     if(this.isUploader) {
       this.initDropzone()
+    } else {
+      window.onbeforeunload = () => {
+        return 'There is a download in progress, are you sure you wish to cancel it?'
+      }
     }
 
     this.socket = io(this.config.apiUrl)
@@ -116,6 +120,8 @@ export class Index {
 
         if(!this.uploadComplete) {
           this.reader.loadNextChunk()
+        } else {
+          window.onbeforeunload = null
         }
       }.bind(this))
 
@@ -129,6 +135,8 @@ export class Index {
           if(!this.downloader.setComplete(packet.fileHash)) {
             this.hashMismatch = 'SHA-1 mismatch, got "' + this.downloader.fileHash + '", expected "' + packet.fileHash + '"'
           }
+
+          window.onbeforeunload = null
         }
       }.bind(this))
     }.bind(this))
@@ -166,6 +174,9 @@ export class Index {
     }
 
     this.uploading = true
+    window.onbeforeunload = () => {
+      return 'There is an upload in progress, are you sure you wish to cancel it?'
+    }
 
     this.reader = new filereader(this.file)
 
