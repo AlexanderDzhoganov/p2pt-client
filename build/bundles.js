@@ -23,6 +23,7 @@ module.exports = {
         "jquery",
         "lodash",
         "mimetype",
+        "crypto-js",
         "font-awesome/css/font-awesome.min.css!text",
         "socket.io-client",
         "socket.io-p2p"

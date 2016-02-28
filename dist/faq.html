@@ -39,7 +39,7 @@
         <div class="list-item" data-faq-item="5">
             <p class="title" click.delegate="showFaqItem(5)"><i class="fa fa-fw fa-angle-right"></i> Javascript crypto is broken!</p>
             <div class="content">
-                <p class="inner-content">We're not doing any kind of cryptography in Bitfly's code. All encryption is done by your browser's WebRTC implementation. Refer to questions 1 and 2.
+                <p class="inner-content">We're not doing any kind of important cryptography in Bitfly's code. All encryption is done by your browser's WebRTC implementation (refer to questions 1 and 2). We do use crypto-js to do SHA-1 hashing of the file chunks in order to verify that we have rebuilt your file correctly on the other end but this has no implications on security.
                 </p>
             </div>
         </div>

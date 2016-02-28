@@ -1,37 +1,46 @@
 import _ from 'lodash'
 import mimetype from 'mimetype'
 
+import CryptoJS from 'crypto-js'
+
 export default class Downloader {
 
     constructor() {
-      this.queue = []
+      this.fileName = null
+      this.fileSize = 0
+      this.chunks = []
+      this.bytesTransferred = 0
+      this.complete = false
+      this.percentComplete = 0
+      this.localUrl = null
+
+      this.hasher = CryptoJS.algo.SHA1.create()
     }
 
-    addChunk(fileName, fileSize, chunk, complete) {
-      var download = _.find(this.queue, dl => dl.fileName == fileName)
-      if(!download) {
-        this.queue.push({
-          fileName: fileName,
-          fileSize: fileSize,
-          chunks: [chunk],
-          bytesTransferred: chunk.byteLength,
-          complete: complete
-        })
+    setFileInfo(fileName, fileSize) {
+      this.fileName = fileName
+      this.fileSize = fileSize
+    }
 
-        download = this.queue[this.queue.length - 1]
-      } else {
-        download.chunks.push(chunk)
-        download.bytesTransferred += chunk.byteLength
-        download.fileSize = fileSize
-        download.complete = complete
+    addChunk(chunk) {
+      this.hasher.update(CryptoJS.lib.WordArray.create(new Uint8Array(chunk)))
+      this.chunks.push(chunk)
+      this.bytesTransferred += chunk.byteLength
+      this.percentComplete = (this.bytesTransferred / this.fileSize) * 100.0
+    }
+
+    setComplete(fileHash) {
+      this.complete = false
+
+      this.fileHash = this.hasher.finalize().toString()
+      if(this.fileHash !== fileHash) {
+        return false
       }
 
-      download.percentComplete = (download.bytesTransferred / download.fileSize) * 100.0
-
-      if (download.complete) {
-        var blob = new Blob(download.chunks, { type: mimetype.lookup(download.fileName) })
-        download.localUrl = window.URL.createObjectURL(blob)
-      }
+      var blob = new Blob(this.chunks, { type: mimetype.lookup(this.fileName) })
+      this.localUrl = window.URL.createObjectURL(blob)
+      this.complete = true
+      return true
     }
 
 }

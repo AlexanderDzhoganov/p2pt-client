@@ -1,3 +1,5 @@
+import CryptoJS from 'crypto-js'
+
 export default class Reader {
 
     constructor(file) {
@@ -6,6 +8,9 @@ export default class Reader {
       this.pos = 0
       this.fileSize = 0
       this.percentComplete = 0
+
+      this.fileHasher = CryptoJS.algo.SHA1.create()
+      this.fileHash = null
 
       this.reader = new FileReader()
       this.reader.onload = function(e) {
@@ -27,12 +32,16 @@ export default class Reader {
       this.percentComplete = (this.pos / this.fileSize) * 100.0
       var complete = this.pos >= this.fileSize
 
-      if(this.readCallback) {
-        this.readCallback(data, complete)
-      }
+      this.fileHasher.update(CryptoJS.lib.WordArray.create(new Uint8Array(data)))
 
       if(!complete) {
         this.loadNextChunk()
+      } else {
+        this.fileHash = this.fileHasher.finalize().toString()
+      }
+
+      if(this.readCallback) {
+        this.readCallback(data, complete)
       }
     }
 

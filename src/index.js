@@ -18,15 +18,12 @@ export class Index {
 
   isUploader = true
   connectedToPeer = false
-
   token = null
-
   file = null
-  previewImage = null
   uploading = false
   uploadComplete = false
-
   downloader = null
+  hashMismatch = null
 
   totalTransfers = 0
 
@@ -112,7 +109,14 @@ export class Index {
       }.bind(this))
 
       this.p2p.on('data', packet => {
-        this.downloader.addChunk(packet.fileName, packet.fileSize, packet.data, packet.complete)
+        this.downloader.setFileInfo(packet.fileName, packet.fileSize)
+        this.downloader.addChunk(packet.chunk)
+
+        if (packet.complete) {
+          if(!this.downloader.setComplete(packet.fileHash)) {
+            this.hashMismatch = 'SHA-1 mismatch, got "' + this.downloader.fileHash + '", expected "' + packet.fileHash + '"'
+          }
+        }
       }.bind(this))
     }.bind(this))
   }
@@ -122,7 +126,7 @@ export class Index {
 
     setTimeout(() => {
       this.dropzone = new Dropzone("div#dropzone", {
-        url: "/file/post",
+        url: "bitf.ly",
         addedfile: file => {
           view.fileAdded(file)
         }.bind(this),
@@ -152,12 +156,15 @@ export class Index {
 
     this.reader = new filereader(this.file)
     this.reader.readFile(function(data, complete) {
-      this.p2p.emit('data', {
+      var packet = {
         fileName: fileName,
         fileSize: this.reader.fileSize,
-        data: data,
-        complete: complete
-      })
+        chunk: data,
+        complete: complete,
+        fileHash: this.reader.fileHash
+      }
+
+      this.p2p.emit('data', packet)
 
       if(complete) {
         this.uploadComplete = true
@@ -168,6 +175,5 @@ export class Index {
   reload() {
     location.reload()
   }
-
 
 }

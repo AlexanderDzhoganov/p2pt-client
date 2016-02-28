@@ -29,6 +29,7 @@ System.config({
     "bulma": "npm:bulma@0.0.16",
     "component-emitter": "npm:component-emitter@1.2.0",
     "core-js": "npm:core-js@1.2.6",
+    "crypto-js": "npm:crypto-js@3.1.6",
     "css": "github:systemjs/plugin-css@0.1.20",
     "debug": "npm:debug@2.2.0",
     "dropzone": "github:enyo/dropzone@4.3.0",
@@ -366,6 +367,10 @@ System.config({
       "pbkdf2": "npm:pbkdf2@3.0.4",
       "public-encrypt": "npm:public-encrypt@4.0.0",
       "randombytes": "npm:randombytes@2.0.2"
+    },
+    "npm:crypto-js@3.1.6": {
+      "buffer": "github:jspm/nodelibs-buffer@0.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:debug@2.1.3": {
       "fs": "github:jspm/nodelibs-fs@0.1.2",

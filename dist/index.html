@@ -12,7 +12,7 @@
           </div>
           <div class="header-right">
             <div class="header-item logo" click.delegate="reload()">
-              bit<span style="color: #346BC8;">f.ly</span>
+              bit<span style="color: #346BC8;">f.ly</span> <span class="beta-tag">[BETA]</span>
             </div>
           </div>
         </header>
@@ -52,7 +52,7 @@
                   <h2 class="title">Sending..</h2>
 
                   <div class="progress">
-                      <div class="progress-bar" style="width:${reader.percentComplete}%">
+                      <div class="progress-bar" css="width:${reader.percentComplete}%">
                           <span class="sr-only">${reader.percentComplete.toFixed(2)}%</span>
                       </div>
                   </div>
@@ -65,30 +65,37 @@
           </div>
 
           <div if.bind="!isUploader" class="container">
-            <template if.bind="downloader.queue.length === 0">
+            <template if.bind="!downloader.fileName">
                 <h2 class="title">Please wait..</h2>
             </template>
-            <template if.bind="downloader.queue.length > 0">
+            <template if.bind="downloader.fileName">
               <h2 class="title">
-                  <template if.bind="!downloader.queue[0].localUrl">Receiving</template>
-                  <template if.bind="downloader.queue[0].localUrl">Received</template>
-                  "${downloader.queue[0].fileName}"
+                  <template if.bind="!downloader.complete">Receiving</template>
+                  <template if.bind="downloader.complete">Received</template>
+                  "${downloader.fileName}"
               </h2>
-              <h3 class="subtitle">Size: ${((downloader.queue[0].fileSize / 1024.0) / 1024.0).toFixed(2)} MiB</h3>
+              <h3 class="subtitle">Size: ${((downloader.fileSize / 1024.0) / 1024.0).toFixed(2)} MiB</h3>
 
-              <div if.bind="!downloader.queue[0].localUrl" class="progress">
-                  <div class="progress-bar" role="progressbar" aria-valuenow="${downloader.queue[0].percentComplete}"
-                       aria-valuemin="0" aria-valuemax="100" style="width:${downloader.queue[0].percentComplete}%">
-                      <span class="sr-only">${downloader.queue[0].percentComplete.toFixed(2)}%</span>
+              <div if.bind="!downloader.complete && !hashMismatch" class="progress">
+                  <div class="progress-bar" role="progressbar" aria-valuenow="${downloader.percentComplete}"
+                       aria-valuemin="0" aria-valuemax="100" css="width:${downloader.percentComplete}%">
+                      <span class="sr-only">${downloader.percentComplete.toFixed(2)}%</span>
                   </div>
               </div>
 
+              <div if.bind="hashMismatch">
+                <h1 class="title">
+                  ERROR: ${hashMismatch}
+                </h1>
+              </div>
+
               <br/>
+
               <div>
                 <h1 class="title">
-                  <a if.bind="downloader.queue[0].localUrl"
-                    download.bind="downloader.queue[0].fileName"
-                    href.bind="downloader.queue[0].localUrl">
+                  <a if.bind="downloader.complete"
+                    download.bind="downloader.fileName"
+                    href.bind="downloader.localUrl">
                     Save file
                   </a>
                 </h1>

@@ -619,5 +619,9 @@
   "github:tomcartwrightuk/socket.io-p2p-parser@master": {},
   "github:systemjs/plugin-text@0.0.7": {},
   "npm:bulma@0.0.16": {},
-  "npm:jquery@2.2.1": {}
+  "npm:jquery@2.2.1": {},
+  "npm:crypto-js@3.1.6": {
+    "buffer": "github:jspm/nodelibs-buffer@^0.1.0",
+    "process": "github:jspm/nodelibs-process@^0.1.0"
+  }
 }

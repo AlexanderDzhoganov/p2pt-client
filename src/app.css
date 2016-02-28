@@ -215,3 +215,9 @@ a {
 .show-faq {
     margin-top: 16px;
 }
+
+.beta-tag {
+    font-variant: small-caps;
+    font-size: 12px;
+    color: #A9A9A9;
+}
