@@ -19,6 +19,7 @@ module.exports = {
         "aurelia-logging-console",
         "dropzone",
         "dropzone/min/dropzone.min.css!text",
+        "bulma/css/bulma.min.css!text",
         "jspm/nodelibs-path",
         "jquery",
         "lodash",
