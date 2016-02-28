@@ -49,11 +49,6 @@ a {
     margin-left: 8px;
 }
 
-.header .info .subtext {
-    color: #8E92A3;
-    margin-left: 4px;
-}
-
 .header-separator {
     margin-top: 56px;
     border: 1px solid #eee;
@@ -66,7 +61,7 @@ a {
 .dropzone {
     background: url('images/background.png');
     margin: 0 auto;
-    padding: 0;
+    padding: 8px;
     border: 1px dashed #494C66;
     min-height: 400px;
     border-radius: 32px;
@@ -138,18 +133,14 @@ a {
 }
 
 .faq {
-    width: 600px;
-    height: 0px;
+    display: none;
     text-align: left;
     margin: 8px auto 0;
     font-size: 15px;
-    transition: height 350ms ease;
-    -webkit-transition: height 350ms ease;
-    overflow: hidden;
 }
 
 .faq.shown {
-    height: 240px;
+    display: block;
 }
 
 .faq .list-item .title {
