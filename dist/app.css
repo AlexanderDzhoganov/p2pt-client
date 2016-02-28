@@ -140,10 +140,17 @@ a {
 
 .faq {
     width: 600px;
-    height: 234px;
+    height: 0px;
     text-align: left;
     margin: 30px auto 0;
     font-size: 15px;
+    transition: height 350ms ease;
+    -webkit-transition: height 350ms ease;
+    overflow: hidden;
+}
+
+.faq.shown {
+    height: 234px;
 }
 
 .faq .list-item .title {
