@@ -133,7 +133,8 @@ export class Index {
         thumbnail: (file, dataUrl) => {
         }.bind(this),
         uploadprogress: () => {},
-        autoProcessQueue: false
+        autoProcessQueue: false,
+        maxFiles: 1
       })
     }.bind(this), 0)
   }
