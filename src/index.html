@@ -75,9 +75,13 @@
               <div if.bind="token && !uploading">
                   <h2 class="subtitle">
                       Open this URL on the receiving device
-                      <br />
-                      <a href="${serverUrl}/${token}${secret}" target="_blank" class="token-link">${serverUrl}/${token}${secret}</a>
-                      <br/>
+
+                      <div class="message token-link">
+                        <div class="message-body" style="padding: 12px 0px; word-wrap: break-word;">
+                          <a href="${serverUrl}/${token}${secret}" target="_blank" class="token-link">${serverUrl}/${token}${secret}</a>
+                        </div>
+                      </div>
+
                       and don't close this tab until the transfer is complete
                   </h2>
               </div>
@@ -160,9 +164,9 @@
                 </a>
               </div>
               <div class="column">
-                <button if.bind="!showBTCAddress" class="button" data-size="28" style="height: 32px;" click.delegate="showBTCAddress = true">
+                <a if.bind="!showBTCAddress" class="button" data-size="28" style="height: 32px;" click.delegate="showBTCAddress = true">
                   Donate with <i class="fa fa-btc"></i>
-                </button>
+                </a>
                 <template if.bind="showBTCAddress">
                   BTC: 1GafbH7KQSJmCbbESoRqPqy3A6UrXAFn7V<br/>
                   Thank you for your support!

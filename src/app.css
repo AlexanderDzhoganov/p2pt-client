@@ -144,13 +144,7 @@ a {
 }
 
 .token-link {
-    font-size: 2em;
-    color: #6666B5;
-    z-index: 2;
-}
-
-.footer .flink:hover {
-    color: #333;
+    margin: 0.5em;    
 }
 
 .progress-bar {

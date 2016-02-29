@@ -266,6 +266,7 @@ export class Index {
   }
 
   reload() {
+    window.onbeforeunload = null
     this.router.navigate('/')
     location.reload()
   }
