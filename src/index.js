@@ -48,7 +48,6 @@ export class Index {
 
     this.notifications = JSON.parse(localStorage.notifications)
     this.isFirstVisit = !localStorage.firstVisit
-    localStorage.firstVisit = true
 
     this.noSecureRandom = window.crypto === undefined || 
       window.crypto.getRandomValues === undefined
@@ -64,6 +63,7 @@ export class Index {
 
   bind() {
     if(this.isUploader) {
+      localStorage.firstVisit = true
       this.initDropzone()
     } else {
       window.onbeforeunload = () => {
