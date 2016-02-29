@@ -47,6 +47,9 @@ export class Index {
     }
 
     this.notifications = JSON.parse(localStorage.notifications)
+
+    this.noSecureRandom = window.crypto === undefined || 
+      window.crypto.getRandomValues === undefined
   }
 
   activate(params) {
