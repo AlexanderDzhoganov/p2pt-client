@@ -7,6 +7,7 @@ import io from 'socket.io-client'
 import lodash from 'lodash'
 import $ from 'jquery'
 import Dropzone from 'dropzone'
+import CryptoJS from 'crypto-js'
 
 import filereader from './filereader'
 import downloader from './downloader'
@@ -103,9 +104,8 @@ export class Index {
         var secret = randValue[0].toString(16) + randValue[1].toString(16)
         return secret
       } else {
-        var a = Math.floor(Math.random() * (Number.MAX_VALUE - Number.MIN_VALUE)) + Number.MIN_VALUE;
-        var b = Math.floor(Math.random() * (Number.MAX_VALUE - Number.MIN_VALUE)) + Number.MIN_VALUE;
-        var secret = a.toString(16) + b.toString(16)
+        var randValue = Math.floor(Math.random() * (Number.MAX_VALUE - Number.MIN_VALUE)) + Number.MIN_VALUE;
+        var secret = CryptoJS.SHA1(randValue.toString(16)).toString().slice(0, 16)
         return secret
       }
     }
