@@ -56,9 +56,19 @@ export class Index {
     this.socket = io(this.config.apiUrl)
   
     this.socket.on('connect', () => {
+      this.connectionError = false
+
       if(this.token) {
         this.socket.emit('set-token', this.token)
       }
+    }.bind(this))
+
+    this.socket.on('connect_error', () => {
+      this.connectionError = true
+    }.bind(this))
+
+    this.socket.on('connect_timeout', () => {
+      this.connectionError = true
     }.bind(this))
 
     this.socket.on('error', err => {
