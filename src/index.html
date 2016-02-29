@@ -67,7 +67,7 @@
             </div>
 
             <div if.bind="file" class="upload-box">
-              <div>
+              <div if.bind="!uploadComplete">
                 <h1 class="title">Sending "${fileName}"</h1>
                 <h3 if.bind="reader.fileSize" class="subtitle">Size: ${((reader.fileSize / 1024.0) / 1024.0).toFixed(2)} MiB</h3>
               </div>
