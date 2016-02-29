@@ -18,8 +18,11 @@
       <div class="hero-header">
         <header class="header">
           <div class="header-left">
-            <div class="header-item info">
+            <div class="header-item info is-hidden-touch">
               Secure peer-to-peer file transfer directly from your browser
+            </div>
+            <div class="header-item info is-hidden-desktop">
+              Secure file transfer
             </div>
           </div>
           <div class="header-right">
@@ -51,6 +54,13 @@
           <div if.bind="!notifications['improv_security']" class="notification is-info">
             <button class="delete" click.delegate="hideNotification('improv_security')"></button>
             We have adopted an improved key generation scheme, check out "How do the secret URLs work?" in the FAQ for details.
+          </div>
+
+          <div class="container how-it-works is-text-left is-hidden-mobile">
+            <i class="fa fa-chevron-right"></i> You want to send a file<br/>
+            <i class="fa fa-chevron-right"></i> We give you a secret URL to use<br/>
+            <i class="fa fa-chevron-right"></i> Your file gets transferred directly from your device to the recipient<br/>
+            <i class="fa fa-chevron-right"></i> After you close this tab the URL is no longer valid
           </div>
 
           <div if.bind="isUploader" class="container">

@@ -171,3 +171,15 @@ a {
     color: #A9A9A9;
     margin-top: -0.5em;
 }
+
+.how-it-works {
+    position: relative;
+    bottom: 1em;
+    color: #A5979C;
+    font-size: 1.4em;
+}
+
+.how-it-works .fa {
+    position: relative;
+    top: 4px;
+}
