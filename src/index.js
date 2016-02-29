@@ -38,6 +38,14 @@ export class Index {
     this.downloader = new downloader()
     this.config = new Config()
     this.serverUrl = this.config.serverUrl
+
+    if(!localStorage.notifications) {
+      localStorage.notifications = JSON.stringify({
+        improv_security: false
+      })
+    }
+
+    this.notifications = JSON.parse(localStorage.notifications)
   }
 
   activate(params) {
@@ -256,6 +264,11 @@ export class Index {
   reload() {
     this.router.navigate('/')
     location.reload()
+  }
+
+  hideNotification(name) {
+    this.notifications[name] = true
+    localStorage.notifications = JSON.stringify(this.notifications)
   }
 
 }
