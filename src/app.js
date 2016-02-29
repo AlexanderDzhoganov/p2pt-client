@@ -2,7 +2,7 @@ import Config from './config'
 
 export class App {
   configureRouter(config, router) {
-    config.title = 'Bitf.ly'
+    config.title = 'Bitf.ly - secure file transfer over WebRTC'
 
     if(new Config().usePushState) {
         config.options.pushState = true
