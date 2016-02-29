@@ -156,6 +156,7 @@ export class Index {
 
       this.p2p.on('verify-secret', secret => {
         this.secretVerified = secret === this.secret
+        this.invalidSecret = false
 
         if(this.file && !this.uploading && this.secretVerified) {
           this.startUpload()
