@@ -40,6 +40,10 @@
               Warning! You are trying to send a file over 16 GiB. This will probably not work.
             </div>
 
+            <div if.bind="invalidSecret" class="notification is-danger">
+              Error! The receiving party sent an invalid secret! Maybe you gave them the wrong URL or somebody is doing something nasty.
+            </div>
+
             <div if.bind="isUploader" class="container">
               <div if.bind="!file" id="dropzone" class="dropzone" ref="dropzoneRef">
                   <div class="dropzone-text">Drag and drop a file or click to browse</div>
@@ -63,7 +67,7 @@
                     <h2 class="subtitle">
                         Open this URL on the receiving device
                         <br />
-                        <a href="${serverUrl}/${token}" target="_blank" class="token-link">${serverUrl}/${token}</a>
+                        <a href="${serverUrl}/${token}${secret}" target="_blank" class="token-link">${serverUrl}/${token}${secret}</a>
                         <br/>
                         and don't close this tab until the transfer is complete
                     </h2>

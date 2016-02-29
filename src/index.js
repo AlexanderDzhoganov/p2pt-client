@@ -19,6 +19,9 @@ export class Index {
   isUploader = true
   connectedToPeer = false
   token = null
+  secret = null
+  secretVerified = false
+
   file = null
   uploading = false
   uploadComplete = false
@@ -40,7 +43,8 @@ export class Index {
   activate(params) {
     if(params.token) {
       this.isUploader = false
-      this.token = params.token
+      this.token = params.token.slice(0, 16)
+      this.secret = params.token.slice(16)
     }
   }
 
@@ -84,8 +88,27 @@ export class Index {
       this.totalTransfers = val
     }.bind(this))
 
+    function generateSecret() {
+      if (window.crypto && window.crypto.getRandomValues) {
+        var randValue = new Uint32Array(2)
+        window.crypto.getRandomValues(randValue)
+        var secret = randValue[0].toString(16) + randValue[1].toString(16)
+        return secret
+      } else {
+        var a = Math.floor(Math.random() * (Number.MAX_VALUE - Number.MIN_VALUE)) + Number.MIN_VALUE;
+        var b = Math.floor(Math.random() * (Number.MAX_VALUE - Number.MIN_VALUE)) + Number.MIN_VALUE;
+        var secret = a.toString(16) + b.toString(16)
+        return secret
+      }
+    }
+
     this.socket.on('set-token-ok', token => {
       this.token = token
+
+      if(this.isUploader) {
+        this.secret = generateSecret()
+        this.secretVerified = false
+      }
 
       this.p2p = new p2p(this.socket, {
         peerOpts: {
@@ -106,11 +129,11 @@ export class Index {
       }.bind(this))
 
       this.p2p.on('upgrade', data => {
-        this.connectedToPeer = true
-
-        if (this.file && !this.uploading) {
-          this.startUpload()
+        if(this.connectedToPeer && !this.isUploader) {
+          this.p2p.emit('verify-secret', this.secret)
         }
+
+        this.connectedToPeer = true
       }.bind(this))
 
       this.p2p.on('peer-error', err => {
@@ -121,6 +144,16 @@ export class Index {
       this.p2p.on('error', err => {
         console.error(err)
         this.connectedToPeer = false
+      }.bind(this))
+
+      this.p2p.on('verify-secret', secret => {
+        this.secretVerified = secret === this.secret
+
+        if(this.file && !this.uploading && this.secretVerified) {
+          this.startUpload()
+        } else if(!this.secretVerified) {
+          this.invalidSecret = true
+        }
       }.bind(this))
 
       this.p2p.on('got-chunk', packet => {
