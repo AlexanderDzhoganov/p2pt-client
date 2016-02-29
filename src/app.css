@@ -96,6 +96,7 @@ a {
 
 .footer {
     border-top: 1px solid #e5e5e5;
+    padding: 30px 20px 30px;
 }
 
 .faq {
@@ -175,11 +176,13 @@ a {
 .how-it-works {
     position: relative;
     bottom: 1em;
-    color: #A5979C;
+    color: #346BCA;
+    margin-top: 2em;
     font-size: 1.4em;
 }
 
 .how-it-works .fa {
     position: relative;
-    top: 4px;
+    top: 0.65em;
+    font-size: 0.6em;
 }

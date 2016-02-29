@@ -47,6 +47,8 @@ export class Index {
     }
 
     this.notifications = JSON.parse(localStorage.notifications)
+    this.isFirstVisit = !localStorage.firstVisit
+    localStorage.firstVisit = true
 
     this.noSecureRandom = window.crypto === undefined || 
       window.crypto.getRandomValues === undefined
