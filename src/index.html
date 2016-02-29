@@ -19,7 +19,7 @@
         <header class="header">
           <div class="header-left">
             <div class="header-item info">
-              Secure file transfer over <a href="https://webrtc.org/" target="_blank" style="margin-left: 0.25em;">WebRTC</a>. 
+              Secure peer-to-peer file transfer directly from your browser
             </div>
           </div>
           <div class="header-right">
@@ -59,7 +59,7 @@
 
                 <div class="fileicon"></div>
 
-                <div class="dropzone-subtext">and we'll generate a download URL for you</div>
+                <div class="dropzone-subtext">and we'll generate a secure download URL for you</div>
             </div>
 
             <div if.bind="file && !token" class="upload-box">
@@ -145,7 +145,7 @@
       </div>
 
       <div style="background: #fafafa;">
-        DELIVERED ${totalTransfers} FILES
+        BITFLY HAS SHIPPED ${totalTransfers} FILES SO FAR
       </div>
 
       <div class="hero-footer">
