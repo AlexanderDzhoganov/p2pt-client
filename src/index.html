@@ -56,7 +56,7 @@
             We have adopted an improved key generation scheme, check out "How do the secret URLs work?" in the FAQ for details.
           </div>
 
-          <div if.bind="isUploader" class="container how-it-works is-text-left is-hidden-mobile">
+          <div if.bind="isUploader && !file && !uploading" class="container how-it-works is-text-left is-hidden-mobile">
             <i class="fa fa-chevron-right"></i> You want to send a file<br/>
             <i class="fa fa-chevron-right"></i> We give you a secret URL to use<br/>
             <i class="fa fa-chevron-right"></i> Your file gets transferred directly from your device to the recipient<br/>
