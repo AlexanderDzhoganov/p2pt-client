@@ -12,7 +12,6 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
-
   map: {
     "aurelia-bootstrapper": "npm:aurelia-bootstrapper@1.0.0-beta.1.1.4",
     "aurelia-fetch-client": "npm:aurelia-fetch-client@1.0.0-beta.1.1.1",
@@ -28,7 +27,6 @@ System.config({
     "babel-runtime": "npm:babel-runtime@5.8.35",
     "bulma": "npm:bulma@0.0.16",
     "component-emitter": "npm:component-emitter@1.2.0",
-    "core-js": "npm:core-js@1.2.6",
     "crypto-js": "npm:crypto-js@3.1.6",
     "css": "github:systemjs/plugin-css@0.1.20",
     "debug": "npm:debug@2.2.0",
@@ -307,12 +305,6 @@ System.config({
       "string_decoder": "github:jspm/nodelibs-string_decoder@0.1.0"
     },
     "npm:constants-browserify@0.0.1": {
-      "systemjs-json": "github:systemjs/plugin-json@0.1.0"
-    },
-    "npm:core-js@1.2.6": {
-      "fs": "github:jspm/nodelibs-fs@0.1.2",
-      "path": "github:jspm/nodelibs-path@0.1.0",
-      "process": "github:jspm/nodelibs-process@0.1.2",
       "systemjs-json": "github:systemjs/plugin-json@0.1.0"
     },
     "npm:core-util-is@1.0.2": {

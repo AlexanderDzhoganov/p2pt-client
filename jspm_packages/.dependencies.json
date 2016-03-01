@@ -40,12 +40,6 @@
   "github:jspm/nodelibs-util@0.1.0": {
     "util": "npm:util@^0.10.3"
   },
-  "npm:core-js@1.2.6": {
-    "systemjs-json": "github:systemjs/plugin-json@^0.1.0",
-    "process": "github:jspm/nodelibs-process@^0.1.0",
-    "fs": "github:jspm/nodelibs-fs@^0.1.0",
-    "path": "github:jspm/nodelibs-path@^0.1.0"
-  },
   "npm:aurelia-logging-console@1.0.0-beta.1.1.4": {
     "aurelia-logging": "npm:aurelia-logging@^1.0.0-beta.1.1.1",
     "aurelia-pal": "npm:aurelia-pal@^1.0.0-beta.1.1.1"
