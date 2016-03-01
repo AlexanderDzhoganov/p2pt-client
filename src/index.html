@@ -11,7 +11,8 @@
 
           <div if.bind="noSecureRandom" class="notification is-danger is-text-left">
             Your browser does not support <a href="https://developer.mozilla.org/en-US/docs/Web/API/RandomSource/getRandomValues" target="_blank">RandomSource.getRandomValues()</a>, please upgrade to use Bitf.ly!<br/>
-            See <a href="http://caniuse.com/#feat=getrandomvalues">http://caniuse.com/#feat=getrandomvalues</a> for detailed information on supported browsers.
+            See <a href="http://caniuse.com/#feat=getrandomvalues">http://caniuse.com/#feat=getrandomvalues</a> for detailed information on supported browsers.<br/>
+            User agent: ${userAgent}
           </div>
         </div>
       </div>

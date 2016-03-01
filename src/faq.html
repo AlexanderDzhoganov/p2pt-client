@@ -32,10 +32,15 @@
       </div>
     </div>
     <div class="list-item" data-faq-item="4">
-      <p class="title" click.delegate="showFaqItem(4)"><i class="fa fa-fw fa-angle-right"></i> So is Bitfly really secure?</p>
+      <p class="title" click.delegate="showFaqItem(4)"><i class="fa fa-fw fa-angle-right"></i> So is Bitfly secure or not?</p>
       <div class="content">
         <p class="inner-content">
-        The way Bitfly works is relatively secure against simple threats. It is highly unlikely that a third-party would be able to access any data you sent via Bitfly. It is not absolutely secure though! Due to the way the WebRTC handshake works it may be possible for us to perform a man-in-the-middle attack and gain access to your data (we promise we're not doing this!). In this sense Bitfly provides little extra security compared to server based solutions like Dropbox or Google Drive. On the other hand, the ephemeral existence of the files on the network does provide some guarantees that server based solutions do not e.g. somebody successfully gaining unauthorized access to our servers does not allow him or her to view the contents or metadata of any files sent in the past. We monitor our servers for threats and will respond by shutting down the service temporarily in case we detect a malicious actor to prevent compromise of future transfers. With the above in mind, <strong>we advise against using Bitfly for highly sensitive data</strong>.
+        <strong>TL;DR - while Bitf.ly is secure against non-sophisticated threats we advise against using the service for highly sensitive data.</strong><br/>
+
+        There are both pros and cons to our approach.<br/>
+        - You still have to trust the service (meaning us). There is no viable method for secure delivery of signed code to the browser. You have to trust that we have not done any malicious modifications to the client-side code and that our servers were not compromised.<br/>
+        - WebRTC potentially is vulnerable to man in the middle attacks. Anyone who posseses or could (in theory) guess the secret URLs could pretend to be the receving device and get to your data. Make sure to keep your secret URLs between you and your recipient. Your data is exposed to anyone who has the full URL!<br/>
+        - No data is ever stored on any intermediary server. Your data is gone from the Internet the moment you close the tab. Any compromise of our infrastructure does not expose metadata or contents for any past transfers. We do monitor our servers vigilantly and will shut down the service temporarily in case of compromise. We'll also notify you promptly with a message on the site.
         </p>
       </div>
     </div>
