@@ -9,8 +9,8 @@ import $ from 'jquery'
 import Dropzone from 'dropzone'
 import CryptoJS from 'crypto-js'
 
-import filereader from './filereader'
-import downloader from './downloader'
+import FileReader from './filereader'
+import Downloader from './downloader'
 
 import Config from './config'
 
@@ -34,9 +34,7 @@ export class Index {
 
   constructor(router) {
     this.router = router
-    Dropzone.autoDiscover = false
-    Dropzone.autoProcessQueue = false
-    this.downloader = new downloader()
+
     this.config = new Config()
     this.serverUrl = this.config.serverUrl
 
@@ -48,6 +46,9 @@ export class Index {
 
     this.notifications = JSON.parse(localStorage.notifications)
     this.isFirstVisit = !localStorage.firstVisit
+
+    Dropzone.autoDiscover = false
+    Dropzone.autoProcessQueue = false
   }
 
   activate(params) {
@@ -63,6 +64,8 @@ export class Index {
       localStorage.firstVisit = true
       this.initDropzone()
     } else {
+      this.downloader = new Downloader()
+
       window.onbeforeunload = () => {
         return 'There is a download in progress, are you sure you wish to cancel it?'
       }
@@ -98,100 +101,91 @@ export class Index {
       this.totalTransfers = val
     }.bind(this))
 
-    function generateSecret() {
-      if (!window.crypto || !window.crypto.getRandomValues) {
-        throw 'prng not available'
-      }
-
-      var randValues = new Uint32Array(2)
-      window.crypto.getRandomValues(randValues)
-      var secret = randValues[0].toString(16) + randValues[1].toString(16)
-      return secret
-    }
-
     this.socket.on('set-token-ok', token => {
       this.token = token
+      this.initPeerToPeer()
+    }.bind(this))
+  }
 
-      if(this.isUploader) {
-        this.secret = generateSecret()
-        this.secretVerified = false
+  createClientSecret() {
+    if (!window.crypto || !window.crypto.getRandomValues) {
+      throw 'prng not available'
+    }
+
+    var randValues = new Uint32Array(2)
+    window.crypto.getRandomValues(randValues)
+    var secret = randValues[0].toString(16) + randValues[1].toString(16)
+    return secret
+  }
+
+  initPeerToPeer() {
+    if(this.isUploader) {
+      this.secret = this.createClientSecret()
+      this.secretVerified = false
+    }
+
+    this.p2p = new p2p(this.socket, this.config.p2pConfig)
+
+    this.p2p.on('ready', function() {
+      this.p2p.usePeerConnection = true
+    }.bind(this))
+
+    this.p2p.on('upgrade', data => {
+      if(this.connectedToPeer && !this.isUploader) {
+        this.p2p.emit('verify-secret', this.secret)
       }
 
-      this.p2p = new p2p(this.socket, {
-        peerOpts: {
-          trickle: false,
-          config: {
-            "iceServers": [
-              {
-                "url": "stun:23.21.150.121",
-                "urls": "stun:23.21.150.121"
-              }
-            ]
+      this.connectedToPeer = true
+    }.bind(this))
+
+    this.p2p.on('peer-error', err => {
+      console.error(err)
+      this.connectedToPeer = false
+    }.bind(this))
+
+    this.p2p.on('error', err => {
+      console.error(err)
+      this.connectedToPeer = false
+    }.bind(this))
+
+    this.p2p.on('verify-secret', secret => {
+      this.secretVerified = secret === this.secret
+      this.invalidSecret = !this.secretVerified
+
+      if(this.file && !this.uploading && this.secretVerified) {
+        this.startUpload()
+      }
+    }.bind(this))
+
+    this.p2p.on('got-chunk', packet => {
+      if(packet.chunkId !== this.chunkId - 1) {
+        console.error('chunks out of order')
+      }
+
+      if(!this.uploadComplete) {
+        this.reader.loadNextChunk()
+      } else {
+        window.onbeforeunload = null
+      }
+    }.bind(this))
+
+    this.p2p.on('data', packet => {
+      this.downloader.setFileInfo(packet.fileName, packet.fileSize)
+      this.downloader.addChunk(packet.chunkId, packet.chunk)
+
+      this.p2p.emit('got-chunk', { chunkId: packet.chunkId })
+
+      if (packet.complete) {
+        this.downloader.setComplete(packet.fileHash, success => {
+          if(!success) {
+            this.hashMismatch = 'SHA-1 mismatch, got "' + 
+              this.downloader.fileHash + '", expected "' + 
+              packet.fileHash + '"'
           }
-        }
-      })
 
-      this.p2p.on('ready', function() {
-        this.p2p.usePeerConnection = true
-      }.bind(this))
-
-      this.p2p.on('upgrade', data => {
-        if(this.connectedToPeer && !this.isUploader) {
-          this.p2p.emit('verify-secret', this.secret)
-        }
-
-        this.connectedToPeer = true
-      }.bind(this))
-
-      this.p2p.on('peer-error', err => {
-        console.error(err)
-        this.connectedToPeer = false
-      }.bind(this))
-
-      this.p2p.on('error', err => {
-        console.error(err)
-        this.connectedToPeer = false
-      }.bind(this))
-
-      this.p2p.on('verify-secret', secret => {
-        this.secretVerified = secret === this.secret
-        this.invalidSecret = false
-
-        if(this.file && !this.uploading && this.secretVerified) {
-          this.startUpload()
-        } else if(!this.secretVerified) {
-          this.invalidSecret = true
-        }
-      }.bind(this))
-
-      this.p2p.on('got-chunk', packet => {
-        if(packet.chunkId !== this.chunkId - 1) {
-          console.error('chunks out of order')
-        }
-
-        if(!this.uploadComplete) {
-          this.reader.loadNextChunk()
-        } else {
           window.onbeforeunload = null
-        }
-      }.bind(this))
-
-      this.p2p.on('data', packet => {
-        this.downloader.setFileInfo(packet.fileName, packet.fileSize)
-        this.downloader.addChunk(packet.chunkId, packet.chunk)
-
-        this.p2p.emit('got-chunk', { chunkId: packet.chunkId })
-
-        if (packet.complete) {
-          this.downloader.setComplete(packet.fileHash, success => {
-            if(!success) {
-              this.hashMismatch = 'SHA-1 mismatch, got "' + this.downloader.fileHash + '", expected "' + packet.fileHash + '"'
-            }
-
-            window.onbeforeunload = null
-          })
-        }
-      }.bind(this))
+        })
+      }
     }.bind(this))
   }
 
@@ -199,7 +193,7 @@ export class Index {
     var view = this
 
     setTimeout(() => {
-      this.dropzone = new Dropzone("div#dropzone", {
+      this.dropzone = new Dropzone(this.dropzoneRef, {
         url: "bitf.ly",
         addedfile: file => {
           view.fileAdded(file)
@@ -217,21 +211,20 @@ export class Index {
     this.noSecureRandom = window.crypto === undefined || 
       window.crypto.getRandomValues === undefined
     
-    if(this.noSecureRandom) {
+    if(this.noSecureRandom) { // fail hard if we have no secure random source
       this.userAgent = navigator.userAgent
       return
     }
 
-    $('#dropzone-text').html(file.name)
-    this.fileName = file.name
-    this.contentType = file.type
+    this.fileName = file.name.split('\\').pop()
+
     this.file = file
-    this.reader = new filereader(this.file)
-    this.socket.emit('ask-token')
+    this.reader = new FileReader(this.file)
+    this.socket.emit('ask-token') // got a file, time to ask the backend for a token
   }
 
   startUpload() {
-    if(!this.file || !this.connectedToPeer) {
+    if(!this.file || !this.connectedToPeer || !this.secretVerified) {
       return
     }
 
@@ -241,32 +234,21 @@ export class Index {
     }
 
     this.reader.readCallback = (data, complete) => {
-      this.sendChunk(data, complete)
+      this.p2p.emit('data', {
+        fileName: this.fileName,
+        fileSize: this.reader.fileSize,
+        chunk: data,
+        complete: complete,
+        fileHash: this.reader.fileHash,
+        chunkId: this.chunkId++
+      })
+
+      this.uploadComplete = complete
     }.bind(this)
 
-    setTimeout(() => {
-      this.reader.loadNextChunk()
+    setTimeout(() => { // hacky but this allows WebRTC some time to initialize or something
+      this.reader.loadNextChunk() // otherwise the first request always goes missing
     }.bind(this), 1000)
-  }
-
-  sendChunk(data, complete) {
-    var fileName = this.fileName.split('\\').pop()
-
-    var packet = {
-      fileName: fileName,
-      fileSize: this.reader.fileSize,
-      chunk: data,
-      complete: complete,
-      fileHash: this.reader.fileHash,
-      chunkId: this.chunkId
-    }
-
-    this.chunkId++
-    this.p2p.emit('data', packet)
-
-    if(complete) {
-      this.uploadComplete = true
-    }
   }
 
   reload() {

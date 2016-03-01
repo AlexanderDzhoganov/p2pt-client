@@ -1,5 +1,10 @@
 import CryptoJS from 'crypto-js'
 
+var CONST_1GiB = 1024 * 1024 * 1024
+var CONST_8GiB = 1024 * 1024 * 1024 * 8
+
+var CONST_CHUNK_SIZE = 65536
+
 export default class Reader {
 
     constructor(file) {
@@ -7,7 +12,6 @@ export default class Reader {
       this.largeFile = false
       this.veryLargeFile = false
 
-      this.chunkSize = 65536
       this.pos = 0
       this.fileSize = 0
       this.percentComplete = 0
@@ -19,11 +23,11 @@ export default class Reader {
 
       this.reader.onload = () => {
         this.fileSize = this.file.size
-        if(this.fileSize > (1024 * 1024 * 1024)) {
+        if(this.fileSize > CONST_1GiB) {
           this.largeFile = true
         }
 
-        if(this.fileSize > (1024 * 1024 * 1024 * 8)) {
+        if(this.fileSize > CONST_8GiB) {
           this.veryLargeFile = true
         }
 
@@ -51,13 +55,11 @@ export default class Reader {
         this.fileHash = this.sha1.finalize().toString()
       }
 
-      if(this.readCallback) {
-        this.readCallback(data, complete)
-      }
+      this.readCallback && this.readCallback(data, complete)
     }
 
     loadNextChunk() {
-      this.reader.readAsArrayBuffer(this.file.slice(this.pos, this.pos + this.chunkSize));
+      this.reader.readAsArrayBuffer(this.file.slice(this.pos, this.pos + CONST_CHUNK_SIZE));
     }
 
 }
