@@ -56,23 +56,15 @@
       </div>
     </div>
     <div class="list-item" data-faq-item="7">
-      <p class="title" click.delegate="showFaqItem(7)"><i class="fa fa-fw fa-angle-right"></i> Javascript crypto is broken!</p>
-      <div class="content">
-        <p class="inner-content">
-        We are not doing any kind of cryptography in Bitfly's code. All of the actual encryption is done by your browser's WebRTC implementation (refer to questions 1 and 2). We do use the crypto-js package to do SHA-1 hashing of the file chunks in order to verify that we have rebuilt your file correctly on the other end, however this has no substantial implication on security.
-        </p>
-      </div>
-    </div>
-    <div class="list-item" data-faq-item="9">
-      <p class="title" click.delegate="showFaqItem(9)"><i class="fa fa-fw fa-angle-right"></i> Is there a file size limit?</p>
+      <p class="title" click.delegate="showFaqItem(7)"><i class="fa fa-fw fa-angle-right"></i> Is there a file size limit?</p>
       <div class="content">
         <p class="inner-content">
         There are no file-size limits hardcoded into Bitfly. You may get a warning message saying that sending very large files requires plenty of RAM on the receiving device but we have had great success with files up to 4 GiB in size. Right now there is a high probability that a desktop machine will not have enough memory to receive files above 16 GiB without issues.
         </p>
       </div>
     </div>
-    <div class="list-item" data-faq-item="10">
-      <p class="title" click.delegate="showFaqItem(10)"><i class="fa fa-fw fa-angle-right"></i> It's not working! Help!</p>
+    <div class="list-item" data-faq-item="8">
+      <p class="title" click.delegate="showFaqItem(8)"><i class="fa fa-fw fa-angle-right"></i> It's not working! Help!</p>
       <div class="content">
         <p class="inner-content">
         Bitfly should work for almost anyone with <a href="http://iswebrtcreadyyet.com/" target="_blank">a supported browser</a> but it may fail for some very restricted NAT setups (e.g. behind some corporate firewalls). If you encounter issues please submit a report to one of our GitHub repositories via the GitHub button at the bottom of the page.
