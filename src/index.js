@@ -94,8 +94,7 @@ export class Index {
     }.bind(this))
 
     this.socket.on('set-token-invalid', () => {
-      this.router.navigate('/')
-      location.reload()
+      this.reload()
     }.bind(this))
 
     this.socket.on('total-transfers', val => {
