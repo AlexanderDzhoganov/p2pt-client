@@ -1,1 +1,0 @@
-module.exports = require("npm:blob@0.0.2/index");

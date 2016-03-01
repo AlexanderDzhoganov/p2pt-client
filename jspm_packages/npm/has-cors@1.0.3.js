@@ -1,1 +1,0 @@
-module.exports = require("npm:has-cors@1.0.3/index");
