@@ -48,13 +48,6 @@ export class Index {
 
     this.notifications = JSON.parse(localStorage.notifications)
     this.isFirstVisit = !localStorage.firstVisit
-
-    this.noSecureRandom = window.crypto === undefined || 
-      window.crypto.getRandomValues === undefined
-  
-    if(this.noSecureRandom) {
-      this.userAgent = navigator.userAgent
-    }
   }
 
   activate(params) {
@@ -221,6 +214,15 @@ export class Index {
   }
 
   fileAdded(file) {
+    this.noSecureRandom = window.crypto === undefined || 
+      window.crypto.getRandomValues === undefined
+    
+    this.noSecureRandom = true
+    if(this.noSecureRandom) {
+      this.userAgent = navigator.userAgent
+      return
+    }
+
     $('#dropzone-text').html(file.name)
     this.fileName = file.name
     this.contentType = file.type
