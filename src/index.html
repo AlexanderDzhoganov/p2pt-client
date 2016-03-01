@@ -1,19 +1,24 @@
 <template>
   <require from="faq"></require>
 
-  <template if.bind="connectionError">
+  <template if.bind="connectionError || noSecureRandom">
     <section class="hero is-fullheight is-bold">
       <div class="hero-content">
         <div class="container"> 
-          <div class="notification is-warning">
+          <div if.bind="connectionError" class="notification is-warning">
             Bitf.ly is experiencing some technical difficulties, please try again in a bit..
+          </div>
+
+          <div if.bind="noSecureRandom" class="notification is-danger is-text-left">
+            Your browser does not support <a href="https://developer.mozilla.org/en-US/docs/Web/API/RandomSource/getRandomValues" target="_blank">RandomSource.getRandomValues()</a>, please upgrade to use Bitf.ly!<br/>
+            See <a href="http://caniuse.com/#feat=getrandomvalues">http://caniuse.com/#feat=getrandomvalues</a> for detailed information on supported browsers.
           </div>
         </div>
       </div>
     </section>
   </template>
 
-  <template if.bind="!connectionError">
+  <template if.bind="!connectionError && !noSecureRandom">
     <section class="hero is-fullheight is-bold">
       <div class="hero-header">
         <header class="header">
@@ -45,10 +50,6 @@
 
           <div if.bind="invalidSecret" class="notification is-danger">
             Error! The receiving party sent an invalid secret! Maybe you gave them the wrong URL or somebody is doing something nasty.
-          </div>
-
-          <div if.bind="noSecureRandom" class="notification is-warning">
-            Caution! Your browser does not support <a href="https://developer.mozilla.org/en-US/docs/Web/API/RandomSource/getRandomValues" target="_blank">crypto.getRandomValues()</a>, falling back to Math.random().
           </div>
 
           <div if.bind="!notifications['improv_security']" class="notification is-info">

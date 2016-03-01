@@ -102,16 +102,14 @@ export class Index {
     }.bind(this))
 
     function generateSecret() {
-      if (window.crypto && window.crypto.getRandomValues) {
-        var randValue = new Uint32Array(2)
-        window.crypto.getRandomValues(randValue)
-        var secret = randValue[0].toString(16) + randValue[1].toString(16)
-        return secret
-      } else {
-        var randValue = Math.floor(Math.random() * (Number.MAX_VALUE - Number.MIN_VALUE)) + Number.MIN_VALUE;
-        var secret = CryptoJS.SHA1(randValue.toString(16)).toString().slice(0, 16)
-        return secret
+      if (!window.crypto || !window.crypto.getRandomValues) {
+        throw 'prng not available'
       }
+
+      var randValues = new Uint32Array(2)
+      window.crypto.getRandomValues(randValues)
+      var secret = randValues[0].toString(16) + randValues[1].toString(16)
+      return secret
     }
 
     this.socket.on('set-token-ok', token => {
