@@ -217,7 +217,6 @@ export class Index {
     this.noSecureRandom = window.crypto === undefined || 
       window.crypto.getRandomValues === undefined
     
-    this.noSecureRandom = true
     if(this.noSecureRandom) {
       this.userAgent = navigator.userAgent
       return
