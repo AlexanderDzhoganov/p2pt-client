@@ -7,6 +7,11 @@ import FileReader from './filereader'
 import Downloader from './downloader'
 
 import Config from './config'
+var config = new Config()
+
+var socket = io(config.apiUrl, {
+  transports: ['websocket']
+})
 
 export class Index {
 
@@ -24,8 +29,7 @@ export class Index {
   hashMismatch = null
 
   constructor() {
-    this.config = new Config()
-    this.serverUrl = this.config.serverUrl
+    this.serverUrl = config.serverUrl
     this.isFirstVisit = !localStorage.firstVisit
 
     Dropzone.autoDiscover = false
@@ -61,37 +65,35 @@ export class Index {
       }
     }
 
-    this.socket = io(this.config.apiUrl)
-  
-    this.socket.on('connect', () => {
+    socket.on('connect', () => {
       this.connectionError = false
 
       if(this.token) {
-        this.socket.emit('set-token', this.token)
+        socket.emit('set-token', this.token)
       }
     }.bind(this))
 
-    this.socket.on('connect_error', () => {
+    socket.on('connect_error', () => {
       this.connectionError = true
     }.bind(this))
 
-    this.socket.on('connect_timeout', () => {
+    socket.on('connect_timeout', () => {
       this.connectionError = true
     }.bind(this))
 
-    this.socket.on('error', err => {
+    socket.on('error', err => {
       console.error(err)
     }.bind(this))
 
-    this.socket.on('set-token-invalid', () => {
+    socket.on('set-token-invalid', () => {
       this.reload()
     }.bind(this))
 
-    this.socket.on('total-transfers', val => {
+    socket.on('total-transfers', val => {
       this.totalTransfers = val
     }.bind(this))
 
-    this.socket.on('set-token-ok', token => {
+    socket.on('set-token-ok', token => {
       this.token = token
       this.initPeerToPeer()
     }.bind(this))
@@ -114,7 +116,7 @@ export class Index {
       this.secretVerified = false
     }
 
-    this.p2p = new p2p(this.socket, this.config.p2pConfig)
+    this.p2p = new p2p(socket, config.p2pConfig)
 
     this.p2p.on('ready', function() {
       this.p2p.usePeerConnection = true
@@ -210,7 +212,7 @@ export class Index {
 
     this.file = file
     this.reader = new FileReader(this.file)
-    this.socket.emit('ask-token') // got a file, time to ask the backend for a token
+    socket.emit('ask-token') // got a file, time to ask the backend for a token
   }
 
   startUpload() {
