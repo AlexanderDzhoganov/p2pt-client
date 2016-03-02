@@ -128,7 +128,36 @@
     </div>
   </div>
 
-  <div if.bind="totalTransfers">
+  <div if.bind="totalTransfers" style="padding-top: 8px;">
     BITFLY HAS SHIPPED ${totalTransfers} FILES SO FAR
-  </footer>
+  </div>
+  
+  <div class="hero-footer">
+      <footer class="footer">
+        <div class="container">
+          <div class="columns">
+            <div class="column">
+              <a class="button" href="http://iswebrtcreadyyet.com/" target="_blank">
+                Supported browsers
+              </a>
+            </div>
+            <div class="column">
+              <a class="button" href="https://github.com/bitfly-p2p/" target="_blank">
+                <i class="fa fa-github"></i>
+                GitHub
+              </a>
+            </div>
+            <div class="column">
+              <a if.bind="!showBTCAddress" class="button" data-size="28" style="height: 32px;" click.delegate="showBTCAddress = true">
+                Donate with <i class="fa fa-btc"></i>
+              </a>
+              <template if.bind="showBTCAddress">
+                BTC: 1GafbH7KQSJmCbbESoRqPqy3A6UrXAFn7V<br/>
+                Thank you for your support!
+              </template>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
 </template>
