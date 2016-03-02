@@ -47,7 +47,7 @@
 
         <div if.bind="file" class="upload-box">
           <div if.bind="!uploadComplete">
-            <h1 class="title">Sending "${fileName}"</h1>
+            <h1 class="title" style="word-wrap: break-word;">Sending "${fileName}"</h1>
             <h3 if.bind="reader.fileSize" class="subtitle">Size: ${((reader.fileSize / 1024.0) / 1024.0).toFixed(2)} MiB</h3>
           </div>
           <br/>
@@ -56,7 +56,7 @@
                   Open this URL on the receiving device
 
                   <div class="message token-link">
-                    <div class="message-body" style="padding: 12px 0px; word-wrap: break-word;">
+                    <div class="message-body" style="padding: 12px 4px; word-wrap: break-word;">
                       <a href="${serverUrl}/${token}${secret}" target="_blank" class="token-link">${serverUrl}/${token}${secret}</a>
                     </div>
                   </div>
@@ -84,7 +84,7 @@
             <h2 class="title">Connecting..</h2>
         </template>
         <template if.bind="downloader.fileName">
-          <h2 class="title">
+          <h2 class="title" style="word-wrap: break-word;">
               <template if.bind="!downloader.complete">Receiving</template>
               <template if.bind="downloader.complete && downloader.validated">Received</template>
               <template if.bind="downloader.complete && !downloader.validated">Validating</template>
@@ -131,7 +131,7 @@
   <div if.bind="totalTransfers" style="padding-top: 8px;">
     BITFLY HAS SHIPPED ${totalTransfers} FILES SO FAR
   </div>
-  
+
   <div class="hero-footer">
       <footer class="footer">
         <div class="container">
