@@ -12,7 +12,6 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
-
   map: {
     "aurelia-framework": "npm:aurelia-framework@1.0.0-beta.1.1.4",
     "aurelia-loader-default": "npm:aurelia-loader-default@1.0.0-beta.1.1.3",
