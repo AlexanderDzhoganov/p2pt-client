@@ -4,7 +4,6 @@ import {Router} from 'aurelia-router'
 import p2p from 'socket.io-p2p'
 import io from 'socket.io-client'
 
-import lodash from 'lodash'
 import Dropzone from 'dropzone'
 
 import FileReader from './filereader'

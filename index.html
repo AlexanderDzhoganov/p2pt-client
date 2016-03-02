@@ -2,15 +2,74 @@
 <html>
   <head>
     <base href="http://localhost:9000/">
-    <title>Bitf.ly - secure peer-to-peer file transfer over WebRTC</title>
+    <title>Bitfly - secure peer-to-peer file transfer over WebRTC</title>
+    <meta name="description" content="Secure, free file transfer to device with a modern browser">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="jspm_packages/npm/font-awesome@4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="jspm_packages/npm/bulma@0.0.16/css/bulma.min.css">
+    <link rel="stylesheet" type="text/css" href="jspm_packages/github/enyo/dropzone@4.3.0/min/dropzone.min.css">
+    <link rel="stylesheet" type="text/css" href="app.css">
   </head>
+  <body>
+    <section class="hero is-fullheight is-bold">
+    <div class="hero-header">
+      <header class="header">
+        <div class="header-left">
+          <div class="header-item info is-hidden-touch">
+            Secure peer-to-peer file transfer directly from your browser
+          </div>
+          <div class="header-item info is-hidden-desktop">
+            Secure file transfer
+          </div>
+        </div>
+        <div class="header-right">
+          <div class="header-item logo">
+            <a href="https://bitf.ly">Bit<span style="color: #346BC8;">fly</span></a>
+          </div>
+        </div>
+      </header>
+    </div>
 
-  <body aurelia-app="main">
-    <script src="jspm_packages/system.js"></script>
-    <script src="config.js"></script>
-    <script>
-      System.import('aurelia-bootstrapper');
-    </script>
+    <div class="hero-content" aurelia-app="main">
+      <h1 class="title">
+        <a href="https://bitf.ly">Bit<span style="color: #346BC8;">fly</span>
+        </a></h1>
+      <h2 class="subtitle">Free and simple file transfer to any device with a modern browser</h2>
+      Now loading..
+      <script src="jspm_packages/system.js"></script>
+      <script src="config.js"></script>
+      <script>
+        System.import('mini-bootstrap')
+      </script>
+    </div>
+
+    <div class="hero-footer">
+      <footer class="footer">
+        <div class="container">
+          <div class="columns">
+            <div class="column">
+              <a class="button" href="http://iswebrtcreadyyet.com/" target="_blank">
+                Supported browsers
+              </a>
+            </div>
+            <div class="column">
+              <a class="button" href="https://github.com/bitfly-p2p/" target="_blank">
+                <i class="fa fa-github"></i>
+                GitHub
+              </a>
+            </div>
+            <div class="column">
+              <a if.bind="!showBTCAddress" class="button" data-size="28" style="height: 32px;" click.delegate="showBTCAddress = true">
+                Donate with <i class="fa fa-btc"></i>
+              </a>
+              <template if.bind="showBTCAddress">
+                BTC: 1GafbH7KQSJmCbbESoRqPqy3A6UrXAFn7V<br/>
+                Thank you for your support!
+              </template>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
   </body>
 </html>

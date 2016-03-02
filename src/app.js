@@ -1,10 +1,6 @@
-import {inject} from 'aurelia-framework'
-import {Router} from 'aurelia-router'
-
 import p2p from 'socket.io-p2p'
 import io from 'socket.io-client'
 
-import lodash from 'lodash'
 import Dropzone from 'dropzone'
 
 import FileReader from './filereader'
@@ -12,7 +8,6 @@ import Downloader from './downloader'
 
 import Config from './config'
 
-@inject(Router)
 export class Index {
 
   isUploader = true
@@ -30,9 +25,7 @@ export class Index {
 
   totalTransfers = 0
 
-  constructor(router) {
-    this.router = router
-
+  constructor() {
     this.config = new Config()
     this.serverUrl = this.config.serverUrl
     this.isFirstVisit = !localStorage.firstVisit
@@ -252,7 +245,7 @@ export class Index {
 
   reload() {
     window.onbeforeunload = null
-    this.router.navigate('/')
+    location = '/'
     location.reload()
   }
 

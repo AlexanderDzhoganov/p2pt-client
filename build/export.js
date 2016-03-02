@@ -3,7 +3,7 @@ module.exports = {
     "index.html",
     "config.js",
     "favicon.ico",
-    "LICENSE",
+    "app.css",
     "dist/**/*",
     "images/**",
     "fonts/**",

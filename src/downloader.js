@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import mimetype from 'mimetype'
 
 import CryptoJS from 'crypto-js'

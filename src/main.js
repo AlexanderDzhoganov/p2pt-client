@@ -1,7 +1,9 @@
 import Config from './config'
 
+import 'aurelia-templating-binding'
+
 export function configure(aurelia) {
-  aurelia.use.standardConfiguration()
+  aurelia.use.defaultBindingLanguage().defaultResources()
 
   if(new Config().debug) {
     aurelia.use.developmentLogging()
