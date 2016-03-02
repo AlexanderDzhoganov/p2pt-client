@@ -100,14 +100,9 @@ a {
 }
 
 .faq {
-    display: none;
     text-align: left;
     margin: 0.1em auto 0;
     font-size: 1.0em;
-}
-
-.faq.shown {
-    display: block;
 }
 
 .faq .list-item .title {

@@ -58,7 +58,6 @@
   "jspm": {
     "dependencies": {
       "aurelia-bootstrapper": "npm:aurelia-bootstrapper@^1.0.0-beta.1.1.1",
-      "aurelia-fetch-client": "npm:aurelia-fetch-client@^1.0.0-beta.1.1.0",
       "aurelia-framework": "npm:aurelia-framework@^1.0.0-beta.1.1.0",
       "aurelia-history-browser": "npm:aurelia-history-browser@^1.0.0-beta.1.1.1",
       "aurelia-loader-default": "npm:aurelia-loader-default@^1.0.0-beta.1.1.1",
@@ -66,7 +65,6 @@
       "aurelia-router": "npm:aurelia-router@^1.0.0-beta.1.1.0",
       "aurelia-templating-binding": "npm:aurelia-templating-binding@^1.0.0-beta.1.1.0",
       "aurelia-templating-resources": "npm:aurelia-templating-resources@^1.0.0-beta.1.1.0",
-      "aurelia-templating-router": "npm:aurelia-templating-router@^1.0.0-beta.1.1.0",
       "bulma": "npm:bulma@^0.0.16",
       "component-emitter": "npm:component-emitter@^1.2.0",
       "crypto-js": "npm:crypto-js@^3.1.6",

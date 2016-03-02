@@ -5,9 +5,7 @@ import p2p from 'socket.io-p2p'
 import io from 'socket.io-client'
 
 import lodash from 'lodash'
-import $ from 'jquery'
 import Dropzone from 'dropzone'
-import CryptoJS from 'crypto-js'
 
 import FileReader from './filereader'
 import Downloader from './downloader'
