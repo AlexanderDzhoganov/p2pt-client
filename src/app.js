@@ -23,8 +23,6 @@ export class Index {
   downloader = null
   hashMismatch = null
 
-  totalTransfers = 0
-
   constructor() {
     this.config = new Config()
     this.serverUrl = this.config.serverUrl
@@ -245,7 +243,7 @@ export class Index {
 
   reload() {
     window.onbeforeunload = null
-    location = '/'
+    location.hash = ''
     location.reload()
   }
 

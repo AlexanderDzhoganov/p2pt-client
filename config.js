@@ -12,8 +12,8 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
+
   map: {
-    "aurelia-event-aggregator": "npm:aurelia-event-aggregator@1.0.0-beta.1.1.1",
     "aurelia-framework": "npm:aurelia-framework@1.0.0-beta.1.1.4",
     "aurelia-loader-default": "npm:aurelia-loader-default@1.0.0-beta.1.1.3",
     "aurelia-logging-console": "npm:aurelia-logging-console@1.0.0-beta.1.1.4",
@@ -120,9 +120,6 @@ System.config({
       "aurelia-logging": "npm:aurelia-logging@1.0.0-beta.1.1.2",
       "aurelia-metadata": "npm:aurelia-metadata@1.0.0-beta.1.1.5",
       "aurelia-pal": "npm:aurelia-pal@1.0.0-beta.1.1.1"
-    },
-    "npm:aurelia-event-aggregator@1.0.0-beta.1.1.1": {
-      "aurelia-logging": "npm:aurelia-logging@1.0.0-beta.1.1.2"
     },
     "npm:aurelia-framework@1.0.0-beta.1.1.4": {
       "aurelia-binding": "npm:aurelia-binding@1.0.0-beta.1.2.1",

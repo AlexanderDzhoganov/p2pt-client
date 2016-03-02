@@ -4,13 +4,10 @@ module.exports = {
       "includes": [
         "[*.js]",
         "*.html!text",
-        "*.css!text",
         "text",
-        "css",
         "aurelia-framework",
         "aurelia-pal",
         "aurelia-pal-browser",
-        "aurelia-event-aggregator",
         "aurelia-polyfills",
         "aurelia-templating-binding",
         "aurelia-templating-resources",

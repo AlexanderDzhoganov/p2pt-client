@@ -57,7 +57,6 @@
   },
   "jspm": {
     "dependencies": {
-      "aurelia-event-aggregator": "npm:aurelia-event-aggregator@^1.0.0-beta.1.1.1",
       "aurelia-framework": "npm:aurelia-framework@^1.0.0-beta.1.1.0",
       "aurelia-loader-default": "npm:aurelia-loader-default@^1.0.0-beta.1.1.1",
       "aurelia-logging-console": "npm:aurelia-logging-console@^1.0.0-beta.1.1.3",
