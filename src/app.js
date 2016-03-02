@@ -28,6 +28,8 @@ export class Index {
   downloader = null
   hashMismatch = null
 
+  totalTransfers = 0
+
   constructor() {
     this.serverUrl = config.serverUrl
     this.isFirstVisit = !localStorage.firstVisit
