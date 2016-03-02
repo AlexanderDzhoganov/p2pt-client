@@ -161,13 +161,6 @@ a {
     margin-top: 1em;
 }
 
-.beta-tag {
-    font-variant: small-caps;
-    font-size: 0.45em;
-    color: #A9A9A9;
-    margin-top: -0.5em;
-}
-
 .how-it-works {
     position: relative;
     bottom: 1em;
@@ -180,4 +173,8 @@ a {
     position: relative;
     top: 0.65em;
     font-size: 0.6em;
+}
+
+.hero-content {
+    padding: 0 16px 0px 16px;
 }

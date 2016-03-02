@@ -1,188 +1,134 @@
 <template>
-  <section class="hero is-fullheight is-bold">
-    <div class="hero-header">
-      <header class="header">
-        <div class="header-left">
-          <div class="header-item info is-hidden-touch">
-            Secure peer-to-peer file transfer directly from your browser
+  <div class="hero-content">
+    <div class="container">
+      <div if.bind="reader && reader.largeFile && !reader.veryLargeFile" class="notification is-warning">
+        Warning! You are trying to send a large file. Receiving files above 1 GiB is recommended only for desktop devices with plenty of RAM. Mobile devices and old PCs may experience unresponsiveness for a while after the transfer completes and the file gets reassembled.
+      </div>
+
+      <div if.bind="reader && reader.veryLargeFile" class="notification is-danger">
+        Warning! You are trying to send a file over 16 GiB. This will probably not work.
+      </div>
+
+      <div if.bind="invalidSecret" class="notification is-danger">
+        Error! The receiving party sent an invalid secret! Maybe you gave them the wrong URL or somebody is doing something nasty.
+      </div>
+
+      <div if.bind="connectionError" class="notification is-warning">
+        Bitfly is experiencing some technical difficulties, please try again in a bit..
+      </div>
+
+      <div if.bind="noSecureRandom" class="notification is-danger is-text-left">
+        Your browser does not support <a href="https://developer.mozilla.org/en-US/docs/Web/API/RandomSource/getRandomValues" target="_blank">RandomSource.getRandomValues()</a>, please upgrade to use Bitfly!<br/>
+        See <a href="http://caniuse.com/#feat=getrandomvalues">http://caniuse.com/#feat=getrandomvalues</a> for detailed information on supported browsers.<br/>
+        User agent: ${userAgent}
+      </div>
+
+      <div if.bind="isUploader && !file && !uploading && isFirstVisit"
+        class="container how-it-works is-text-left is-hidden-mobile">
+        <i class="fa fa-chevron-right"></i> You want to send a file<br/>
+        <i class="fa fa-chevron-right"></i> We give you a secret URL to use<br/>
+        <i class="fa fa-chevron-right"></i> Your file gets transferred directly from your device to the recipient<br/>
+        <i class="fa fa-chevron-right"></i> After you close this tab the URL is no longer valid
+      </div>
+
+      <div if.bind="isUploader && !noSecureRandom && !connectionError" class="container">
+        <div if.bind="!file" id="dropzone" class="dropzone" ref="dropzoneRef">
+            <div class="dropzone-text is-hidden-touch">Drag and drop a file or click to browse</div>
+            <div class="dropzone-text is-hidden-desktop">Touch this box to select a file</div>
+
+            <div class="fileicon"></div>
+
+            <div class="dropzone-subtext">and we'll generate a secure download URL for you</div>
+        </div>
+
+        <div if.bind="file && !token" class="upload-box">
+            <div><h2 class="title">Please wait</h2></div>
+        </div>
+
+        <div if.bind="file" class="upload-box">
+          <div if.bind="!uploadComplete">
+            <h1 class="title">Sending "${fileName}"</h1>
+            <h3 if.bind="reader.fileSize" class="subtitle">Size: ${((reader.fileSize / 1024.0) / 1024.0).toFixed(2)} MiB</h3>
           </div>
-          <div class="header-item info is-hidden-desktop">
-            Secure file transfer
-          </div>
-        </div>
-        <div class="header-right">
-          <div class="header-item logo" click.delegate="reload()">
-            bit<span style="color: #346BC8;">f.ly</span> <span class="beta-tag">[BETA]</span>
-          </div>
-        </div>
-      </header>
-    </div>
+          <br/>
+          <div if.bind="token && !uploading">
+              <h2 class="subtitle">
+                  Open this URL on the receiving device
 
-    <div class="hero-content">
-      <div class="container">
-        <div if.bind="reader && reader.largeFile && !reader.veryLargeFile" class="notification is-warning">
-          Warning! You are trying to send a large file. Receiving files above 1 GiB is recommended only for desktop devices with plenty of RAM. Mobile devices and old PCs may experience unresponsiveness for a while after the transfer completes and the file gets reassembled.
-        </div>
-
-        <div if.bind="reader && reader.veryLargeFile" class="notification is-danger">
-          Warning! You are trying to send a file over 16 GiB. This will probably not work.
-        </div>
-
-        <div if.bind="invalidSecret" class="notification is-danger">
-          Error! The receiving party sent an invalid secret! Maybe you gave them the wrong URL or somebody is doing something nasty.
-        </div>
-
-        <div if.bind="!notifications['improv_security']" class="notification is-info">
-          <button class="delete" click.delegate="hideNotification('improv_security')"></button>
-          We have adopted an improved key generation scheme, check out "How do the secret URLs work?" in the FAQ for details.
-        </div>
-
-        <div if.bind="connectionError" class="notification is-warning">
-          Bitf.ly is experiencing some technical difficulties, please try again in a bit..
-        </div>
-
-        <div if.bind="noSecureRandom" class="notification is-danger is-text-left">
-          Your browser does not support <a href="https://developer.mozilla.org/en-US/docs/Web/API/RandomSource/getRandomValues" target="_blank">RandomSource.getRandomValues()</a>, please upgrade to use Bitf.ly!<br/>
-          See <a href="http://caniuse.com/#feat=getrandomvalues">http://caniuse.com/#feat=getrandomvalues</a> for detailed information on supported browsers.<br/>
-          User agent: ${userAgent}
-        </div>
-
-        <div if.bind="isUploader && !file && !uploading && isFirstVisit"
-          class="container how-it-works is-text-left is-hidden-mobile">
-          <i class="fa fa-chevron-right"></i> You want to send a file<br/>
-          <i class="fa fa-chevron-right"></i> We give you a secret URL to use<br/>
-          <i class="fa fa-chevron-right"></i> Your file gets transferred directly from your device to the recipient<br/>
-          <i class="fa fa-chevron-right"></i> After you close this tab the URL is no longer valid
-        </div>
-
-        <div if.bind="isUploader && !noSecureRandom && !connectionError" class="container">
-          <div if.bind="!file" id="dropzone" class="dropzone" ref="dropzoneRef">
-              <div class="dropzone-text is-hidden-touch">Drag and drop a file or click to browse</div>
-              <div class="dropzone-text is-hidden-desktop">Touch this box to select a file</div>
-
-              <div class="fileicon"></div>
-
-              <div class="dropzone-subtext">and we'll generate a secure download URL for you</div>
-          </div>
-
-          <div if.bind="file && !token" class="upload-box">
-              <div><h2 class="title">Please wait</h2></div>
-          </div>
-
-          <div if.bind="file" class="upload-box">
-            <div if.bind="!uploadComplete">
-              <h1 class="title">Sending "${fileName}"</h1>
-              <h3 if.bind="reader.fileSize" class="subtitle">Size: ${((reader.fileSize / 1024.0) / 1024.0).toFixed(2)} MiB</h3>
-            </div>
-            <br/>
-            <div if.bind="token && !uploading">
-                <h2 class="subtitle">
-                    Open this URL on the receiving device
-
-                    <div class="message token-link">
-                      <div class="message-body" style="padding: 12px 0px; word-wrap: break-word;">
-                        <a href="${serverUrl}/${token}${secret}" target="_blank" class="token-link">${serverUrl}/${token}${secret}</a>
-                      </div>
+                  <div class="message token-link">
+                    <div class="message-body" style="padding: 12px 0px; word-wrap: break-word;">
+                      <a href="${serverUrl}/${token}${secret}" target="_blank" class="token-link">${serverUrl}/${token}${secret}</a>
                     </div>
+                  </div>
 
-                    and don't close this tab until the transfer is complete
-                </h2>
-            </div>
+                  and don't close this tab until the transfer is complete
+              </h2>
+          </div>
 
-            <div if.bind="uploading && !uploadComplete">
-                <div class="progress">
-                    <div class="progress-bar" css="width:${reader.percentComplete}%">
-                        <span class="sr-only">${reader.percentComplete.toFixed(2)}%</span>
-                    </div>
-                </div>
-            </div>
-            <div if.bind="uploading && uploadComplete">
-                <h2 class="title">Your file has been sent successfully!</h2>
-                <h4 class="subtitle"><a click.delegate="reload()">Send another?</a></h4>
-            </div>
+          <div if.bind="uploading && !uploadComplete">
+              <div class="progress">
+                  <div class="progress-bar" css="width:${reader.percentComplete}%">
+                      <span class="sr-only">${reader.percentComplete.toFixed(2)}%</span>
+                  </div>
+              </div>
+          </div>
+          <div if.bind="uploading && uploadComplete">
+              <h2 class="title">Your file has been sent successfully!</h2>
+              <h4 class="subtitle"><a click.delegate="reload()">Send another?</a></h4>
           </div>
         </div>
+      </div>
 
-        <div if.bind="!isUploader && !connectionError" class="container">
-          <template if.bind="!downloader.fileName">
-              <h2 class="title">Please wait..</h2>
-          </template>
-          <template if.bind="downloader.fileName">
-            <h2 class="title">
-                <template if.bind="!downloader.complete">Receiving</template>
-                <template if.bind="downloader.complete && downloader.validated">Received</template>
-                <template if.bind="downloader.complete && !downloader.validated">Validating</template>
-                "${downloader.fileName}"
-            </h2>
-            <h3 class="subtitle">Size: ${((downloader.fileSize / 1024.0) / 1024.0).toFixed(2)} MiB</h3>
+      <div if.bind="!isUploader && !connectionError" class="container">
+        <template if.bind="!downloader.fileName">
+            <h2 class="title">Connecting..</h2>
+        </template>
+        <template if.bind="downloader.fileName">
+          <h2 class="title">
+              <template if.bind="!downloader.complete">Receiving</template>
+              <template if.bind="downloader.complete && downloader.validated">Received</template>
+              <template if.bind="downloader.complete && !downloader.validated">Validating</template>
+              "${downloader.fileName}"
+          </h2>
+          <h3 class="subtitle">Size: ${((downloader.fileSize / 1024.0) / 1024.0).toFixed(2)} MiB</h3>
 
-            <div if.bind="(!downloader.complete || !downloader.validated) && !hashMismatch" class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuenow="${downloader.percentComplete}"
-                     aria-valuemin="0" aria-valuemax="100" css="width:${downloader.percentComplete}%">
-                    <span class="sr-only">${downloader.percentComplete.toFixed(2)}%</span>
-                </div>
-            </div>
+          <div if.bind="(!downloader.complete || !downloader.validated) && !hashMismatch" class="progress">
+              <div class="progress-bar" role="progressbar" aria-valuenow="${downloader.percentComplete}"
+                   aria-valuemin="0" aria-valuemax="100" css="width:${downloader.percentComplete}%">
+                  <span class="sr-only">${downloader.percentComplete.toFixed(2)}%</span>
+              </div>
+          </div>
 
-            <div if.bind="hashMismatch">
-              <h1 class="title">
-                ERROR: ${hashMismatch}
-              </h1>
-            </div>
+          <div if.bind="hashMismatch">
+            <h1 class="title">
+              ERROR: ${hashMismatch}
+            </h1>
+          </div>
 
-            <br/>
+          <br/>
 
-            <div>
-              <h1 class="title">
-                <a if.bind="downloader.complete && downloader.validated"
-                  download.bind="downloader.fileName"
-                  href.bind="downloader.localUrl">
-                  Save file
-                </a>
-              </h1>
-            </div>
-          </template>
-        </div>
-
-        <div class="show-faq">
-          <a click.delegate="showFaq = !showFaq"><h1 class="subtitle">FAQ</h1></a>
-        </div>
-        <template if.bind="showFaq">
-          <compose view-model="faq"></compose>
+          <div>
+            <h1 class="title">
+              <a if.bind="downloader.complete && downloader.validated"
+                download.bind="downloader.fileName"
+                href.bind="downloader.localUrl">
+                Save file
+              </a>
+            </h1>
+          </div>
         </template>
       </div>
-    </div>
 
-    <div style="background: #fafafa;">
-      BITFLY HAS SHIPPED ${totalTransfers} FILES SO FAR
+      <div class="show-faq">
+        <a click.delegate="showFaq = !showFaq"><h1 class="subtitle">FAQ</h1></a>
+      </div>
+      <template if.bind="showFaq">
+        <compose view-model="faq"></compose>
+      </template>
     </div>
+  </div>
 
-    <div class="hero-footer">
-      <footer class="footer">
-        <div class="container">
-          <div class="columns">
-            <div class="column">
-              <a class="button" href="http://iswebrtcreadyyet.com/" target="_blank">
-                Supported browsers
-              </a>
-            </div>
-            <div class="column">
-              <a class="button" href="https://github.com/bitfly-p2p/" target="_blank">
-                <i class="fa fa-github"></i>
-                GitHub
-              </a>
-            </div>
-            <div class="column">
-              <a if.bind="!showBTCAddress" class="button" data-size="28" style="height: 32px;" click.delegate="showBTCAddress = true">
-                Donate with <i class="fa fa-btc"></i>
-              </a>
-              <template if.bind="showBTCAddress">
-                BTC: 1GafbH7KQSJmCbbESoRqPqy3A6UrXAFn7V<br/>
-                Thank you for your support!
-              </template>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </div>
-  </section>
+  <div>
+    BITFLY HAS SHIPPED ${totalTransfers} FILES SO FAR
+  </footer>
 </template>

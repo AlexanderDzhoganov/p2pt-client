@@ -35,14 +35,6 @@ export class Index {
 
     this.config = new Config()
     this.serverUrl = this.config.serverUrl
-
-    if(!localStorage.notifications) {
-      localStorage.notifications = JSON.stringify({
-        improv_security: false
-      })
-    }
-
-    this.notifications = JSON.parse(localStorage.notifications)
     this.isFirstVisit = !localStorage.firstVisit
 
     Dropzone.autoDiscover = false
@@ -253,11 +245,6 @@ export class Index {
     window.onbeforeunload = null
     this.router.navigate('/')
     location.reload()
-  }
-
-  hideNotification(name) {
-    this.notifications[name] = true
-    localStorage.notifications = JSON.stringify(this.notifications)
   }
 
 }
