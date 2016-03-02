@@ -12,6 +12,7 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
+
   map: {
     "aurelia-framework": "npm:aurelia-framework@1.0.0-beta.1.1.4",
     "aurelia-loader-default": "npm:aurelia-loader-default@1.0.0-beta.1.1.3",
@@ -32,7 +33,6 @@ System.config({
     "fetch": "github:github/fetch@0.10.1",
     "font-awesome": "npm:font-awesome@4.5.0",
     "isarray": "npm:isarray@1.0.0",
-    "jquery": "npm:jquery@2.2.1",
     "json3": "npm:json3@3.3.2",
     "mimetype": "npm:mimetype@0.0.8",
     "socket.io-client": "npm:socket.io-client@1.4.5",

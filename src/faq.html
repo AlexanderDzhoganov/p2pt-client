@@ -1,7 +1,7 @@
 <template>
   <div class="faq">
-    <div class="list-item" data-faq-item="1">
-      <p class="title" click.delegate="showFaqItem(1)"><i class="fa fa-fw fa-angle-right"></i> What is this?</p>
+    <div class="list-item">
+      <h1 class="title"><i class="fa fa-fw fa-angle-right"></i> What is this?</h1>
       <div class="content">
         <p class="inner-content">
         Bitfly is a service which allows you to securely transfer files to (almost) any device with a modern browser.
@@ -9,8 +9,8 @@
         </p>
       </div>
     </div>
-    <div class="list-item" data-faq-item="2">
-      <p class="title" click.delegate="showFaqItem(2)"><i class="fa fa-fw fa-angle-right"></i> How do the secret URLs work?</p>
+    <div class="list-item">
+      <h1 class="title"><i class="fa fa-fw fa-angle-right"></i> How do the secret URLs work?</h1>
       <div class="content">
         <p class="inner-content">
         Every time you select a file for transfer the Bitfly client will create a unique, single-use 128-bit key and append it to your URL.
@@ -18,45 +18,45 @@
         </p>
       </div>
     </div>
-    <div class="list-item" data-faq-item="3">
-      <p class="title" click.delegate="showFaqItem(3)"><i class="fa fa-fw fa-angle-right"></i> Security considerations</p>
+    <div class="list-item">
+      <h1 class="title"><i class="fa fa-fw fa-angle-right"></i> Security considerations</h1>
       <div class="content">
         <p class="inner-content">
-        <strong>TL;DR - while Bitfly is secure against non-sophisticated threats we advise against using the service for highly sensitive data.</strong><br/>
+        <strong>While Bitfly is relatively secure we advise against using the service for highly sensitive data.</strong><br/>
 
-        There are both pros and cons to our approach.<br/>
-        - You still have to trust the service (meaning us). There is no viable method for delivery of signed code to the browser. You have to trust that we have not done any malicious modifications to the client-side code and that our servers were not compromised.<br/>
+        <br/>
+        - There is no viable method for delivery of signed code to the browser. You have to trust that we have not done any malicious modifications to the client-side code and that our servers were not compromised.<br/>
         - WebRTC is potentially vulnerable to man in the middle attacks. Anyone who posseses or could (in theory) guess the information in your secret URL could pretend to be the receving device and get your data. Make sure to keep your secret URLs between you and your recipient. Your data is exposed to anyone who has the full URL!<br/>
         - No data is ever stored on any intermediary server. Your data is gone from the Internet the moment you close the tab. Any compromise of our infrastructure does not expose metadata or contents for any past transfers. We do monitor our servers vigilantly and will shut down the service temporarily in case of compromise. We'll also notify you promptly with a message on the site.
         </p>
       </div>
     </div>
-    <div class="list-item" data-faq-item="4">
-      <p class="title" click.delegate="showFaqItem(4)"><i class="fa fa-fw fa-angle-right"></i> Is sending files via Bitfly anonymous?</p>
+    <div class="list-item">
+      <h1 class="title"><i class="fa fa-fw fa-angle-right"></i> Is sending files via Bitfly anonymous?</h1>
       <div class="content">
         <p class="inner-content">
         Bitfly does not provide anonymity like a service like TOR would. We do not keep any logs but our servers store the address of both the sending and receiving device for a short duration in order to setup the peer-to-peer connection. While using Bitfly for any kind of illegal material is strictly forbidden we cannot really tell what you are sending (see the first two questions) so please act responsibly.
         </p>
       </div>
     </div>
-    <div class="list-item" data-faq-item="5">
-      <p class="title" click.delegate="showFaqItem(5)"><i class="fa fa-fw fa-angle-right"></i> Is Bitfly open-source?</p>
+    <div class="list-item">
+      <h1 class="title"><i class="fa fa-fw fa-angle-right"></i> Is Bitfly open-source?</h1>
       <div class="content">
         <p class="inner-content">
         Yes! Bitfly's code is MIT- licensed and very small (less than 3000 lines). You can fork all of our code by clicking on the 'GitHub' button at the bottom of the page. Pull-requests are welcome!
         </p>
       </div>
     </div>
-    <div class="list-item" data-faq-item="6">
-      <p class="title" click.delegate="showFaqItem(6)"><i class="fa fa-fw fa-angle-right"></i> Is there a file size limit?</p>
+    <div class="list-item">
+      <h1 class="title"><i class="fa fa-fw fa-angle-right"></i> Is there a file size limit?</h1>
       <div class="content">
         <p class="inner-content">
         There are no file-size limits hardcoded into Bitfly. You may get a warning message saying that sending very large files requires plenty of RAM on the receiving device but we have had great success with files up to 4 GiB in size. Right now there is a high probability that a desktop machine will not have enough memory to receive files above 16 GiB without issues.
         </p>
       </div>
     </div>
-    <div class="list-item" data-faq-item="7">
-      <p class="title" click.delegate="showFaqItem(7)"><i class="fa fa-fw fa-angle-right"></i> It's not working! Help!</p>
+    <div class="list-item">
+      <h1 class="title"><i class="fa fa-fw fa-angle-right"></i> It's not working! Help!</h1>
       <div class="content">
         <p class="inner-content">
         Bitfly should work for almost anyone with <a href="http://iswebrtcreadyyet.com/" target="_blank">a supported browser</a> but it may fail for some very restricted NAT setups (e.g. behind some corporate firewalls). If you encounter issues please submit a report to one of our GitHub repositories via the GitHub button at the bottom of the page.

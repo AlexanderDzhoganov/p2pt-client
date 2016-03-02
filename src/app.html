@@ -1,6 +1,6 @@
 <template>
   <div class="hero-content">
-    <div class="container">
+    <div show.bind="!showFaq" class="container">
       <div if.bind="reader && reader.largeFile && !reader.veryLargeFile" class="notification is-warning">
         Warning! You are trying to send a large file. Receiving files above 1 GiB is recommended only for desktop devices with plenty of RAM. Mobile devices and old PCs may experience unresponsiveness for a while after the transfer completes and the file gets reassembled.
       </div>
@@ -119,12 +119,14 @@
         </template>
       </div>
 
-      <div class="show-faq">
-        <a click.delegate="showFaq = !showFaq"><h1 class="subtitle">FAQ</h1></a>
+      <div show.bind="isUploader" class="show-faq">
+        <a click.delegate="showFaq = true"><h1 class="subtitle">FAQ</h1></a>
       </div>
-      <template if.bind="showFaq">
-        <compose view-model="faq"></compose>
-      </template>
+    </div>
+
+    <div show.bind="showFaq">
+      <compose view-model="faq"></compose>
+      <a click.delegate="showFaq = false"><h1 class="subtitle" style="margin-top: 2em;">Go back to the main page</h1></a>
     </div>
   </div>
 

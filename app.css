@@ -106,32 +106,14 @@ a {
 }
 
 .faq .list-item .title {
-    font-weight: bold;
-    color: #0b97c4;
+    color: #646BC8;
     font-size: 1.0em;
     margin: 0;
     margin-top: 0.65em;
-    cursor: pointer;
-}
-
-.faq .list-item .title:hover {
-    color: #0f7595;
 }
 
 .faq .list-item .title i {
     font-size: 1.0em;
-}
-
-.faq .list-item .content {
-    height: auto;
-    max-height: 0em;
-    overflow: hidden;
-    transition: max-height 350ms ease;
-    -webkit-transition: max-height 350ms ease;
-}
-
-.faq .list-item .content.show {
-    max-height: 18em;
 }
 
 .faq .list-item .content .inner-content {
@@ -177,4 +159,8 @@ a {
 
 .hero-content {
     padding: 16px 16px 0px 16px;
+}
+
+.main {
+    padding: 0;
 }

@@ -9,10 +9,6 @@ import Downloader from './downloader'
 import Config from './config'
 var config = new Config()
 
-var socket = io(config.apiUrl, {
-  transports: ['websocket']
-})
-
 export class Index {
 
   isUploader = true
@@ -36,9 +32,7 @@ export class Index {
 
     Dropzone.autoDiscover = false
     Dropzone.autoProcessQueue = false
-  }
 
-  activate() {
     var hash = location.hash.trim()
 
     if(hash.length !== 0) {
@@ -53,6 +47,43 @@ export class Index {
       this.token = hash.slice(0, 16)
       this.secret = hash.slice(16, 32)
     }
+
+    this.socket = io(config.apiUrl, {
+      transports: ['websocket']
+    })
+
+    this.socket.on('connect', () => {
+      this.connectionError = false
+
+      if(this.token) {
+        this.socket.emit('set-token', this.token)
+      }
+    }.bind(this))
+
+    this.socket.on('connect_error', () => {
+      this.connectionError = true
+    }.bind(this))
+
+    this.socket.on('connect_timeout', () => {
+      this.connectionError = true
+    }.bind(this))
+
+    this.socket.on('error', err => {
+      console.error(err)
+    }.bind(this))
+
+    this.socket.on('set-token-invalid', () => {
+      this.reload()
+    }.bind(this))
+
+    this.socket.on('total-transfers', val => {
+      this.totalTransfers = val
+    }.bind(this))
+
+    this.socket.on('set-token-ok', token => {
+      this.token = token
+      this.initPeerToPeer()
+    }.bind(this))
   }
 
   bind() {
@@ -66,39 +97,6 @@ export class Index {
         return 'There is a download in progress, are you sure you wish to cancel it?'
       }
     }
-
-    socket.on('connect', () => {
-      this.connectionError = false
-
-      if(this.token) {
-        socket.emit('set-token', this.token)
-      }
-    }.bind(this))
-
-    socket.on('connect_error', () => {
-      this.connectionError = true
-    }.bind(this))
-
-    socket.on('connect_timeout', () => {
-      this.connectionError = true
-    }.bind(this))
-
-    socket.on('error', err => {
-      console.error(err)
-    }.bind(this))
-
-    socket.on('set-token-invalid', () => {
-      this.reload()
-    }.bind(this))
-
-    socket.on('total-transfers', val => {
-      this.totalTransfers = val
-    }.bind(this))
-
-    socket.on('set-token-ok', token => {
-      this.token = token
-      this.initPeerToPeer()
-    }.bind(this))
   }
 
   createClientSecret() {
@@ -118,7 +116,7 @@ export class Index {
       this.secretVerified = false
     }
 
-    this.p2p = new p2p(socket, config.p2pConfig)
+    this.p2p = new p2p(this.socket, config.p2pConfig)
 
     this.p2p.on('ready', function() {
       this.p2p.usePeerConnection = true
@@ -214,7 +212,7 @@ export class Index {
 
     this.file = file
     this.reader = new FileReader(this.file)
-    socket.emit('ask-token') // got a file, time to ask the backend for a token
+    this.socket.emit('ask-token') // got a file, time to ask the backend for a token
   }
 
   startUpload() {
