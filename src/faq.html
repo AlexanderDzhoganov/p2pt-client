@@ -1,5 +1,5 @@
 <template>
-  <div class="faq">
+  <div class="container faq">
     <div class="list-item">
       <h1 class="title"><i class="fa fa-fw fa-angle-right"></i> What is this?</h1>
       <div class="content">
@@ -23,8 +23,6 @@
       <div class="content">
         <p class="inner-content">
         <strong>While Bitfly is relatively secure we advise against using the service for highly sensitive data.</strong><br/>
-
-        <br/>
         - There is no viable method for delivery of signed code to the browser. You have to trust that we have not done any malicious modifications to the client-side code and that our servers were not compromised.<br/>
         - WebRTC is potentially vulnerable to man in the middle attacks. Anyone who posseses or could (in theory) guess the information in your secret URL could pretend to be the receving device and get your data. Make sure to keep your secret URLs between you and your recipient. Your data is exposed to anyone who has the full URL!<br/>
         - No data is ever stored on any intermediary server. Your data is gone from the Internet the moment you close the tab. Any compromise of our infrastructure does not expose metadata or contents for any past transfers. We do monitor our servers vigilantly and will shut down the service temporarily in case of compromise. We'll also notify you promptly with a message on the site.

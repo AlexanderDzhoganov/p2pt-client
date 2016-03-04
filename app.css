@@ -100,13 +100,11 @@ a {
 
 .faq {
     text-align: left;
-    margin: 0.1em auto 0;
     font-size: 1.0em;
 }
 
 .faq .list-item .title {
-    color: #646BC8;
-    font-size: 1.0em;
+    font-size: 1.2em;
     margin: 0;
     margin-top: 0.65em;
 }
